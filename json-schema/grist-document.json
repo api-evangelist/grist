@@ -1,0 +1,35 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/grist/main/json-schema/grist-document.json",
+  "title": "GristDocument",
+  "description": "Metadata for a Grist document.",
+  "type": "object",
+  "required": ["id", "name", "isPinned", "urlId", "access"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique document identifier.",
+      "example": "9PJhBDZPyCNoayZxaCwFfS"
+    },
+    "name": {
+      "type": "string",
+      "description": "Human-readable document name.",
+      "example": "Project Lollipop"
+    },
+    "isPinned": {
+      "type": "boolean",
+      "description": "Whether the document is pinned at the top of workspace listings.",
+      "example": false
+    },
+    "urlId": {
+      "type": ["string", "null"],
+      "description": "Optional URL-friendly alias for the document.",
+      "example": null
+    },
+    "access": {
+      "type": "string",
+      "enum": ["owners", "editors", "viewers"],
+      "description": "Caller's access level for this document."
+    }
+  }
+}

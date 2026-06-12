@@ -1,0 +1,5 @@
+{
+  "sql": "select * from Pets where popularity >= ?",
+  "args": [50],
+  "timeout": 1000
+}

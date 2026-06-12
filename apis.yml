@@ -46,6 +46,8 @@ apis:
         url: https://raw.githubusercontent.com/gristlabs/grist-help/master/api/grist.yml
       - type: OpenAPIConsole
         url: https://docs.getgrist.com/apiconsole
+      - type: OpenAPI
+        url: https://raw.githubusercontent.com/api-evangelist/grist/refs/heads/main/openapi/grist-rest-api-openapi.yml
     contact:
       - FN: Grist Support
         url: https://support.getgrist.com/
@@ -77,6 +79,12 @@ common:
     url: https://raw.githubusercontent.com/api-evangelist/grist/refs/heads/main/rate-limits/grist-rate-limits.yml
   - type: FinOps
     url: https://raw.githubusercontent.com/api-evangelist/grist/refs/heads/main/finops/grist-finops.yml
+  - type: Vocabulary
+    url: https://raw.githubusercontent.com/api-evangelist/grist/refs/heads/main/vocabulary/grist-vocabulary.yml
+  - type: JSONLDContext
+    url: https://raw.githubusercontent.com/api-evangelist/grist/refs/heads/main/json-ld/grist-context.jsonld
+  - type: Blog
+    url: https://raw.githubusercontent.com/api-evangelist/grist/refs/heads/main/blogs/blogs.json
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com

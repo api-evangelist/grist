@@ -1,0 +1,43 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/grist/main/json-schema/grist-webhook.json",
+  "title": "GristWebhook",
+  "description": "A webhook configured on a Grist document that delivers payloads when data changes.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Webhook unique identifier.",
+      "example": "xxxxxxx-xxxx-xxxx-xxxxxxxxxxxxxxxx"
+    },
+    "fields": {
+      "type": "object",
+      "description": "Webhook configuration fields.",
+      "properties": {
+        "name": { "type": ["string", "null"], "example": "new-project-email" },
+        "memo": { "type": ["string", "null"], "example": "Send an email when a project is added" },
+        "url": { "type": "string", "format": "uri", "example": "https://example.com/webhook/123" },
+        "enabled": { "type": "boolean" },
+        "eventTypes": {
+          "type": "array",
+          "items": { "type": "string" },
+          "example": ["add", "update"]
+        },
+        "isReadyColumn": { "type": ["string", "null"] },
+        "tableId": { "type": "string", "example": "Projects" },
+        "unsubscribeKey": { "type": "string" }
+      }
+    },
+    "usage": {
+      "type": ["object", "null"],
+      "description": "Delivery statistics for this webhook.",
+      "properties": {
+        "numWaiting": { "type": "integer" },
+        "status": { "type": "string", "example": "idle" },
+        "lastHttpStatus": { "type": ["number", "null"] },
+        "lastErrorMessage": { "type": ["string", "null"] }
+      }
+    }
+  }
+}

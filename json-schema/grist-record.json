@@ -1,0 +1,20 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/grist/main/json-schema/grist-record.json",
+  "title": "GristRecord",
+  "description": "A single record (row) in a Grist table, with an integer id and a fields object.",
+  "type": "object",
+  "required": ["id", "fields"],
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Row identifier, assigned automatically by Grist.",
+      "example": 1
+    },
+    "fields": {
+      "type": "object",
+      "description": "Key-value map of column identifiers to cell values.",
+      "additionalProperties": true
+    }
+  }
+}

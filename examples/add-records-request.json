@@ -1,0 +1,16 @@
+{
+  "records": [
+    {
+      "fields": {
+        "pet": "rabbit",
+        "popularity": 78
+      }
+    },
+    {
+      "fields": {
+        "pet": "hamster",
+        "popularity": 55
+      }
+    }
+  ]
+}

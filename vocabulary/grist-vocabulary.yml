@@ -1,0 +1,90 @@
+vocabulary:
+  provider: Grist
+  url: https://support.getgrist.com/api/
+  terms:
+    - term: org
+      label: Organization
+      definition: >
+        A team site or personal area in Grist. Every Grist account belongs to
+        at least one org (the personal org). Team orgs map to a subdomain and
+        can contain multiple workspaces shared across members.
+    - term: workspace
+      label: Workspace
+      definition: >
+        A named folder inside an org that groups related documents. Workspaces
+        have their own access controls which can be set independently from the
+        parent org.
+    - term: doc
+      label: Document
+      definition: >
+        A Grist document is an SQLite database file with structured tables,
+        columns, formulas, and views. Documents live inside workspaces and are
+        identified by a UUID.
+    - term: table
+      label: Table
+      definition: >
+        A structured collection of rows (records) and columns within a
+        document. Tables in Grist correspond to SQLite tables and support
+        typed columns, formulas, and references to other tables.
+    - term: column
+      label: Column
+      definition: >
+        A typed field within a table. Grist supports types such as Text,
+        Numeric, Int, Bool, Date, DateTime, Choice, ChoiceList, Ref, RefList,
+        and Attachments. Columns may be formula columns (computed) or data
+        columns (stored).
+    - term: record
+      label: Record
+      definition: >
+        A single row in a Grist table, identified by an integer row ID. Records
+        are accessed via the /records endpoints and represented as an object
+        with an `id` and a `fields` map.
+    - term: webhook
+      label: Webhook
+      definition: >
+        An HTTP callback configured on a document. When rows in a specified
+        table are added or updated, Grist POSTs a JSON payload to the
+        registered URL. Webhooks include delivery statistics and a queue of
+        undelivered payloads.
+    - term: snapshot
+      label: Snapshot
+      definition: >
+        An automatic backup of a Grist document captured at a point in time.
+        Snapshots are stored in external object storage and can be restored via
+        the replace endpoint.
+    - term: fork
+      label: Fork
+      definition: >
+        A personal copy of a document that tracks its relationship to the
+        original (trunk). Forks are used to experiment with changes and can
+        produce proposals to merge changes back into the trunk.
+    - term: proposal
+      label: Proposal
+      definition: >
+        A suggested set of changes from a fork to its trunk document. Proposals
+        summarise the diff between the two documents and can be applied
+        (merged) by a document owner.
+    - term: apikey
+      label: API Key
+      definition: >
+        A bearer token used to authenticate requests to the Grist REST API.
+        Passed in the Authorization header as `Bearer <key>`. Users can
+        generate or delete their key via the /profile/apikey endpoints.
+    - term: service-account
+      label: Service Account
+      definition: >
+        A non-human account with its own API key, intended for automated
+        integrations. Service accounts can be granted scoped access to
+        documents and have an expiry date.
+    - term: sql
+      label: SQL Endpoint
+      definition: >
+        A read-only SQL SELECT interface that executes queries directly against
+        the underlying SQLite database of a Grist document. Supports
+        parameterised queries and configurable timeouts.
+    - term: attachment
+      label: Attachment
+      definition: >
+        A binary file stored inside a Grist document. Attachment columns hold
+        references to these files. Attachments can be uploaded, downloaded,
+        archived, and transferred to external object storage.

@@ -1,0 +1,18 @@
+{
+  "records": [
+    {
+      "id": 1,
+      "fields": {
+        "pet": "cat",
+        "popularity": 67
+      }
+    },
+    {
+      "id": 2,
+      "fields": {
+        "pet": "dog",
+        "popularity": 95
+      }
+    }
+  ]
+}

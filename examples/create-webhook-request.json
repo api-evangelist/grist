@@ -1,0 +1,15 @@
+{
+  "webhooks": [
+    {
+      "fields": {
+        "name": "new-project-email",
+        "memo": "Send an email when a project is added",
+        "url": "https://example.com/webhook/123",
+        "enabled": true,
+        "eventTypes": ["add", "update"],
+        "tableId": "Projects",
+        "isReadyColumn": null
+      }
+    }
+  ]
+}
