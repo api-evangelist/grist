@@ -1,0 +1,79 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+provider: Grist
+providerId: grist
+created: '2026-06-12'
+modified: '2026-06-12'
+url: https://support.getgrist.com/limits/
+headers:
+  retryAfter: Retry-After
+responseCodes:
+  throttled: 429
+limits:
+  - name: Free Plan Daily API Calls
+    scope: document
+    metric: api_calls
+    limit: 5000
+    timeFrame: daily
+    plans:
+      - Free
+    description: >
+      Free plan documents are limited to 5,000 API calls per document per day.
+      Exceeding this limit results in HTTP 429 responses until the daily quota
+      resets.
+  - name: Pro Plan Daily API Calls
+    scope: document
+    metric: api_calls
+    limit: 40000
+    timeFrame: daily
+    plans:
+      - Pro
+    description: >
+      Pro plan documents are limited to 40,000 API calls per document per day.
+  - name: Business Plan Daily API Calls
+    scope: document
+    metric: api_calls
+    limit: 60000
+    timeFrame: daily
+    plans:
+      - Business
+    description: >
+      Business plan documents are limited to 60,000 API calls per document
+      per day.
+  - name: Free Plan Per-Second Rate Limit
+    scope: document
+    metric: requests_per_second
+    limit: 5
+    timeFrame: second
+    plans:
+      - Free
+    description: >
+      Free plan documents may be throttled to 5 API requests per second per
+      document. Requests exceeding this rate receive HTTP 429 responses.
+  - name: Concurrency Limit (All Plans)
+    scope: document
+    metric: concurrent_requests
+    limit: 10
+    timeFrame: instantaneous
+    plans:
+      - Free
+      - Pro
+      - Business
+      - Enterprise
+    description: >
+      All plans enforce a concurrency limit of 10 simultaneous authorized
+      requests per document. If 10 requests are simultaneously processing,
+      additional requests receive HTTP 429 until capacity is available.
+  - name: Request Body Size
+    scope: request
+    metric: request_body_bytes
+    limit: 1048576
+    timeFrame: per_request
+    plans:
+      - Free
+      - Pro
+      - Business
+      - Enterprise
+    description: >
+      Individual API request bodies are capped at 1 MB (1,048,576 bytes).
+      Multi-record batch operations must be split to stay within this limit.

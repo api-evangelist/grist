@@ -1,0 +1,109 @@
+specification: FinOps Framework
+specificationVersion: '1.0'
+provider: Grist
+providerId: grist
+created: '2026-06-12'
+modified: '2026-06-12'
+url: https://www.getgrist.com/pricing/
+billingModel:
+  type: per_user_per_month
+  description: >
+    Grist charges per user per month for cloud-hosted team sites. A free tier
+    is available with document-level row caps and daily API call quotas. Paid
+    plans (Pro and Business) scale document row limits and daily API call
+    quotas. The Business plan requires a minimum of 5 users. Annual billing
+    provides a 20% discount over monthly billing.
+  currency: USD
+  billingCadence:
+    - monthly
+    - annual
+focusColumns:
+  - ChargeCategory: Usage
+  - ChargeType: Usage
+  - BilledCurrency: USD
+  - PricingUnit: User/Month
+  - ServiceName: Grist
+  - ServiceCategory: Database / Spreadsheet SaaS
+meters:
+  - name: User Seats
+    unit: user/month
+    description: >
+      Primary billing dimension. Each user with access to a team site counts
+      toward the per-seat charge.
+    rates:
+      - plan: Free
+        price: 0.00
+      - plan: Pro (Monthly)
+        price: 10.00
+      - plan: Pro (Annual)
+        price: 8.00
+      - plan: Business (Monthly)
+        price: 30.00
+      - plan: Business (Annual)
+        price: 24.00
+  - name: API Calls per Document
+    unit: calls/document/day
+    description: >
+      Daily API call quota per document determines throughput capacity for
+      integrations and automations.
+    rates:
+      - plan: Free
+        limit: 5000
+        overage: blocked
+      - plan: Pro
+        limit: 40000
+        overage: blocked
+      - plan: Business
+        limit: 60000
+        overage: blocked
+  - name: Document Rows
+    unit: rows/document
+    description: >
+      Maximum rows per document controls how much data can be stored in a
+      single Grist document.
+    rates:
+      - plan: Free
+        limit: 5000
+      - plan: Pro
+        limit: 100000
+      - plan: Business
+        limit: 150000
+  - name: AI Assistant Credits
+    unit: credits
+    description: >
+      AI Assistant credits consumed for formula assistance and AI-powered
+      features within documents.
+    rates:
+      - plan: Free
+        limit: 100
+        period: lifetime
+      - plan: Pro
+        limit: 100
+        period: monthly
+      - plan: Business
+        limit: 2000
+        period: monthly
+principles:
+  - name: Visibility
+    description: >
+      Grist exposes usage metrics through the pricing page and plan
+      comparisons. Document-level API call counts are tracked per plan to
+      help teams monitor consumption against daily quotas. Snapshot history
+      retention periods are clearly defined per tier.
+    practices:
+      - Monitor daily API call usage per document against plan quotas
+      - Track row counts per document to avoid hitting tier limits
+      - Review AI Assistant credit consumption monthly (Pro/Business)
+  - name: Optimization
+    description: >
+      Teams can optimize Grist costs by right-sizing user seats, batching
+      API requests to stay within daily quotas, archiving or splitting
+      documents approaching row limits, and choosing annual billing for a
+      20% savings over monthly billing.
+    practices:
+      - Choose annual billing to save 20% vs monthly pricing
+      - Batch API calls to maximize efficiency within daily quotas
+      - Split large documents to stay within per-document row limits
+      - Use the free Community self-hosted edition for workloads without
+        SaaS requirements to eliminate per-seat costs entirely
+      - Right-size team seats; Business plan requires minimum 5 users

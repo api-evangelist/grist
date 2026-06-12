@@ -1,0 +1,156 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+provider: Grist
+providerId: grist
+created: '2026-06-12'
+modified: '2026-06-12'
+reconciled: true
+url: https://www.getgrist.com/pricing/
+plans:
+  - name: Free
+    type: freemium
+    description: >
+      Free cloud-hosted plan for individuals and small teams. Includes
+      unlimited documents, up to 5,000 rows per document, 2 guests per
+      document, and 100 lifetime AI Assistant credits.
+    price: 0.00
+    currency: USD
+    billingPeriod: monthly
+    quotas:
+      - name: API Calls per Document per Day
+        type: metered
+        metric: api_calls_per_doc_per_day
+        limit: 5000
+        timeFrame: daily
+      - name: Rows per Document
+        type: quota
+        metric: rows_per_document
+        limit: 5000
+      - name: Documents
+        type: boolean
+        metric: documents
+        limit: unlimited
+      - name: Snapshot History
+        type: quota
+        metric: snapshot_history_days
+        limit: 30
+      - name: AI Assistant Credits
+        type: quota
+        metric: ai_credits_lifetime
+        limit: 100
+      - name: Guests per Document
+        type: quota
+        metric: guests_per_document
+        limit: 2
+  - name: Pro
+    type: paid
+    description: >
+      Pro plan for teams needing more capacity. Includes up to 100,000 rows
+      per document, 40,000 API calls per document per day, 3-year snapshot
+      history, and 100 AI Assistant credits per month.
+    price: 10.00
+    currency: USD
+    billingPeriod: monthly
+    annualPrice: 8.00
+    quotas:
+      - name: API Calls per Document per Day
+        type: metered
+        metric: api_calls_per_doc_per_day
+        limit: 40000
+        timeFrame: daily
+      - name: Rows per Document
+        type: quota
+        metric: rows_per_document
+        limit: 100000
+      - name: Documents
+        type: boolean
+        metric: documents
+        limit: unlimited
+      - name: Snapshot History Years
+        type: quota
+        metric: snapshot_history_years
+        limit: 3
+      - name: AI Assistant Credits per Month
+        type: metered
+        metric: ai_credits_monthly
+        limit: 100
+        timeFrame: monthly
+      - name: Guests per Document
+        type: quota
+        metric: guests_per_document
+        limit: 2
+  - name: Business
+    type: paid
+    description: >
+      Business plan for larger teams requiring higher limits. Requires minimum
+      5 users. Includes up to 150,000 rows per document, 60,000 API calls per
+      document per day, 5-year snapshot history, and 2,000 AI Assistant
+      credits per month. Includes priority support.
+    price: 30.00
+    currency: USD
+    billingPeriod: monthly
+    annualPrice: 24.00
+    minimumUsers: 5
+    quotas:
+      - name: API Calls per Document per Day
+        type: metered
+        metric: api_calls_per_doc_per_day
+        limit: 60000
+        timeFrame: daily
+      - name: Rows per Document
+        type: quota
+        metric: rows_per_document
+        limit: 150000
+      - name: Documents
+        type: boolean
+        metric: documents
+        limit: unlimited
+      - name: Snapshot History Years
+        type: quota
+        metric: snapshot_history_years
+        limit: 5
+      - name: AI Assistant Credits per Month
+        type: metered
+        metric: ai_credits_monthly
+        limit: 2000
+        timeFrame: monthly
+      - name: Guests per Document
+        type: quota
+        metric: guests_per_document
+        limit: 2
+  - name: Enterprise
+    type: enterprise
+    description: >
+      Enterprise plan with custom pricing. Includes dedicated server,
+      custom SSO, custom domain, custom branding, advanced admin controls,
+      and audit logging. Contact Grist for pricing.
+    price: custom
+    currency: USD
+    billingPeriod: annual
+    quotas:
+      - name: API Calls per Document per Day
+        type: quota
+        metric: api_calls_per_doc_per_day
+        limit: custom
+      - name: Rows per Document
+        type: quota
+        metric: rows_per_document
+        limit: custom
+  - name: Community (Self-Hosted)
+    type: free
+    description: >
+      Free open-source self-hosted deployment of Grist using the Apache 2.0
+      licensed grist-core repository. No limits imposed by Grist; capacity
+      depends on self-hosted infrastructure.
+    price: 0.00
+    currency: USD
+    billingPeriod: none
+    quotas:
+      - name: API Calls
+        type: boolean
+        metric: api_calls
+        limit: unlimited
+      - name: Rows per Document
+        type: boolean
+        metric: rows_per_document
+        limit: unlimited

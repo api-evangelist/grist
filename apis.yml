@@ -1,0 +1,82 @@
+aid: grist
+name: Grist
+description: >
+  Grist is a collaborative spreadsheet and relational database platform that
+  combines the flexibility of spreadsheets with the power of a structured
+  database. It provides a REST API for reading and writing table records,
+  managing organizations, workspaces, and documents, executing SQL queries
+  against document data, and configuring outgoing webhooks triggered by data
+  changes. Grist is available as a cloud-hosted SaaS at getgrist.com and as
+  an open-source self-hosted deployment via the Apache-licensed grist-core
+  repository maintained by Grist Labs.
+type: Index
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+tags:
+  - Spreadsheet
+  - Database
+  - Collaboration
+  - No-Code
+  - Data Management
+  - Webhooks
+  - Open Source
+url: https://raw.githubusercontent.com/api-evangelist/grist/refs/heads/main/apis.yml
+created: '2026-06-12'
+modified: '2026-06-12'
+specificationVersion: '0.19'
+apis:
+  - aid: grist:grist-rest-api
+    name: Grist REST API
+    description: >
+      The Grist REST API provides programmatic access to organizations,
+      workspaces, documents, and table records. Supports CRUD operations on
+      rows, SQL SELECT queries against documents, attachment management, user
+      and permission management, and webhook configuration for event-driven
+      integrations.
+    humanURL: https://support.getgrist.com/api/
+    baseURL: https://docs.getgrist.com/api
+    tags:
+      - Spreadsheet
+      - Database
+      - Records
+      - Webhooks
+    properties:
+      - type: Documentation
+        url: https://support.getgrist.com/rest-api/
+      - type: OpenAPI
+        url: https://raw.githubusercontent.com/gristlabs/grist-help/master/api/grist.yml
+      - type: OpenAPIConsole
+        url: https://docs.getgrist.com/apiconsole
+    contact:
+      - FN: Grist Support
+        url: https://support.getgrist.com/
+        email: support@getgrist.com
+common:
+  - type: Website
+    url: https://www.getgrist.com/
+  - type: Documentation
+    url: https://support.getgrist.com/
+  - type: GitHubOrganization
+    url: https://github.com/gristlabs
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/grist-labs/
+  - type: X
+    url: https://twitter.com/getgrist
+  - type: Blog
+    url: https://www.getgrist.com/blog/
+  - type: Pricing
+    url: https://www.getgrist.com/pricing/
+  - type: Changelog
+    url: https://github.com/gristlabs/grist-core/releases
+  - type: Community
+    url: https://community.getgrist.com/
+  - type: Discord
+    url: https://discord.gg/MYKpYQ3fbP
+  - type: Plans
+    url: https://raw.githubusercontent.com/api-evangelist/grist/refs/heads/main/plans/grist-plans-pricing.yml
+  - type: RateLimits
+    url: https://raw.githubusercontent.com/api-evangelist/grist/refs/heads/main/rate-limits/grist-rate-limits.yml
+  - type: FinOps
+    url: https://raw.githubusercontent.com/api-evangelist/grist/refs/heads/main/finops/grist-finops.yml
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
