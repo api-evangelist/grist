@@ -67,7 +67,7 @@ common:
     url: https://www.getgrist.com/blog/
   - type: Pricing
     url: https://www.getgrist.com/pricing/
-  - type: Changelog
+  - type: ChangeLog
     url: https://github.com/gristlabs/grist-core/releases
   - type: Community
     url: https://community.getgrist.com/
