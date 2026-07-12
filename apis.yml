@@ -53,6 +53,10 @@ apis:
         url: https://support.getgrist.com/
         email: support@getgrist.com
 common:
+  - type: DomainSecurity
+    url: security/grist-domain-security.yml
+  - type: Authentication
+    url: authentication/grist-authentication.yml
   - type: Website
     url: https://www.getgrist.com/
   - type: Documentation
