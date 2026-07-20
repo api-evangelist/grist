@@ -8,7 +8,7 @@ schemes:
 - name: ApiKey
   type: http
   scheme: bearer
-  bearerFormat: 'Authorization: Bearer XXXXXXXXXXX'
+  bearerFormat: 'Authorization: Bearer [example key]'
   description: Access to the Grist API is controlled by an Authorization header, which should
     contain the word 'Bearer', followed by a space, followed by your API key.
   sources:
