@@ -1,0 +1,79 @@
+openapi: 3.0.0
+info:
+  description: 'An API for manipulating Grist sites, workspaces, and documents.
+
+
+    # Authentication
+
+    <SecurityDefinitions />
+
+    '
+  version: 1.0.1
+  title: Grist attachments forms API
+servers:
+- url: https://{gristhost}/api
+  variables:
+    subdomain:
+      description: The team name, or `docs` for personal areas
+      default: docs
+security:
+- ApiKey: []
+tags:
+- name: forms
+paths:
+  /docs/{docId}/forms/{viewSectionId}:
+    get:
+      operationId: getFormData
+      tags:
+      - forms
+      summary: Get form view data
+      description: 'Get the form configuration for a specific view section. Forms are
+
+        a special view type that allows external users to submit data.
+
+        '
+      parameters:
+      - $ref: '#/components/parameters/docIdPathParam'
+      - name: viewSectionId
+        in: path
+        required: true
+        schema:
+          type: integer
+        description: ID of the view section (form)
+      responses:
+        200:
+          description: Form data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  formFieldsById:
+                    type: object
+                    description: Form fields indexed by field ID
+                  formLayoutSpec:
+                    type: string
+                    description: JSON layout specification for the form
+                  formTableId:
+                    type: string
+                    description: ID of the table the form submits to
+                  formTitle:
+                    type: string
+                    description: Title of the form
+        404:
+          description: Form not found
+components:
+  parameters:
+    docIdPathParam:
+      in: path
+      name: docId
+      schema:
+        type: string
+      description: A string id (UUID)
+      required: true
+  securitySchemes:
+    ApiKey:
+      type: http
+      scheme: bearer
+      bearerFormat: 'Authorization: Bearer XXXXXXXXXXX'
+      description: Access to the Grist API is controlled by an Authorization header, which should contain the word 'Bearer', followed by a space, followed by your API key.

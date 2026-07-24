@@ -1,0 +1,142 @@
+openapi: 3.0.0
+info:
+  description: 'An API for manipulating Grist sites, workspaces, and documents.
+
+
+    # Authentication
+
+    <SecurityDefinitions />
+
+    '
+  version: 1.0.1
+  title: Grist attachments sql API
+servers:
+- url: https://{gristhost}/api
+  variables:
+    subdomain:
+      description: The team name, or `docs` for personal areas
+      default: docs
+security:
+- ApiKey: []
+tags:
+- name: sql
+  description: Sql endpoint to query data from documents.
+paths:
+  /docs/{docId}/sql:
+    get:
+      operationId: runSqlGet
+      tags:
+      - sql
+      summary: Run an SQL query against a document
+      description: 'Execute a read-only SQL SELECT query against the document''s SQLite database.
+
+        This is a simplified endpoint for basic queries. For queries with parameters
+
+        or custom timeouts, use the POST endpoint instead.
+
+        '
+      parameters:
+      - $ref: '#/components/parameters/docIdPathParam'
+      - in: query
+        name: q
+        schema:
+          type: string
+          description: The SQL query to run. This GET endpoint is a simplified version of the corresponding POST endpoint, without support for parameters or options. See the POST endpoint for details of what's allowed in the SQL query string.
+      responses:
+        200:
+          description: The result set for the query.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SqlResultSet'
+    post:
+      operationId: runSql
+      tags:
+      - sql
+      summary: Run an SQL query against a document, with options or parameters
+      description: 'Execute a read-only SQL SELECT query with support for parameterized queries
+
+        and custom timeouts. All Grist documents are SQLite databases, and queries
+
+        are executed directly against SQLite with security restrictions.
+
+        '
+      parameters:
+      - $ref: '#/components/parameters/docIdPathParam'
+      requestBody:
+        description: Query options
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - sql
+              properties:
+                sql:
+                  type: string
+                  description: The SQL query to run. Must be a single SELECT statement, with no trailing semicolon. WITH clauses are permitted. All Grist documents are currently SQLite databases, and the SQL query is interpreted and run by SQLite, with various defensive measures. Statements that would modify the database are not supported.
+                  example: select * from Pets where popularity >= ?
+                args:
+                  type: array
+                  items:
+                    oneOf:
+                    - type: number
+                    - type: string
+                  description: Parameters for the query.
+                  example:
+                  - 50
+                timeout:
+                  type: number
+                  description: Timeout after which operations on the document will be interrupted. Specified in milliseconds. Defaults to 1000 (1 second). This default is controlled by an optional environment variable read by the Grist app, GRIST_SQL_TIMEOUT_MSEC. The default cannot be exceeded, only reduced.
+                  example: 500
+      responses:
+        200:
+          description: The result set for the query.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SqlResultSet'
+components:
+  schemas:
+    SqlResultSet:
+      type: object
+      required:
+      - statement
+      - records
+      properties:
+        statement:
+          type: string
+          description: A copy of the SQL statement.
+          example: select * from Pets ...
+        records:
+          type: array
+          items:
+            type: object
+            required:
+            - fields
+            properties:
+              fields:
+                type: object
+          example:
+          - fields:
+              id: 1
+              pet: cat
+              popularity: 67
+          - fields:
+              id: 2
+              pet: dog
+              popularity: 95
+  parameters:
+    docIdPathParam:
+      in: path
+      name: docId
+      schema:
+        type: string
+      description: A string id (UUID)
+      required: true
+  securitySchemes:
+    ApiKey:
+      type: http
+      scheme: bearer
+      bearerFormat: 'Authorization: Bearer XXXXXXXXXXX'
+      description: Access to the Grist API is controlled by an Authorization header, which should contain the word 'Bearer', followed by a space, followed by your API key.

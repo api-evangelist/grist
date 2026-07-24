@@ -1,0 +1,230 @@
+openapi: 3.0.0
+info:
+  description: 'An API for manipulating Grist sites, workspaces, and documents.
+
+
+    # Authentication
+
+    <SecurityDefinitions />
+
+    '
+  version: 1.0.1
+  title: Grist attachments data API
+servers:
+- url: https://{gristhost}/api
+  variables:
+    subdomain:
+      description: The team name, or `docs` for personal areas
+      default: docs
+security:
+- ApiKey: []
+tags:
+- name: data
+  description: Work with table data, using a (now deprecated) columnar format. We now recommend the `records` endpoints.
+paths:
+  /docs/{docId}/tables/{tableId}/data:
+    get:
+      operationId: getTableData
+      tags:
+      - data
+      summary: Fetch data from a table
+      deprecated: true
+      description: Deprecated in favor of `records` endpoints. We have no immediate plans to remove these endpoints, but consider `records` a better starting point for new projects.
+      parameters:
+      - $ref: '#/components/parameters/docIdPathParam'
+      - $ref: '#/components/parameters/tableIdPathParam'
+      - $ref: '#/components/parameters/filterQueryParam'
+      - $ref: '#/components/parameters/sortQueryParam'
+      - $ref: '#/components/parameters/limitQueryParam'
+      - $ref: '#/components/parameters/sortHeaderParam'
+      - $ref: '#/components/parameters/limitHeaderParam'
+      responses:
+        200:
+          description: Cells from the table
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Data'
+    post:
+      operationId: addRows
+      tags:
+      - data
+      summary: Add rows to a table
+      deprecated: true
+      description: Deprecated in favor of `records` endpoints. We have no immediate plans to remove these endpoints, but consider `records` a better starting point for new projects.
+      parameters:
+      - $ref: '#/components/parameters/docIdPathParam'
+      - $ref: '#/components/parameters/tableIdPathParam'
+      - $ref: '#/components/parameters/noparseQueryParam'
+      requestBody:
+        description: the data to add
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DataWithoutId'
+        required: true
+      responses:
+        200:
+          description: IDs of rows added
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RowIds'
+    patch:
+      operationId: modifyRows
+      tags:
+      - data
+      summary: Modify rows of a table
+      deprecated: true
+      description: Deprecated in favor of `records` endpoints. We have no immediate plans to remove these endpoints, but consider `records` a better starting point for new projects.
+      parameters:
+      - $ref: '#/components/parameters/docIdPathParam'
+      - $ref: '#/components/parameters/tableIdPathParam'
+      - $ref: '#/components/parameters/noparseQueryParam'
+      requestBody:
+        description: the data to change, with ids
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Data'
+        required: true
+      responses:
+        200:
+          description: IDs of rows modified
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RowIds'
+  /docs/{docId}/tables/{tableId}/data/delete:
+    post:
+      operationId: deleteRows
+      tags:
+      - data
+      summary: Delete rows of a table
+      deprecated: true
+      parameters:
+      - $ref: '#/components/parameters/docIdPathParam'
+      - $ref: '#/components/parameters/tableIdPathParam'
+      requestBody:
+        description: the IDs of rows to remove
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RowIds'
+        required: true
+      responses:
+        200:
+          description: Nothing returned
+components:
+  parameters:
+    sortHeaderParam:
+      in: header
+      name: X-Sort
+      schema:
+        type: string
+      description: Same as `sort` query parameter.
+      example: pet,-age
+      required: false
+    docIdPathParam:
+      in: path
+      name: docId
+      schema:
+        type: string
+      description: A string id (UUID)
+      required: true
+    sortQueryParam:
+      in: query
+      name: sort
+      schema:
+        type: string
+      description: 'Order in which to return results. If a single column name is given (e.g. `pet`), results are placed in ascending order of values in that column. To get results in an order that was previously prepared manually in Grist, use the special `manualSort` column name. Multiple columns can be specified, separated by commas (e.g. `pet,age`). For descending order, prefix a column name with a `-` character (e.g. `pet,-age`). To include additional sorting options append them after a colon (e.g. `pet,-age:naturalSort;emptyLast,owner`). Available options are: `orderByChoice`, `naturalSort`, `emptyLast`. Without the `sort` parameter, the order of results is unspecified.'
+      example: pet,-age
+      required: false
+    filterQueryParam:
+      in: query
+      name: filter
+      schema:
+        type: string
+      description: 'This is a JSON object mapping column names to arrays of allowed values.  For example, to filter column `pet` for values `cat` and `dog`, the filter would be `{"pet": ["cat", "dog"]}`. JSON contains characters that are not safe to place in a URL, so it is important to url-encode them.  For this example, the url-encoding is `%7B%22pet%22%3A%20%5B%22cat%22%2C%20%22dog%22%5D%7D`. See https://rosettacode.org/wiki/URL_encoding for how to url-encode a string, or https://www.urlencoder.org/ to try some examples. Multiple columns can be filtered. For example the filter for `pet` being either `cat` or `dog`, AND `size` being either `tiny` or `outrageously small`, would be `{"pet": ["cat", "dog"], "size": ["tiny", "outrageously small"]}`.'
+      example: '{"pet": ["cat", "dog"]}'
+      required: false
+    tableIdPathParam:
+      in: path
+      name: tableId
+      schema:
+        type: string
+      description: normalized table name (see `TABLE ID` in Raw Data) or numeric row ID in `_grist_Tables`
+      required: true
+    limitQueryParam:
+      in: query
+      name: limit
+      schema:
+        type: number
+      description: Return at most this number of rows.  A value of 0 is equivalent to having no limit.
+      example: '5'
+      required: false
+    noparseQueryParam:
+      in: query
+      name: noparse
+      schema:
+        type: boolean
+      description: Set to true to prohibit parsing strings according to the column type.
+    limitHeaderParam:
+      in: header
+      name: X-Limit
+      schema:
+        type: number
+      description: Same as `limit` query parameter.
+      example: '5'
+      required: false
+  schemas:
+    DataWithoutId:
+      type: object
+      additionalProperties:
+        type: array
+        items:
+          type: object
+      example:
+        pet:
+        - cat
+        - dog
+        popularity:
+        - 67
+        - 95
+    RowIds:
+      type: array
+      example:
+      - 101
+      - 102
+      - 103
+      items:
+        type: integer
+    Data:
+      type: object
+      required:
+      - id
+      properties:
+        id:
+          type: array
+          items:
+            type: integer
+      additionalProperties:
+        type: array
+        items:
+          type: object
+      example:
+        id:
+        - 1
+        - 2
+        pet:
+        - cat
+        - dog
+        popularity:
+        - 67
+        - 95
+  securitySchemes:
+    ApiKey:
+      type: http
+      scheme: bearer
+      bearerFormat: 'Authorization: Bearer XXXXXXXXXXX'
+      description: Access to the Grist API is controlled by an Authorization header, which should contain the word 'Bearer', followed by a space, followed by your API key.

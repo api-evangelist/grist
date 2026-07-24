@@ -1,0 +1,393 @@
+openapi: 3.0.0
+info:
+  description: 'An API for manipulating Grist sites, workspaces, and documents.
+
+
+    # Authentication
+
+    <SecurityDefinitions />
+
+    '
+  version: 1.0.1
+  title: Grist attachments workspaces API
+servers:
+- url: https://{gristhost}/api
+  variables:
+    subdomain:
+      description: The team name, or `docs` for personal areas
+      default: docs
+security:
+- ApiKey: []
+tags:
+- name: workspaces
+  description: Sites can be organized into groups of documents called workspaces.
+paths:
+  /orgs/{orgId}/workspaces:
+    get:
+      operationId: listWorkspaces
+      tags:
+      - workspaces
+      summary: List workspaces and documents within an org
+      parameters:
+      - $ref: '#/components/parameters/orgIdPathParam'
+      responses:
+        200:
+          description: An org's workspaces and documents
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WorkspaceWithDocsAndDomain'
+    post:
+      operationId: createWorkspace
+      tags:
+      - workspaces
+      summary: Create an empty workspace
+      parameters:
+      - $ref: '#/components/parameters/orgIdPathParam'
+      requestBody:
+        description: settings for the workspace
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WorkspaceParameters'
+        required: true
+      responses:
+        200:
+          description: The workspace id
+          content:
+            application/json:
+              schema:
+                type: integer
+                description: an identifier for the workspace
+                example: 155
+  /workspaces/{workspaceId}:
+    get:
+      operationId: describeWorkspace
+      tags:
+      - workspaces
+      summary: Describe a workspace
+      parameters:
+      - $ref: '#/components/parameters/workspaceIdPathParam'
+      responses:
+        200:
+          description: A workspace
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkspaceWithDocsAndOrg'
+    patch:
+      operationId: modifyWorkspace
+      tags:
+      - workspaces
+      summary: Modify a workspace
+      parameters:
+      - $ref: '#/components/parameters/workspaceIdPathParam'
+      requestBody:
+        description: the changes to make
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WorkspaceParameters'
+        required: true
+      responses:
+        200:
+          description: Success
+    delete:
+      operationId: deleteWorkspace
+      tags:
+      - workspaces
+      summary: Delete a workspace
+      parameters:
+      - $ref: '#/components/parameters/workspaceIdPathParam'
+      responses:
+        200:
+          description: Success
+  /workspaces/{workspaceId}/remove:
+    post:
+      operationId: removeWorkspace
+      tags:
+      - workspaces
+      summary: Move workspace to trash
+      description: 'Soft-delete the workspace by moving it to trash. The workspace can be
+
+        restored using the unremove endpoint. If the `permanent` query parameter
+
+        is set to true, the workspace is permanently deleted instead.
+
+        '
+      parameters:
+      - $ref: '#/components/parameters/workspaceIdPathParam'
+      - in: query
+        name: permanent
+        schema:
+          type: boolean
+        description: If true, permanently delete instead of moving to trash
+      responses:
+        200:
+          description: Workspace moved to trash (or permanently deleted)
+  /workspaces/{workspaceId}/unremove:
+    post:
+      operationId: unremoveWorkspace
+      tags:
+      - workspaces
+      summary: Restore workspace from trash
+      description: 'Recover a workspace that was previously soft-deleted. Only works if the
+
+        workspace is still in the trash.
+
+        '
+      parameters:
+      - $ref: '#/components/parameters/workspaceIdPathParam'
+      responses:
+        200:
+          description: Workspace restored successfully
+  /workspaces/{workspaceId}/access:
+    get:
+      operationId: listWorkspaceAccess
+      tags:
+      - workspaces
+      summary: List users with access to workspace
+      parameters:
+      - $ref: '#/components/parameters/workspaceIdPathParam'
+      responses:
+        200:
+          description: Users with access to workspace
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkspaceAccessRead'
+    patch:
+      operationId: modifyWorkspaceAccess
+      tags:
+      - workspaces
+      summary: Change who has access to workspace
+      parameters:
+      - $ref: '#/components/parameters/workspaceIdPathParam'
+      requestBody:
+        description: the changes to make
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - delta
+              properties:
+                delta:
+                  $ref: '#/components/schemas/WorkspaceAccessWrite'
+        required: true
+      responses:
+        200:
+          description: Success
+components:
+  schemas:
+    Access:
+      type: string
+      enum:
+      - owners
+      - editors
+      - viewers
+    WorkspaceWithOrg:
+      allOf:
+      - $ref: '#/components/schemas/Workspace'
+      - type: object
+        required:
+        - org
+        properties:
+          org:
+            $ref: '#/components/schemas/Org'
+    WorkspaceWithDocsAndOrg:
+      allOf:
+      - $ref: '#/components/schemas/WorkspaceWithDocs'
+      - $ref: '#/components/schemas/WorkspaceWithOrg'
+    Org:
+      type: object
+      required:
+      - id
+      - name
+      - domain
+      - owner
+      - createdAt
+      - updatedAt
+      - access
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 42
+        name:
+          type: string
+          example: Grist Labs
+        domain:
+          type: string
+          nullable: true
+          example: gristlabs
+        owner:
+          type: object
+          $ref: '#/components/schemas/User'
+          nullable: true
+        access:
+          type: string
+          $ref: '#/components/schemas/Access'
+        createdAt:
+          type: string
+          example: '2019-09-13T15:42:35.000Z'
+        updatedAt:
+          type: string
+          example: '2019-09-13T15:42:35.000Z'
+    WorkspaceAccessWrite:
+      type: object
+      properties:
+        maxInheritedRole:
+          $ref: '#/components/schemas/Access'
+        users:
+          type: object
+          additionalProperties:
+            type: string
+            enum:
+            - owners
+            - editors
+            - viewers
+            - members
+            - null
+          example:
+            foo@getgrist.com: owners
+            bar@getgrist.com: null
+    WorkspaceWithDocsAndDomain:
+      allOf:
+      - $ref: '#/components/schemas/WorkspaceWithDocs'
+      - type: object
+        properties:
+          orgDomain:
+            type: string
+            example: gristlabs
+    User:
+      type: object
+      required:
+      - id
+      - name
+      - picture
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 101
+        name:
+          type: string
+          example: Helga Hufflepuff
+        picture:
+          type: string
+          nullable: true
+          example: null
+    WorkspaceAccessRead:
+      type: object
+      required:
+      - maxInheritedRole
+      - users
+      properties:
+        maxInheritedRole:
+          $ref: '#/components/schemas/Access'
+        users:
+          type: array
+          items:
+            type: object
+            required:
+            - id
+            - name
+            properties:
+              id:
+                type: integer
+                example: 1
+              name:
+                type: string
+                example: Andrea
+              email:
+                type: string
+                example: andrea@getgrist.com
+              access:
+                $ref: '#/components/schemas/Access'
+              parentAccess:
+                $ref: '#/components/schemas/Access'
+    Doc:
+      type: object
+      required:
+      - id
+      - name
+      - isPinned
+      - urlId
+      - access
+      properties:
+        id:
+          type: string
+          example: 145
+        name:
+          type: string
+          example: Project Lollipop
+        access:
+          type: string
+          $ref: '#/components/schemas/Access'
+        isPinned:
+          type: boolean
+          example: true
+        urlId:
+          type: string
+          nullable: true
+          example: null
+    Workspace:
+      type: object
+      required:
+      - id
+      - name
+      - access
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 97
+        name:
+          type: string
+          example: Secret Plans
+        access:
+          type: string
+          $ref: '#/components/schemas/Access'
+    WorkspaceParameters:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Retreat Docs
+    WorkspaceWithDocs:
+      allOf:
+      - $ref: '#/components/schemas/Workspace'
+      - type: object
+        required:
+        - docs
+        properties:
+          docs:
+            type: array
+            items:
+              $ref: '#/components/schemas/Doc'
+  parameters:
+    workspaceIdPathParam:
+      in: path
+      name: workspaceId
+      description: An integer id
+      schema:
+        type: integer
+      required: true
+    orgIdPathParam:
+      in: path
+      name: orgId
+      schema:
+        oneOf:
+        - type: integer
+        - type: string
+      description: This can be an integer id, or a string subdomain (e.g. `gristlabs`), or `current` if the org is implied by the domain in the url
+      required: true
+  securitySchemes:
+    ApiKey:
+      type: http
+      scheme: bearer
+      bearerFormat: 'Authorization: Bearer XXXXXXXXXXX'
+      description: Access to the Grist API is controlled by an Authorization header, which should contain the word 'Bearer', followed by a space, followed by your API key.

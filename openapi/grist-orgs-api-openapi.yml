@@ -1,0 +1,299 @@
+openapi: 3.0.0
+info:
+  description: 'An API for manipulating Grist sites, workspaces, and documents.
+
+
+    # Authentication
+
+    <SecurityDefinitions />
+
+    '
+  version: 1.0.1
+  title: Grist attachments orgs API
+servers:
+- url: https://{gristhost}/api
+  variables:
+    subdomain:
+      description: The team name, or `docs` for personal areas
+      default: docs
+security:
+- ApiKey: []
+tags:
+- name: orgs
+  description: Team sites and personal spaces are called 'orgs' in the API.
+paths:
+  /orgs:
+    get:
+      operationId: listOrgs
+      tags:
+      - orgs
+      summary: List the orgs you have access to
+      description: This enumerates all the team sites or personal areas available.
+      responses:
+        200:
+          description: An array of organizations
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Orgs'
+  /orgs/{orgId}:
+    get:
+      operationId: describeOrg
+      tags:
+      - orgs
+      summary: Describe an org
+      parameters:
+      - $ref: '#/components/parameters/orgIdPathParam'
+      responses:
+        200:
+          description: An organization
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Org'
+    patch:
+      operationId: modifyOrg
+      tags:
+      - orgs
+      summary: Modify an org
+      parameters:
+      - $ref: '#/components/parameters/orgIdPathParam'
+      requestBody:
+        description: the changes to make
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrgParameters'
+        required: true
+      responses:
+        200:
+          description: Success
+  /orgs/{orgId}/{name}:
+    delete:
+      operationId: deleteOrg
+      tags:
+      - orgs
+      summary: Delete an org
+      parameters:
+      - $ref: '#/components/parameters/orgIdPathParam'
+      - in: path
+        name: name
+        schema:
+          type: string
+        description: The organization name
+        required: true
+      responses:
+        200:
+          description: Success
+        403:
+          description: Access denied
+        404:
+          description: Not found
+  /orgs/{orgId}/access:
+    get:
+      operationId: listOrgAccess
+      tags:
+      - orgs
+      summary: List users with access to org
+      parameters:
+      - $ref: '#/components/parameters/orgIdPathParam'
+      responses:
+        200:
+          description: Users with access to org
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrgAccessRead'
+    patch:
+      operationId: modifyOrgAccess
+      tags:
+      - orgs
+      summary: Change who has access to org
+      parameters:
+      - $ref: '#/components/parameters/orgIdPathParam'
+      requestBody:
+        description: the changes to make
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - delta
+              properties:
+                delta:
+                  $ref: '#/components/schemas/OrgAccessWrite'
+        required: true
+      responses:
+        200:
+          description: Success
+  /orgs/{orgId}/usage:
+    get:
+      operationId: getOrgUsage
+      tags:
+      - orgs
+      summary: Get organization usage summary
+      description: 'Get usage statistics for all non-deleted documents in the organization.
+
+        Only accessible to organization owners.
+
+        '
+      parameters:
+      - $ref: '#/components/parameters/orgIdPathParam'
+      responses:
+        200:
+          description: Usage summary
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  countsByDataLimitStatus:
+                    type: object
+                    description: Count of documents grouped by data limit status
+                    properties:
+                      approachingLimit:
+                        type: integer
+                      gracePeriod:
+                        type: integer
+                      deleteOnly:
+                        type: integer
+                  attachments:
+                    type: object
+                    required:
+                    - totalBytes
+                    properties:
+                      totalBytes:
+                        type: integer
+                        description: Total attachment storage used in bytes
+                      limitExceeded:
+                        type: boolean
+                        description: Whether the attachment limit has been exceeded (only present when limit is exceeded)
+components:
+  schemas:
+    Access:
+      type: string
+      enum:
+      - owners
+      - editors
+      - viewers
+    Org:
+      type: object
+      required:
+      - id
+      - name
+      - domain
+      - owner
+      - createdAt
+      - updatedAt
+      - access
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 42
+        name:
+          type: string
+          example: Grist Labs
+        domain:
+          type: string
+          nullable: true
+          example: gristlabs
+        owner:
+          type: object
+          $ref: '#/components/schemas/User'
+          nullable: true
+        access:
+          type: string
+          $ref: '#/components/schemas/Access'
+        createdAt:
+          type: string
+          example: '2019-09-13T15:42:35.000Z'
+        updatedAt:
+          type: string
+          example: '2019-09-13T15:42:35.000Z'
+    OrgAccessRead:
+      type: object
+      required:
+      - users
+      properties:
+        users:
+          type: array
+          items:
+            type: object
+            required:
+            - id
+            - name
+            properties:
+              id:
+                type: integer
+                example: 1
+              name:
+                type: string
+                example: Andrea
+              email:
+                type: string
+                example: andrea@getgrist.com
+              access:
+                $ref: '#/components/schemas/Access'
+    OrgParameters:
+      type: object
+      properties:
+        name:
+          type: string
+          example: ACME Unlimited
+    Orgs:
+      type: array
+      items:
+        $ref: '#/components/schemas/Org'
+    User:
+      type: object
+      required:
+      - id
+      - name
+      - picture
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 101
+        name:
+          type: string
+          example: Helga Hufflepuff
+        picture:
+          type: string
+          nullable: true
+          example: null
+    OrgAccessWrite:
+      type: object
+      required:
+      - users
+      properties:
+        users:
+          type: object
+          additionalProperties:
+            type: string
+            enum:
+            - owners
+            - editors
+            - viewers
+            - members
+            - null
+          example:
+            foo@getgrist.com: owners
+            bar@getgrist.com: null
+  parameters:
+    orgIdPathParam:
+      in: path
+      name: orgId
+      schema:
+        oneOf:
+        - type: integer
+        - type: string
+      description: This can be an integer id, or a string subdomain (e.g. `gristlabs`), or `current` if the org is implied by the domain in the url
+      required: true
+  securitySchemes:
+    ApiKey:
+      type: http
+      scheme: bearer
+      bearerFormat: 'Authorization: Bearer XXXXXXXXXXX'
+      description: Access to the Grist API is controlled by an Authorization header, which should contain the word 'Bearer', followed by a space, followed by your API key.

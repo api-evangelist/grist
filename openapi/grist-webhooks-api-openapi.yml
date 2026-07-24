@@ -1,0 +1,346 @@
+openapi: 3.0.0
+info:
+  description: 'An API for manipulating Grist sites, workspaces, and documents.
+
+
+    # Authentication
+
+    <SecurityDefinitions />
+
+    '
+  version: 1.0.1
+  title: Grist attachments webhooks API
+servers:
+- url: https://{gristhost}/api
+  variables:
+    subdomain:
+      description: The team name, or `docs` for personal areas
+      default: docs
+security:
+- ApiKey: []
+tags:
+- name: webhooks
+  description: Document changes can trigger requests to URLs called webhooks.
+paths:
+  /docs/{docId}/webhooks:
+    get:
+      operationId: listWebhooks
+      tags:
+      - webhooks
+      summary: Webhooks associated with a document
+      description: 'Returns all webhooks configured for this document, including their
+
+        settings and delivery statistics.
+
+        '
+      parameters:
+      - $ref: '#/components/parameters/docIdPathParam'
+      responses:
+        200:
+          description: A list of webhooks.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - webhooks
+                properties:
+                  webhooks:
+                    $ref: '#/components/schemas/Webhooks'
+    post:
+      operationId: createWebhooks
+      tags:
+      - webhooks
+      summary: Create new webhooks for a document
+      description: 'Creates one or more webhooks that will POST to specified URLs when
+
+        data in the document changes. Returns the IDs of the created webhooks.
+
+        '
+      parameters:
+      - $ref: '#/components/parameters/docIdPathParam'
+      requestBody:
+        description: an array of webhook settings
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - webhooks
+              properties:
+                webhooks:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                    - fields
+                    properties:
+                      fields:
+                        $ref: '#/components/schemas/WebhookPartialFields'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - webhooks
+                properties:
+                  webhooks:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/WebhookId'
+  /docs/{docId}/webhooks/{webhookId}:
+    patch:
+      operationId: modifyWebhook
+      tags:
+      - webhooks
+      summary: Modify a webhook
+      description: 'Update the configuration of an existing webhook, such as its URL,
+
+        enabled state, or event types.
+
+        '
+      parameters:
+      - $ref: '#/components/parameters/docIdPathParam'
+      - in: path
+        name: webhookId
+        schema:
+          type: string
+        required: true
+      requestBody:
+        description: the changes to make
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WebhookPartialFields'
+      responses:
+        200:
+          description: Webhook updated successfully. Returns empty body.
+    delete:
+      operationId: deleteWebhook
+      tags:
+      - webhooks
+      summary: Remove a webhook
+      description: 'Permanently delete a webhook. Any pending deliveries in the queue
+
+        for this webhook will also be removed.
+
+        '
+      parameters:
+      - $ref: '#/components/parameters/docIdPathParam'
+      - in: path
+        name: webhookId
+        schema:
+          type: string
+        required: true
+      responses:
+        200:
+          description: Webhook deleted successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+  /docs/{docId}/webhooks/queue:
+    delete:
+      operationId: clearWebhookQueue
+      tags:
+      - webhooks
+      summary: Empty a document's queue of undelivered payloads
+      description: 'Clear all pending webhook deliveries for this document. Use this
+
+        if the queue has built up due to unreachable endpoints.
+
+        '
+      parameters:
+      - $ref: '#/components/parameters/docIdPathParam'
+      responses:
+        200:
+          description: Queue cleared successfully. Returns empty body.
+  /docs/{docId}/webhooks/queue/{webhookId}:
+    delete:
+      operationId: clearWebhookQueueForWebhook
+      tags:
+      - webhooks
+      summary: Clear queue for a specific webhook
+      description: 'Clear the queue of pending payloads for a specific webhook.
+
+        Only document owners can call this endpoint.
+
+        '
+      parameters:
+      - $ref: '#/components/parameters/docIdPathParam'
+      - name: webhookId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: ID of the webhook
+      responses:
+        200:
+          description: Queue cleared
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+components:
+  parameters:
+    docIdPathParam:
+      in: path
+      name: docId
+      schema:
+        type: string
+      description: A string id (UUID)
+      required: true
+  schemas:
+    WebhookId:
+      type: object
+      required:
+      - id
+      properties:
+        id:
+          type: string
+          description: Webhook identifier
+          example: xxxxxxx-xxxx-xxxx-xxxxxxxxxxxxxxxx
+    Webhook:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: xxxxxxx-xxxx-xxxx-xxxxxxxxxxxxxxxx
+        fields:
+          $ref: '#/components/schemas/WebhookFields'
+        usage:
+          $ref: '#/components/schemas/WebhookUsage'
+    WebhookBatchStatus:
+      type: object
+      nullable: true
+      required:
+      - size
+      - attempts
+      - status
+      properties:
+        size:
+          type: number
+          example: 1
+        attempts:
+          type: number
+          example: 1
+        errorMessage:
+          type: string
+          nullable: true
+          example: null
+        httpStatus:
+          type: number
+          example: 200
+        status:
+          type: string
+          example: success
+    WebhookRequiredFields:
+      type: object
+      required:
+      - name
+      - memo
+      - url
+      - enabled
+      - unsubscribeKey
+      - eventTypes
+      - isReadyColumn
+      - tableId
+      properties:
+        unsubscribeKey:
+          type: string
+    Webhooks:
+      type: array
+      items:
+        $ref: '#/components/schemas/Webhook'
+    WebhookFields:
+      allOf:
+      - $ref: '#/components/schemas/WebhookPartialFields'
+      - $ref: '#/components/schemas/WebhookRequiredFields'
+    WebhookPartialFields:
+      type: object
+      properties:
+        name:
+          type: string
+          example: new-project-email
+          nullable: true
+        memo:
+          type: string
+          example: Send an email when a project is added
+          nullable: true
+        url:
+          type: string
+          format: uri
+          example: https://example.com/webhook/123
+        enabled:
+          type: boolean
+        eventTypes:
+          type: array
+          items:
+            type: string
+          example:
+          - add
+          - update
+        isReadyColumn:
+          type: string
+          nullable: true
+          example: null
+        tableId:
+          type: string
+          example: Projects
+    WebhookUsage:
+      type: object
+      nullable: true
+      required:
+      - numWaiting
+      - status
+      properties:
+        numWaiting:
+          type: integer
+        status:
+          type: string
+          example: idle
+        updatedTime:
+          type: number
+          nullable: true
+          format: UNIX epoch in milliseconds
+          example: 1685637500424
+        lastSuccessTime:
+          type: number
+          nullable: true
+          format: UNIX epoch in milliseconds
+          example: 1685637500424
+        lastFailureTime:
+          type: number
+          nullable: true
+          format: UNIX epoch in milliseconds
+          example: 1685637500424
+        lastErrorMessage:
+          type: string
+          nullable: true
+          example: null
+        lastHttpStatus:
+          type: number
+          nullable: true
+          example: 200
+        lastEventBatch:
+          $ref: '#/components/schemas/WebhookBatchStatus'
+  securitySchemes:
+    ApiKey:
+      type: http
+      scheme: bearer
+      bearerFormat: 'Authorization: Bearer XXXXXXXXXXX'
+      description: Access to the Grist API is controlled by an Authorization header, which should contain the word 'Bearer', followed by a space, followed by your API key.

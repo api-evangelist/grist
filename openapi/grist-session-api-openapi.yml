@@ -1,0 +1,182 @@
+openapi: 3.0.0
+info:
+  description: 'An API for manipulating Grist sites, workspaces, and documents.
+
+
+    # Authentication
+
+    <SecurityDefinitions />
+
+    '
+  version: 1.0.1
+  title: Grist attachments session API
+servers:
+- url: https://{gristhost}/api
+  variables:
+    subdomain:
+      description: The team name, or `docs` for personal areas
+      default: docs
+security:
+- ApiKey: []
+tags:
+- name: session
+paths:
+  /session/access/active:
+    get:
+      operationId: getActiveSession
+      tags:
+      - session
+      summary: Get active session information
+      description: 'Returns information about the active user and organization for the current session.
+
+        '
+      responses:
+        200:
+          description: Active session info
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user:
+                    $ref: '#/components/schemas/User'
+                  org:
+                    $ref: '#/components/schemas/Org'
+                  orgError:
+                    type: object
+                    description: Error information if org access failed
+                    properties:
+                      error:
+                        type: string
+                      status:
+                        type: integer
+    post:
+      operationId: setActiveUser
+      tags:
+      - session
+      summary: Set active user for organization
+      description: 'Switch which user account is active for a given organization.
+
+        Useful when a user has multiple accounts logged in.
+
+        '
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - email
+              properties:
+                email:
+                  type: string
+                  description: Email of the user to make active
+                org:
+                  type: string
+                  description: Organization subdomain or 'current'
+      responses:
+        200:
+          description: Active user changed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  email:
+                    type: string
+        403:
+          description: Email not available for this session
+  /session/access/all:
+    get:
+      operationId: getAllSessions
+      tags:
+      - session
+      summary: Get all session users and organizations
+      description: 'Returns all user profiles logged into the current session and all
+
+        organizations they can access.
+
+        '
+      responses:
+        200:
+          description: All session info
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  users:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/User'
+                  orgs:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Org'
+components:
+  schemas:
+    Access:
+      type: string
+      enum:
+      - owners
+      - editors
+      - viewers
+    Org:
+      type: object
+      required:
+      - id
+      - name
+      - domain
+      - owner
+      - createdAt
+      - updatedAt
+      - access
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 42
+        name:
+          type: string
+          example: Grist Labs
+        domain:
+          type: string
+          nullable: true
+          example: gristlabs
+        owner:
+          type: object
+          $ref: '#/components/schemas/User'
+          nullable: true
+        access:
+          type: string
+          $ref: '#/components/schemas/Access'
+        createdAt:
+          type: string
+          example: '2019-09-13T15:42:35.000Z'
+        updatedAt:
+          type: string
+          example: '2019-09-13T15:42:35.000Z'
+    User:
+      type: object
+      required:
+      - id
+      - name
+      - picture
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 101
+        name:
+          type: string
+          example: Helga Hufflepuff
+        picture:
+          type: string
+          nullable: true
+          example: null
+  securitySchemes:
+    ApiKey:
+      type: http
+      scheme: bearer
+      bearerFormat: 'Authorization: Bearer XXXXXXXXXXX'
+      description: Access to the Grist API is controlled by an Authorization header, which should contain the word 'Bearer', followed by a space, followed by your API key.

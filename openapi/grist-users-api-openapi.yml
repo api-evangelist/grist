@@ -1,0 +1,122 @@
+openapi: 3.0.0
+info:
+  description: 'An API for manipulating Grist sites, workspaces, and documents.
+
+
+    # Authentication
+
+    <SecurityDefinitions />
+
+    '
+  version: 1.0.1
+  title: Grist attachments users API
+servers:
+- url: https://{gristhost}/api
+  variables:
+    subdomain:
+      description: The team name, or `docs` for personal areas
+      default: docs
+security:
+- ApiKey: []
+tags:
+- name: users
+  description: Grist users.
+paths:
+  /users/{userId}:
+    delete:
+      operationId: deleteUser
+      tags:
+      - users
+      summary: Delete a user from Grist
+      description: 'This action also deletes the user''s personal organisation and all the workspaces and documents it contains.
+
+        Currently, only the users themselves are allowed to delete their own accounts.
+
+
+        ⚠️ **This action cannot be undone, please be cautious when using this endpoint** ⚠️
+
+        '
+      parameters:
+      - $ref: '#/components/parameters/userIdPathParam'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - name
+              properties:
+                name:
+                  type: string
+                  description: The user's name to delete (for confirmation, to avoid deleting the wrong account).
+                  example: John Doe
+      responses:
+        200:
+          description: The account has been deleted successfully
+        400:
+          description: The passed user name does not match the one retrieved from the database given the passed user id
+        403:
+          description: The caller is not allowed to delete this account
+        404:
+          description: The user is not found
+  /users/{userId}/disable:
+    post:
+      operationId: disableUser
+      tags:
+      - users
+      summary: Disable a user
+      description: 'A disabled user can not log in and loses access to all pages,
+
+        including public ones, as well as API access. The operation is
+
+        non-destructive. Disabled users can be re-enabled.
+
+
+        Only admin accounts can disable a user.
+
+        '
+      parameters:
+      - $ref: '#/components/parameters/userIdPathParam'
+      responses:
+        200:
+          description: The account has been disabled successfully
+        403:
+          description: The caller is not allowed to disable this account
+        404:
+          description: The user is not found
+  /users/{userId}/enable:
+    post:
+      operationId: enableUser
+      tags:
+      - users
+      summary: Enable a user
+      description: 'If a user has been disabled, this will restore their access, including API access.
+
+
+        Only admin accounts can enable a user.
+
+        '
+      parameters:
+      - $ref: '#/components/parameters/userIdPathParam'
+      responses:
+        200:
+          description: The account has been enabled successfully
+        403:
+          description: The caller is not allowed to enable this account
+        404:
+          description: The user is not found
+components:
+  parameters:
+    userIdPathParam:
+      in: path
+      name: userId
+      schema:
+        type: integer
+      description: A user id
+      required: true
+  securitySchemes:
+    ApiKey:
+      type: http
+      scheme: bearer
+      bearerFormat: 'Authorization: Bearer XXXXXXXXXXX'
+      description: Access to the Grist API is controlled by an Authorization header, which should contain the word 'Bearer', followed by a space, followed by your API key.

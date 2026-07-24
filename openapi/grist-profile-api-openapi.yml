@@ -1,0 +1,150 @@
+openapi: 3.0.0
+info:
+  description: 'An API for manipulating Grist sites, workspaces, and documents.
+
+
+    # Authentication
+
+    <SecurityDefinitions />
+
+    '
+  version: 1.0.1
+  title: Grist attachments profile API
+servers:
+- url: https://{gristhost}/api
+  variables:
+    subdomain:
+      description: The team name, or `docs` for personal areas
+      default: docs
+security:
+- ApiKey: []
+tags:
+- name: profile
+paths:
+  /profile/user:
+    get:
+      operationId: getProfile
+      tags:
+      - profile
+      summary: Get current user's profile
+      description: Returns the profile information of the currently authenticated user.
+      responses:
+        200:
+          description: User profile
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+  /profile/user/name:
+    post:
+      operationId: updateUserName
+      tags:
+      - profile
+      summary: Update user's name
+      description: Update the display name for the current user.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - name
+              properties:
+                name:
+                  type: string
+                  description: New display name
+                  example: John Doe
+      responses:
+        200:
+          description: Name updated successfully
+  /profile/user/locale:
+    post:
+      operationId: updateUserLocale
+      tags:
+      - profile
+      summary: Update user's locale
+      description: Update the locale preference for the current user.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                locale:
+                  type: string
+                  description: Locale code (e.g. 'en-US', 'fr'). Set to null to clear.
+                  example: en-US
+      responses:
+        200:
+          description: Locale updated successfully
+  /profile/apikey:
+    get:
+      operationId: getApiKey
+      tags:
+      - profile
+      summary: Get user's API key
+      description: Returns the current user's API key if one exists.
+      responses:
+        200:
+          description: API key
+          content:
+            text/plain:
+              schema:
+                type: string
+    post:
+      operationId: createApiKey
+      tags:
+      - profile
+      summary: Create or regenerate API key
+      description: Create a new API key or regenerate an existing one.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                force:
+                  type: boolean
+                  description: If true, regenerate even if a key already exists
+      responses:
+        200:
+          description: New API key
+          content:
+            text/plain:
+              schema:
+                type: string
+    delete:
+      operationId: deleteApiKey
+      tags:
+      - profile
+      summary: Delete user's API key
+      description: Delete the current user's API key.
+      responses:
+        200:
+          description: API key deleted successfully
+components:
+  schemas:
+    User:
+      type: object
+      required:
+      - id
+      - name
+      - picture
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 101
+        name:
+          type: string
+          example: Helga Hufflepuff
+        picture:
+          type: string
+          nullable: true
+          example: null
+  securitySchemes:
+    ApiKey:
+      type: http
+      scheme: bearer
+      bearerFormat: 'Authorization: Bearer XXXXXXXXXXX'
+      description: Access to the Grist API is controlled by an Authorization header, which should contain the word 'Bearer', followed by a space, followed by your API key.
