@@ -10,7 +10,20 @@ description: >
   an open-source self-hosted deployment via the Apache-licensed grist-core
   repository maintained by Grist Labs.
 type: Index
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/grist.png
 tags:
   - Spreadsheet
   - Database
@@ -24,34 +37,246 @@ created: '2026-06-12'
 modified: '2026-06-12'
 specificationVersion: '0.19'
 apis:
-  - aid: grist:grist-rest-api
-    name: Grist REST API
-    description: >
-      The Grist REST API provides programmatic access to organizations,
-      workspaces, documents, and table records. Supports CRUD operations on
-      rows, SQL SELECT queries against documents, attachment management, user
-      and permission management, and webhook configuration for event-driven
-      integrations.
-    humanURL: https://support.getgrist.com/api/
-    baseURL: https://docs.getgrist.com/api
-    tags:
-      - Spreadsheet
-      - Database
-      - Records
-      - Webhooks
-    properties:
-      - type: Documentation
-        url: https://support.getgrist.com/rest-api/
-      - type: OpenAPI
-        url: https://raw.githubusercontent.com/gristlabs/grist-help/master/api/grist.yml
-      - type: OpenAPIConsole
-        url: https://docs.getgrist.com/apiconsole
-      - type: OpenAPI
-        url: https://raw.githubusercontent.com/api-evangelist/grist/refs/heads/main/openapi/grist-rest-api-openapi.yml
-    contact:
-      - FN: Grist Support
-        url: https://support.getgrist.com/
-        email: support@getgrist.com
+- aid: grist:grist-attachments-api
+  name: Grist attachments API
+  description: >-
+    Documents may include attached files. Data records can refer to these using a column of type `Attachments`.
+  humanURL: https://support.getgrist.com/api/
+  baseURL: https://docs.getgrist.com/api
+  tags:
+  - attachments
+  properties:
+  - type: OpenAPI
+    url: openapi/grist-attachments-api-openapi.yml
+  - type: Documentation
+    url: https://support.getgrist.com/rest-api/
+  - type: OpenAPIConsole
+    url: https://docs.getgrist.com/apiconsole
+- aid: grist:grist-columns-api
+  name: Grist columns API
+  description: Tables are structured as a collection of columns.
+  humanURL: https://support.getgrist.com/api/
+  baseURL: https://docs.getgrist.com/api
+  tags:
+  - columns
+  properties:
+  - type: OpenAPI
+    url: openapi/grist-columns-api-openapi.yml
+  - type: Documentation
+    url: https://support.getgrist.com/rest-api/
+  - type: OpenAPIConsole
+    url: https://docs.getgrist.com/apiconsole
+- aid: grist:grist-data-api
+  name: Grist data API
+  description: >-
+    Work with table data, using a (now deprecated) columnar format. We now recommend the `records` endpoints.
+  humanURL: https://support.getgrist.com/api/
+  baseURL: https://docs.getgrist.com/api
+  tags:
+  - data
+  properties:
+  - type: OpenAPI
+    url: openapi/grist-data-api-openapi.yml
+  - type: Documentation
+    url: https://support.getgrist.com/rest-api/
+  - type: OpenAPIConsole
+    url: https://docs.getgrist.com/apiconsole
+- aid: grist:grist-docs-api
+  name: Grist docs API
+  description: Workspaces contain collections of Grist documents.
+  humanURL: https://support.getgrist.com/api/
+  baseURL: https://docs.getgrist.com/api
+  tags:
+  - docs
+  properties:
+  - type: OpenAPI
+    url: openapi/grist-docs-api-openapi.yml
+  - type: Documentation
+    url: https://support.getgrist.com/rest-api/
+  - type: OpenAPIConsole
+    url: https://docs.getgrist.com/apiconsole
+- aid: grist:grist-forms-api
+  name: Grist forms API
+  description: The forms API from Grist — 1 operation(s) for forms.
+  humanURL: https://support.getgrist.com/api/
+  baseURL: https://docs.getgrist.com/api
+  tags:
+  - forms
+  properties:
+  - type: OpenAPI
+    url: openapi/grist-forms-api-openapi.yml
+  - type: Documentation
+    url: https://support.getgrist.com/rest-api/
+  - type: OpenAPIConsole
+    url: https://docs.getgrist.com/apiconsole
+- aid: grist:grist-orgs-api
+  name: Grist orgs API
+  description: Team sites and personal spaces are called 'orgs' in the API.
+  humanURL: https://support.getgrist.com/api/
+  baseURL: https://docs.getgrist.com/api
+  tags:
+  - orgs
+  properties:
+  - type: OpenAPI
+    url: openapi/grist-orgs-api-openapi.yml
+  - type: Documentation
+    url: https://support.getgrist.com/rest-api/
+  - type: OpenAPIConsole
+    url: https://docs.getgrist.com/apiconsole
+- aid: grist:grist-profile-api
+  name: Grist profile API
+  description: The profile API from Grist — 4 operation(s) for profile.
+  humanURL: https://support.getgrist.com/api/
+  baseURL: https://docs.getgrist.com/api
+  tags:
+  - profile
+  properties:
+  - type: OpenAPI
+    url: openapi/grist-profile-api-openapi.yml
+  - type: Documentation
+    url: https://support.getgrist.com/rest-api/
+  - type: OpenAPIConsole
+    url: https://docs.getgrist.com/apiconsole
+- aid: grist:grist-records-api
+  name: Grist records API
+  description: Tables contain collections of records (also called rows).
+  humanURL: https://support.getgrist.com/api/
+  baseURL: https://docs.getgrist.com/api
+  tags:
+  - records
+  properties:
+  - type: OpenAPI
+    url: openapi/grist-records-api-openapi.yml
+  - type: Documentation
+    url: https://support.getgrist.com/rest-api/
+  - type: OpenAPIConsole
+    url: https://docs.getgrist.com/apiconsole
+- aid: grist:grist-service-accounts-api
+  name: Grist service accounts API
+  description: Impersonations to manage grist resources through REST APIs with specific rights.
+  humanURL: https://support.getgrist.com/api/
+  baseURL: https://docs.getgrist.com/api
+  tags:
+  - service accounts
+  properties:
+  - type: OpenAPI
+    url: openapi/grist-service-accounts-api-openapi.yml
+  - type: Documentation
+    url: https://support.getgrist.com/rest-api/
+  - type: OpenAPIConsole
+    url: https://docs.getgrist.com/apiconsole
+- aid: grist:grist-session-api
+  name: Grist session API
+  description: The session API from Grist — 2 operation(s) for session.
+  humanURL: https://support.getgrist.com/api/
+  baseURL: https://docs.getgrist.com/api
+  tags:
+  - session
+  properties:
+  - type: OpenAPI
+    url: openapi/grist-session-api-openapi.yml
+  - type: Documentation
+    url: https://support.getgrist.com/rest-api/
+  - type: OpenAPIConsole
+    url: https://docs.getgrist.com/apiconsole
+- aid: grist:grist-sql-api
+  name: Grist sql API
+  description: Sql endpoint to query data from documents.
+  humanURL: https://support.getgrist.com/api/
+  baseURL: https://docs.getgrist.com/api
+  tags:
+  - sql
+  properties:
+  - type: OpenAPI
+    url: openapi/grist-sql-api-openapi.yml
+  - type: Documentation
+    url: https://support.getgrist.com/rest-api/
+  - type: OpenAPIConsole
+    url: https://docs.getgrist.com/apiconsole
+- aid: grist:grist-tables-api
+  name: Grist tables API
+  description: Documents are structured as a collection of tables.
+  humanURL: https://support.getgrist.com/api/
+  baseURL: https://docs.getgrist.com/api
+  tags:
+  - tables
+  properties:
+  - type: OpenAPI
+    url: openapi/grist-tables-api-openapi.yml
+  - type: Documentation
+    url: https://support.getgrist.com/rest-api/
+  - type: OpenAPIConsole
+    url: https://docs.getgrist.com/apiconsole
+- aid: grist:grist-templates-api
+  name: Grist templates API
+  description: The templates API from Grist — 2 operation(s) for templates.
+  humanURL: https://support.getgrist.com/api/
+  baseURL: https://docs.getgrist.com/api
+  tags:
+  - templates
+  properties:
+  - type: OpenAPI
+    url: openapi/grist-templates-api-openapi.yml
+  - type: Documentation
+    url: https://support.getgrist.com/rest-api/
+  - type: OpenAPIConsole
+    url: https://docs.getgrist.com/apiconsole
+- aid: grist:grist-users-api
+  name: Grist users API
+  description: Grist users.
+  humanURL: https://support.getgrist.com/api/
+  baseURL: https://docs.getgrist.com/api
+  tags:
+  - users
+  properties:
+  - type: OpenAPI
+    url: openapi/grist-users-api-openapi.yml
+  - type: Documentation
+    url: https://support.getgrist.com/rest-api/
+  - type: OpenAPIConsole
+    url: https://docs.getgrist.com/apiconsole
+- aid: grist:grist-webhooks-api
+  name: Grist webhooks API
+  description: Document changes can trigger requests to URLs called webhooks.
+  humanURL: https://support.getgrist.com/api/
+  baseURL: https://docs.getgrist.com/api
+  tags:
+  - webhooks
+  properties:
+  - type: OpenAPI
+    url: openapi/grist-webhooks-api-openapi.yml
+  - type: Documentation
+    url: https://support.getgrist.com/rest-api/
+  - type: OpenAPIConsole
+    url: https://docs.getgrist.com/apiconsole
+- aid: grist:grist-widgets-api
+  name: Grist widgets API
+  description: The widgets API from Grist — 1 operation(s) for widgets.
+  humanURL: https://support.getgrist.com/api/
+  baseURL: https://docs.getgrist.com/api
+  tags:
+  - widgets
+  properties:
+  - type: OpenAPI
+    url: openapi/grist-widgets-api-openapi.yml
+  - type: Documentation
+    url: https://support.getgrist.com/rest-api/
+  - type: OpenAPIConsole
+    url: https://docs.getgrist.com/apiconsole
+- aid: grist:grist-workspaces-api
+  name: Grist workspaces API
+  description: Sites can be organized into groups of documents called workspaces.
+  humanURL: https://support.getgrist.com/api/
+  baseURL: https://docs.getgrist.com/api
+  tags:
+  - workspaces
+  properties:
+  - type: OpenAPI
+    url: openapi/grist-workspaces-api-openapi.yml
+  - type: Documentation
+    url: https://support.getgrist.com/rest-api/
+  - type: OpenAPIConsole
+    url: https://docs.getgrist.com/apiconsole
 common:
   - type: AgenticAccess
     url: agentic-access/grist-agentic-access.yml
