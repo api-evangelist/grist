@@ -1,0 +1,415 @@
+{
+  "item": [
+    {
+      "id": "a65daba4-942c-4b9f-b4df-007a7f491010",
+      "name": "session",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "ba729fbc-54fb-4db5-8750-091b25898fc3",
+          "name": "Get active session information",
+          "request": {
+            "name": "Get active session information",
+            "description": {
+              "content": "Returns information about the active user and organization for the current session.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "session",
+                "access",
+                "active"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "The team name, or `docs` for personal areas",
+                  "type": "any",
+                  "value": "{{subdomain}}",
+                  "key": "subdomain"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "91ddabba-94ca-4542-a72d-0fcd7ab57625",
+              "name": "Active session info",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "session",
+                    "access",
+                    "active"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The team name, or `docs` for personal areas",
+                      "type": "any",
+                      "value": "{{subdomain}}",
+                      "key": "subdomain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"user\": {\n    \"id\": 101,\n    \"name\": \"Helga Hufflepuff\",\n    \"picture\": null\n  },\n  \"org\": {\n    \"id\": 42,\n    \"name\": \"Grist Labs\",\n    \"domain\": \"gristlabs\",\n    \"owner\": {\n      \"id\": 101,\n      \"name\": \"Helga Hufflepuff\",\n      \"picture\": null\n    },\n    \"createdAt\": \"2019-09-13T15:42:35.000Z\",\n    \"updatedAt\": \"2019-09-13T15:42:35.000Z\",\n    \"access\": \"owners\"\n  },\n  \"orgError\": {\n    \"error\": \"string\",\n    \"status\": 5156\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8c9eac39-dfea-43fe-8bef-9504d1844a46",
+          "name": "Set active user for organization",
+          "request": {
+            "name": "Set active user for organization",
+            "description": {
+              "content": "Switch which user account is active for a given organization.\nUseful when a user has multiple accounts logged in.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "session",
+                "access",
+                "active"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "The team name, or `docs` for personal areas",
+                  "type": "any",
+                  "value": "{{subdomain}}",
+                  "key": "subdomain"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"<string>\",\n  \"org\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "d9e125ed-bfac-465e-acb4-8ce117277507",
+              "name": "Active user changed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "session",
+                    "access",
+                    "active"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The team name, or `docs` for personal areas",
+                      "type": "any",
+                      "value": "{{subdomain}}",
+                      "key": "subdomain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"<string>\",\n  \"org\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"email\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e91538aa-3e89-4f59-b108-d721cb88f215",
+              "name": "Email not available for this session",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "session",
+                    "access",
+                    "active"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The team name, or `docs` for personal areas",
+                      "type": "any",
+                      "value": "{{subdomain}}",
+                      "key": "subdomain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"<string>\",\n  \"org\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "377dfa4e-84e0-401b-b4a9-6e7f9eb44e77",
+          "name": "Get all session users and organizations",
+          "request": {
+            "name": "Get all session users and organizations",
+            "description": {
+              "content": "Returns all user profiles logged into the current session and all\norganizations they can access.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "session",
+                "access",
+                "all"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "The team name, or `docs` for personal areas",
+                  "type": "any",
+                  "value": "{{subdomain}}",
+                  "key": "subdomain"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ef55a381-395d-436e-b113-031f9a440d3b",
+              "name": "All session info",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "session",
+                    "access",
+                    "all"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The team name, or `docs` for personal areas",
+                      "type": "any",
+                      "value": "{{subdomain}}",
+                      "key": "subdomain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"users\": [\n    {\n      \"id\": 101,\n      \"name\": \"Helga Hufflepuff\",\n      \"picture\": null\n    },\n    {\n      \"id\": 101,\n      \"name\": \"Helga Hufflepuff\",\n      \"picture\": null\n    }\n  ],\n  \"orgs\": [\n    {\n      \"id\": 42,\n      \"name\": \"Grist Labs\",\n      \"domain\": \"gristlabs\",\n      \"owner\": {\n        \"id\": 101,\n        \"name\": \"Helga Hufflepuff\",\n        \"picture\": null\n      },\n      \"createdAt\": \"2019-09-13T15:42:35.000Z\",\n      \"updatedAt\": \"2019-09-13T15:42:35.000Z\",\n      \"access\": \"owners\"\n    },\n    {\n      \"id\": 42,\n      \"name\": \"Grist Labs\",\n      \"domain\": \"gristlabs\",\n      \"owner\": {\n        \"id\": 101,\n        \"name\": \"Helga Hufflepuff\",\n        \"picture\": null\n      },\n      \"createdAt\": \"2019-09-13T15:42:35.000Z\",\n      \"updatedAt\": \"2019-09-13T15:42:35.000Z\",\n      \"access\": \"owners\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "The team name, or `docs` for personal areas",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "docs",
+      "key": "subdomain"
+    },
+    {
+      "type": "string",
+      "value": "https://{{gristhost}}/api",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "5540c512-b39f-4251-a3f1-ab59f79eb9d1",
+    "name": "Grist attachments session API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "An API for manipulating Grist sites, workspaces, and documents.\n\n# Authentication\n<SecurityDefinitions />\n",
+      "type": "text/plain"
+    }
+  }
+}

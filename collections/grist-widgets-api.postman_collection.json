@@ -1,0 +1,142 @@
+{
+  "item": [
+    {
+      "id": "50b0398d-fcdd-40b8-a998-0668d4eebc1e",
+      "name": "widgets",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "d3a2250e-2a35-4355-ba1a-c1d712205e25",
+          "name": "List available custom widgets",
+          "request": {
+            "name": "List available custom widgets",
+            "description": {
+              "content": "Get all widget definitions from the configured widget repository.\nCustom widgets extend Grist's functionality with specialized views.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "widgets"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "The team name, or `docs` for personal areas",
+                  "type": "any",
+                  "value": "{{subdomain}}",
+                  "key": "subdomain"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "bfdfcebc-4fdd-4d94-b650-cea6409b3cbf",
+              "name": "List of widgets",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "widgets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The team name, or `docs` for personal areas",
+                      "type": "any",
+                      "value": "{{subdomain}}",
+                      "key": "subdomain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"name\": \"string\",\n    \"url\": \"string\",\n    \"widgetId\": \"string\"\n  },\n  {\n    \"name\": \"string\",\n    \"url\": \"string\",\n    \"widgetId\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "The team name, or `docs` for personal areas",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "docs",
+      "key": "subdomain"
+    },
+    {
+      "type": "string",
+      "value": "https://{{gristhost}}/api",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "5a516a26-33f6-4935-8dbc-4ea366c48482",
+    "name": "Grist attachments widgets API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "An API for manipulating Grist sites, workspaces, and documents.\n\n# Authentication\n<SecurityDefinitions />\n",
+      "type": "text/plain"
+    }
+  }
+}

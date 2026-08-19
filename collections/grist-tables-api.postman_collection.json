@@ -1,0 +1,420 @@
+{
+  "item": [
+    {
+      "id": "c7793882-0f59-49e5-b1de-4c8cda879d45",
+      "name": "tables",
+      "description": {
+        "content": "Documents are structured as a collection of tables.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "875c6385-4f67-49de-9f97-65558b766def",
+          "name": "List tables in a document",
+          "request": {
+            "name": "List tables in a document",
+            "description": {},
+            "url": {
+              "path": [
+                "docs",
+                ":docId",
+                "tables"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "expand",
+                  "value": "<string>",
+                  "description": "Set to \"column\" to include column metadata for each table in the response."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "docId",
+                  "description": "(Required) A string id (UUID)"
+                },
+                {
+                  "description": "The team name, or `docs` for personal areas",
+                  "type": "any",
+                  "value": "{{subdomain}}",
+                  "key": "subdomain"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a0b66191-aea5-4c1a-ae66-53b348460e33",
+              "name": "The tables in a document",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "docs",
+                    ":docId",
+                    "tables"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "docId",
+                      "description": "(Required) A string id (UUID)"
+                    },
+                    {
+                      "description": "The team name, or `docs` for personal areas",
+                      "type": "any",
+                      "value": "{{subdomain}}",
+                      "key": "subdomain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"tables\": [\n    {\n      \"id\": \"People\",\n      \"fields\": {\n        \"tableRef\": 1,\n        \"onDemand\": false\n      }\n    },\n    {\n      \"id\": \"Places\",\n      \"fields\": {\n        \"tableRef\": 2,\n        \"onDemand\": false\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d7244843-78fc-443a-8dd4-89b22c4c4fc6",
+          "name": "Add tables to a document",
+          "request": {
+            "name": "Add tables to a document",
+            "description": {},
+            "url": {
+              "path": [
+                "docs",
+                ":docId",
+                "tables"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "docId",
+                  "description": "(Required) A string id (UUID)"
+                },
+                {
+                  "description": "The team name, or `docs` for personal areas",
+                  "type": "any",
+                  "value": "{{subdomain}}",
+                  "key": "subdomain"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tables\": [\n    {\n      \"columns\": [\n        {\n          \"id\": \"<string>\",\n          \"fields\": \"<object>\"\n        },\n        {\n          \"id\": \"<string>\",\n          \"fields\": \"<object>\"\n        }\n      ],\n      \"id\": \"<string>\"\n    },\n    {\n      \"columns\": [\n        {\n          \"id\": \"<string>\",\n          \"fields\": \"<object>\"\n        },\n        {\n          \"id\": \"<string>\",\n          \"fields\": \"<object>\"\n        }\n      ],\n      \"id\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "361e5e2b-ef2b-47e5-be57-09044d9ff808",
+              "name": "The table created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "docs",
+                    ":docId",
+                    "tables"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "docId",
+                      "description": "(Required) A string id (UUID)"
+                    },
+                    {
+                      "description": "The team name, or `docs` for personal areas",
+                      "type": "any",
+                      "value": "{{subdomain}}",
+                      "key": "subdomain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"tables\": [\n    {\n      \"columns\": [\n        {\n          \"id\": \"ColumnName\",\n          \"fields\": \"<object>\"\n        },\n        {\n          \"id\": \"ColumnName\",\n          \"fields\": \"<object>\"\n        }\n      ],\n      \"id\": \"Table1\"\n    },\n    {\n      \"columns\": [\n        {\n          \"id\": \"ColumnName\",\n          \"fields\": \"<object>\"\n        },\n        {\n          \"id\": \"ColumnName\",\n          \"fields\": \"<object>\"\n        }\n      ],\n      \"id\": \"Table1\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"tables\": [\n    {\n      \"id\": \"Table1\"\n    },\n    {\n      \"id\": \"Table1\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "dc7c88f6-83c4-4434-b4b6-fd5ae5f3b24a",
+          "name": "Modify tables of a document",
+          "request": {
+            "name": "Modify tables of a document",
+            "description": {
+              "content": "Modify metadata for existing tables. This endpoint is primarily useful for:\n- Renaming tables (via the `tableId` field)\n- Setting on-demand loading (via the `onDemand` field)\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "docs",
+                ":docId",
+                "tables"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "docId",
+                  "description": "(Required) A string id (UUID)"
+                },
+                {
+                  "description": "The team name, or `docs` for personal areas",
+                  "type": "any",
+                  "value": "{{subdomain}}",
+                  "key": "subdomain"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tables\": [\n    {\n      \"id\": \"<string>\",\n      \"fields\": {\n        \"tableId\": \"<string>\",\n        \"onDemand\": \"<boolean>\"\n      }\n    },\n    {\n      \"id\": \"<string>\",\n      \"fields\": {\n        \"tableId\": \"<string>\",\n        \"onDemand\": \"<boolean>\"\n      }\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "1b5d4843-0095-4c69-bdda-7f7ad8983b4d",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "docs",
+                    ":docId",
+                    "tables"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "docId",
+                      "description": "(Required) A string id (UUID)"
+                    },
+                    {
+                      "description": "The team name, or `docs` for personal areas",
+                      "type": "any",
+                      "value": "{{subdomain}}",
+                      "key": "subdomain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"tables\": [\n    {\n      \"id\": \"<string>\",\n      \"fields\": {\n        \"tableId\": \"<string>\",\n        \"onDemand\": \"<boolean>\"\n      }\n    },\n    {\n      \"id\": \"<string>\",\n      \"fields\": {\n        \"tableId\": \"<string>\",\n        \"onDemand\": \"<boolean>\"\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "The team name, or `docs` for personal areas",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "docs",
+      "key": "subdomain"
+    },
+    {
+      "type": "string",
+      "value": "https://{{gristhost}}/api",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "1c193b80-217b-4172-bc00-5985cb585b6c",
+    "name": "Grist attachments tables API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "An API for manipulating Grist sites, workspaces, and documents.\n\n# Authentication\n<SecurityDefinitions />\n",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,95 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Grist attachments tables API",
+    "version": "1.0.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "tables",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List tables in a document",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{gristhost}/api/docs/:docId/tables",
+            "params": [
+              {
+                "name": "docId",
+                "value": "",
+                "type": "path",
+                "description": "A string id (UUID)"
+              },
+              {
+                "name": "expand",
+                "value": "",
+                "type": "query",
+                "description": "Set to \"column\" to include column metadata for each table in the response."
+              }
+            ]
+          },
+          "docs": "List tables in a document"
+        },
+        {
+          "info": {
+            "name": "Add tables to a document",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{gristhost}/api/docs/:docId/tables",
+            "params": [
+              {
+                "name": "docId",
+                "value": "",
+                "type": "path",
+                "description": "A string id (UUID)"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add tables to a document"
+        },
+        {
+          "info": {
+            "name": "Modify tables of a document",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{gristhost}/api/docs/:docId/tables",
+            "params": [
+              {
+                "name": "docId",
+                "value": "",
+                "type": "path",
+                "description": "A string id (UUID)"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Modify metadata for existing tables. This endpoint is primarily useful for:\n- Renaming tables (via the `tableId` field)\n- Setting on-demand loading (via the `onDemand` field)\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

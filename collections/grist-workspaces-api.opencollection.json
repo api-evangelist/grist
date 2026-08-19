@@ -1,0 +1,213 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Grist attachments workspaces API",
+    "version": "1.0.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "workspaces",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List workspaces and documents within an org",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{gristhost}/api/orgs/:orgId/workspaces",
+            "params": [
+              {
+                "name": "orgId",
+                "value": "",
+                "type": "path",
+                "description": "This can be an integer id, or a string subdomain (e.g. `gristlabs`), or `current` if the org is implied by the domain in the url"
+              }
+            ]
+          },
+          "docs": "List workspaces and documents within an org"
+        },
+        {
+          "info": {
+            "name": "Create an empty workspace",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{gristhost}/api/orgs/:orgId/workspaces",
+            "params": [
+              {
+                "name": "orgId",
+                "value": "",
+                "type": "path",
+                "description": "This can be an integer id, or a string subdomain (e.g. `gristlabs`), or `current` if the org is implied by the domain in the url"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create an empty workspace"
+        },
+        {
+          "info": {
+            "name": "Describe a workspace",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{gristhost}/api/workspaces/:workspaceId",
+            "params": [
+              {
+                "name": "workspaceId",
+                "value": "",
+                "type": "path",
+                "description": "An integer id"
+              }
+            ]
+          },
+          "docs": "Describe a workspace"
+        },
+        {
+          "info": {
+            "name": "Modify a workspace",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{gristhost}/api/workspaces/:workspaceId",
+            "params": [
+              {
+                "name": "workspaceId",
+                "value": "",
+                "type": "path",
+                "description": "An integer id"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Modify a workspace"
+        },
+        {
+          "info": {
+            "name": "Delete a workspace",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{gristhost}/api/workspaces/:workspaceId",
+            "params": [
+              {
+                "name": "workspaceId",
+                "value": "",
+                "type": "path",
+                "description": "An integer id"
+              }
+            ]
+          },
+          "docs": "Delete a workspace"
+        },
+        {
+          "info": {
+            "name": "Move workspace to trash",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{gristhost}/api/workspaces/:workspaceId/remove",
+            "params": [
+              {
+                "name": "workspaceId",
+                "value": "",
+                "type": "path",
+                "description": "An integer id"
+              },
+              {
+                "name": "permanent",
+                "value": "",
+                "type": "query",
+                "description": "If true, permanently delete instead of moving to trash"
+              }
+            ]
+          },
+          "docs": "Soft-delete the workspace by moving it to trash. The workspace can be\nrestored using the unremove endpoint. If the `permanent` query parameter\nis set to true, the workspace is permanently deleted instead.\n"
+        },
+        {
+          "info": {
+            "name": "Restore workspace from trash",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{gristhost}/api/workspaces/:workspaceId/unremove",
+            "params": [
+              {
+                "name": "workspaceId",
+                "value": "",
+                "type": "path",
+                "description": "An integer id"
+              }
+            ]
+          },
+          "docs": "Recover a workspace that was previously soft-deleted. Only works if the\nworkspace is still in the trash.\n"
+        },
+        {
+          "info": {
+            "name": "List users with access to workspace",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{gristhost}/api/workspaces/:workspaceId/access",
+            "params": [
+              {
+                "name": "workspaceId",
+                "value": "",
+                "type": "path",
+                "description": "An integer id"
+              }
+            ]
+          },
+          "docs": "List users with access to workspace"
+        },
+        {
+          "info": {
+            "name": "Change who has access to workspace",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{gristhost}/api/workspaces/:workspaceId/access",
+            "params": [
+              {
+                "name": "workspaceId",
+                "value": "",
+                "type": "path",
+                "description": "An integer id"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Change who has access to workspace"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

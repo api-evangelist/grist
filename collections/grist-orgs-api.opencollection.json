@@ -1,0 +1,163 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Grist attachments orgs API",
+    "version": "1.0.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "orgs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List the orgs you have access to",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{gristhost}/api/orgs"
+          },
+          "docs": "This enumerates all the team sites or personal areas available."
+        },
+        {
+          "info": {
+            "name": "Describe an org",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{gristhost}/api/orgs/:orgId",
+            "params": [
+              {
+                "name": "orgId",
+                "value": "",
+                "type": "path",
+                "description": "This can be an integer id, or a string subdomain (e.g. `gristlabs`), or `current` if the org is implied by the domain in the url"
+              }
+            ]
+          },
+          "docs": "Describe an org"
+        },
+        {
+          "info": {
+            "name": "Modify an org",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{gristhost}/api/orgs/:orgId",
+            "params": [
+              {
+                "name": "orgId",
+                "value": "",
+                "type": "path",
+                "description": "This can be an integer id, or a string subdomain (e.g. `gristlabs`), or `current` if the org is implied by the domain in the url"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Modify an org"
+        },
+        {
+          "info": {
+            "name": "Delete an org",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{gristhost}/api/orgs/:orgId/:name",
+            "params": [
+              {
+                "name": "orgId",
+                "value": "",
+                "type": "path",
+                "description": "This can be an integer id, or a string subdomain (e.g. `gristlabs`), or `current` if the org is implied by the domain in the url"
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "The organization name"
+              }
+            ]
+          },
+          "docs": "Delete an org"
+        },
+        {
+          "info": {
+            "name": "List users with access to org",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{gristhost}/api/orgs/:orgId/access",
+            "params": [
+              {
+                "name": "orgId",
+                "value": "",
+                "type": "path",
+                "description": "This can be an integer id, or a string subdomain (e.g. `gristlabs`), or `current` if the org is implied by the domain in the url"
+              }
+            ]
+          },
+          "docs": "List users with access to org"
+        },
+        {
+          "info": {
+            "name": "Change who has access to org",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{gristhost}/api/orgs/:orgId/access",
+            "params": [
+              {
+                "name": "orgId",
+                "value": "",
+                "type": "path",
+                "description": "This can be an integer id, or a string subdomain (e.g. `gristlabs`), or `current` if the org is implied by the domain in the url"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Change who has access to org"
+        },
+        {
+          "info": {
+            "name": "Get organization usage summary",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{gristhost}/api/orgs/:orgId/usage",
+            "params": [
+              {
+                "name": "orgId",
+                "value": "",
+                "type": "path",
+                "description": "This can be an integer id, or a string subdomain (e.g. `gristlabs`), or `current` if the org is implied by the domain in the url"
+              }
+            ]
+          },
+          "docs": "Get usage statistics for all non-deleted documents in the organization.\nOnly accessible to organization owners.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,162 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Grist attachments webhooks API",
+    "version": "1.0.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "webhooks",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Webhooks associated with a document",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{gristhost}/api/docs/:docId/webhooks",
+            "params": [
+              {
+                "name": "docId",
+                "value": "",
+                "type": "path",
+                "description": "A string id (UUID)"
+              }
+            ]
+          },
+          "docs": "Returns all webhooks configured for this document, including their\nsettings and delivery statistics.\n"
+        },
+        {
+          "info": {
+            "name": "Create new webhooks for a document",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{gristhost}/api/docs/:docId/webhooks",
+            "params": [
+              {
+                "name": "docId",
+                "value": "",
+                "type": "path",
+                "description": "A string id (UUID)"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates one or more webhooks that will POST to specified URLs when\ndata in the document changes. Returns the IDs of the created webhooks.\n"
+        },
+        {
+          "info": {
+            "name": "Modify a webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{gristhost}/api/docs/:docId/webhooks/:webhookId",
+            "params": [
+              {
+                "name": "docId",
+                "value": "",
+                "type": "path",
+                "description": "A string id (UUID)"
+              },
+              {
+                "name": "webhookId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update the configuration of an existing webhook, such as its URL,\nenabled state, or event types.\n"
+        },
+        {
+          "info": {
+            "name": "Remove a webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{gristhost}/api/docs/:docId/webhooks/:webhookId",
+            "params": [
+              {
+                "name": "docId",
+                "value": "",
+                "type": "path",
+                "description": "A string id (UUID)"
+              },
+              {
+                "name": "webhookId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Permanently delete a webhook. Any pending deliveries in the queue\nfor this webhook will also be removed.\n"
+        },
+        {
+          "info": {
+            "name": "Empty a document's queue of undelivered payloads",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{gristhost}/api/docs/:docId/webhooks/queue",
+            "params": [
+              {
+                "name": "docId",
+                "value": "",
+                "type": "path",
+                "description": "A string id (UUID)"
+              }
+            ]
+          },
+          "docs": "Clear all pending webhook deliveries for this document. Use this\nif the queue has built up due to unreachable endpoints.\n"
+        },
+        {
+          "info": {
+            "name": "Clear queue for a specific webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{gristhost}/api/docs/:docId/webhooks/queue/:webhookId",
+            "params": [
+              {
+                "name": "docId",
+                "value": "",
+                "type": "path",
+                "description": "A string id (UUID)"
+              },
+              {
+                "name": "webhookId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the webhook"
+              }
+            ]
+          },
+          "docs": "Clear the queue of pending payloads for a specific webhook.\nOnly document owners can call this endpoint.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,769 @@
+{
+  "item": [
+    {
+      "id": "030d56d2-070e-43bf-bdcb-0e8a469262ce",
+      "name": "columns",
+      "description": {
+        "content": "Tables are structured as a collection of columns.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "4d628721-6896-4606-9345-57dc61cc469f",
+          "name": "List columns in a table",
+          "request": {
+            "name": "List columns in a table",
+            "description": {},
+            "url": {
+              "path": [
+                "docs",
+                ":docId",
+                "tables",
+                ":tableId",
+                "columns"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "hidden",
+                  "value": "<boolean>",
+                  "description": "Set to true to include the hidden columns (like \"manualSort\")"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "docId",
+                  "description": "(Required) A string id (UUID)"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "tableId",
+                  "description": "(Required) normalized table name (see `TABLE ID` in Raw Data) or numeric row ID in `_grist_Tables`"
+                },
+                {
+                  "description": "The team name, or `docs` for personal areas",
+                  "type": "any",
+                  "value": "{{subdomain}}",
+                  "key": "subdomain"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "96e717a2-0bbb-42fb-9de2-626aa211c906",
+              "name": "The columns in a table",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "docs",
+                    ":docId",
+                    "tables",
+                    ":tableId",
+                    "columns"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "hidden",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "docId",
+                      "description": "(Required) A string id (UUID)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tableId",
+                      "description": "(Required) normalized table name (see `TABLE ID` in Raw Data) or numeric row ID in `_grist_Tables`"
+                    },
+                    {
+                      "description": "The team name, or `docs` for personal areas",
+                      "type": "any",
+                      "value": "{{subdomain}}",
+                      "key": "subdomain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"columns\": [\n    {\n      \"fields\": {\n        \"label\": \"Pet\"\n      }\n    },\n    {\n      \"fields\": {\n        \"label\": \"Popularity ❤\",\n        \"type\": \"Int\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8f41dcfa-81cf-42b2-85dc-5559d9d4ac87",
+          "name": "Add columns to a table",
+          "request": {
+            "name": "Add columns to a table",
+            "description": {},
+            "url": {
+              "path": [
+                "docs",
+                ":docId",
+                "tables",
+                ":tableId",
+                "columns"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "docId",
+                  "description": "(Required) A string id (UUID)"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "tableId",
+                  "description": "(Required) normalized table name (see `TABLE ID` in Raw Data) or numeric row ID in `_grist_Tables`"
+                },
+                {
+                  "description": "The team name, or `docs` for personal areas",
+                  "type": "any",
+                  "value": "{{subdomain}}",
+                  "key": "subdomain"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"columns\": [\n    {\n      \"id\": \"<string>\",\n      \"fields\": {\n        \"type\": \"<string>\",\n        \"label\": \"<string>\",\n        \"formula\": \"<string>\",\n        \"isFormula\": \"<boolean>\",\n        \"widgetOptions\": \"<string>\",\n        \"untieColIdFromLabel\": \"<boolean>\",\n        \"recalcWhen\": \"<integer>\",\n        \"visibleCol\": \"<integer>\",\n        \"recalcDeps\": \"<string>\"\n      }\n    },\n    {\n      \"id\": \"<string>\",\n      \"fields\": {\n        \"type\": \"<string>\",\n        \"label\": \"<string>\",\n        \"formula\": \"<string>\",\n        \"isFormula\": \"<boolean>\",\n        \"widgetOptions\": \"<string>\",\n        \"untieColIdFromLabel\": \"<boolean>\",\n        \"recalcWhen\": \"<integer>\",\n        \"visibleCol\": \"<integer>\",\n        \"recalcDeps\": \"<string>\"\n      }\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "d2b00443-57d0-43b8-ac30-3c71313f4eda",
+              "name": "The columns created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "docs",
+                    ":docId",
+                    "tables",
+                    ":tableId",
+                    "columns"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "docId",
+                      "description": "(Required) A string id (UUID)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tableId",
+                      "description": "(Required) normalized table name (see `TABLE ID` in Raw Data) or numeric row ID in `_grist_Tables`"
+                    },
+                    {
+                      "description": "The team name, or `docs` for personal areas",
+                      "type": "any",
+                      "value": "{{subdomain}}",
+                      "key": "subdomain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"columns\": [\n    {\n      \"id\": \"<string>\",\n      \"fields\": {\n        \"type\": \"<string>\",\n        \"label\": \"<string>\",\n        \"formula\": \"<string>\",\n        \"isFormula\": \"<boolean>\",\n        \"widgetOptions\": \"<string>\",\n        \"untieColIdFromLabel\": \"<boolean>\",\n        \"recalcWhen\": \"<integer>\",\n        \"visibleCol\": \"<integer>\",\n        \"recalcDeps\": \"<string>\"\n      }\n    },\n    {\n      \"id\": \"<string>\",\n      \"fields\": {\n        \"type\": \"<string>\",\n        \"label\": \"<string>\",\n        \"formula\": \"<string>\",\n        \"isFormula\": \"<boolean>\",\n        \"widgetOptions\": \"<string>\",\n        \"untieColIdFromLabel\": \"<boolean>\",\n        \"recalcWhen\": \"<integer>\",\n        \"visibleCol\": \"<integer>\",\n        \"recalcDeps\": \"<string>\"\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"columns\": [\n    {\n      \"id\": \"ColumnName\"\n    },\n    {\n      \"id\": \"ColumnName\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c0145b8b-b3e6-4c32-a9b6-0a87bc4c9120",
+          "name": "Modify columns of a table",
+          "request": {
+            "name": "Modify columns of a table",
+            "description": {},
+            "url": {
+              "path": [
+                "docs",
+                ":docId",
+                "tables",
+                ":tableId",
+                "columns"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "docId",
+                  "description": "(Required) A string id (UUID)"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "tableId",
+                  "description": "(Required) normalized table name (see `TABLE ID` in Raw Data) or numeric row ID in `_grist_Tables`"
+                },
+                {
+                  "description": "The team name, or `docs` for personal areas",
+                  "type": "any",
+                  "value": "{{subdomain}}",
+                  "key": "subdomain"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"columns\": [\n    {\n      \"id\": \"<string>\",\n      \"fields\": {\n        \"type\": \"<string>\",\n        \"label\": \"<string>\",\n        \"formula\": \"<string>\",\n        \"isFormula\": \"<boolean>\",\n        \"widgetOptions\": \"<string>\",\n        \"untieColIdFromLabel\": \"<boolean>\",\n        \"recalcWhen\": \"<integer>\",\n        \"visibleCol\": \"<integer>\",\n        \"recalcDeps\": \"<string>\",\n        \"colId\": \"<string>\"\n      }\n    },\n    {\n      \"id\": \"<string>\",\n      \"fields\": {\n        \"type\": \"<string>\",\n        \"label\": \"<string>\",\n        \"formula\": \"<string>\",\n        \"isFormula\": \"<boolean>\",\n        \"widgetOptions\": \"<string>\",\n        \"untieColIdFromLabel\": \"<boolean>\",\n        \"recalcWhen\": \"<integer>\",\n        \"visibleCol\": \"<integer>\",\n        \"recalcDeps\": \"<string>\",\n        \"colId\": \"<string>\"\n      }\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "dbaaf7fb-f49f-4937-8c4f-e11c8a991e37",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "docs",
+                    ":docId",
+                    "tables",
+                    ":tableId",
+                    "columns"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "docId",
+                      "description": "(Required) A string id (UUID)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tableId",
+                      "description": "(Required) normalized table name (see `TABLE ID` in Raw Data) or numeric row ID in `_grist_Tables`"
+                    },
+                    {
+                      "description": "The team name, or `docs` for personal areas",
+                      "type": "any",
+                      "value": "{{subdomain}}",
+                      "key": "subdomain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"columns\": [\n    {\n      \"id\": \"<string>\",\n      \"fields\": {\n        \"type\": \"<string>\",\n        \"label\": \"<string>\",\n        \"formula\": \"<string>\",\n        \"isFormula\": \"<boolean>\",\n        \"widgetOptions\": \"<string>\",\n        \"untieColIdFromLabel\": \"<boolean>\",\n        \"recalcWhen\": \"<integer>\",\n        \"visibleCol\": \"<integer>\",\n        \"recalcDeps\": \"<string>\",\n        \"colId\": \"<string>\"\n      }\n    },\n    {\n      \"id\": \"<string>\",\n      \"fields\": {\n        \"type\": \"<string>\",\n        \"label\": \"<string>\",\n        \"formula\": \"<string>\",\n        \"isFormula\": \"<boolean>\",\n        \"widgetOptions\": \"<string>\",\n        \"untieColIdFromLabel\": \"<boolean>\",\n        \"recalcWhen\": \"<integer>\",\n        \"visibleCol\": \"<integer>\",\n        \"recalcDeps\": \"<string>\",\n        \"colId\": \"<string>\"\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "36b4aa0a-b522-4b9c-b7db-c6490f798202",
+          "name": "Add or update columns of a table",
+          "request": {
+            "name": "Add or update columns of a table",
+            "description": {},
+            "url": {
+              "path": [
+                "docs",
+                ":docId",
+                "tables",
+                ":tableId",
+                "columns"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "noadd",
+                  "value": "<boolean>"
+                },
+                {
+                  "disabled": false,
+                  "key": "noupdate",
+                  "value": "<boolean>"
+                },
+                {
+                  "disabled": false,
+                  "key": "replaceall",
+                  "value": "<boolean>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "docId",
+                  "description": "(Required) A string id (UUID)"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "tableId",
+                  "description": "(Required) normalized table name (see `TABLE ID` in Raw Data) or numeric row ID in `_grist_Tables`"
+                },
+                {
+                  "description": "The team name, or `docs` for personal areas",
+                  "type": "any",
+                  "value": "{{subdomain}}",
+                  "key": "subdomain"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"columns\": [\n    {\n      \"id\": \"<string>\",\n      \"fields\": {\n        \"type\": \"<string>\",\n        \"label\": \"<string>\",\n        \"formula\": \"<string>\",\n        \"isFormula\": \"<boolean>\",\n        \"widgetOptions\": \"<string>\",\n        \"untieColIdFromLabel\": \"<boolean>\",\n        \"recalcWhen\": \"<integer>\",\n        \"visibleCol\": \"<integer>\",\n        \"recalcDeps\": \"<string>\",\n        \"colId\": \"<string>\"\n      }\n    },\n    {\n      \"id\": \"<string>\",\n      \"fields\": {\n        \"type\": \"<string>\",\n        \"label\": \"<string>\",\n        \"formula\": \"<string>\",\n        \"isFormula\": \"<boolean>\",\n        \"widgetOptions\": \"<string>\",\n        \"untieColIdFromLabel\": \"<boolean>\",\n        \"recalcWhen\": \"<integer>\",\n        \"visibleCol\": \"<integer>\",\n        \"recalcDeps\": \"<string>\",\n        \"colId\": \"<string>\"\n      }\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "4b47386b-8c43-40d3-a43e-c3949f49128a",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "docs",
+                    ":docId",
+                    "tables",
+                    ":tableId",
+                    "columns"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "noadd",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "noupdate",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "replaceall",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "docId",
+                      "description": "(Required) A string id (UUID)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tableId",
+                      "description": "(Required) normalized table name (see `TABLE ID` in Raw Data) or numeric row ID in `_grist_Tables`"
+                    },
+                    {
+                      "description": "The team name, or `docs` for personal areas",
+                      "type": "any",
+                      "value": "{{subdomain}}",
+                      "key": "subdomain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"columns\": [\n    {\n      \"id\": \"<string>\",\n      \"fields\": {\n        \"type\": \"<string>\",\n        \"label\": \"<string>\",\n        \"formula\": \"<string>\",\n        \"isFormula\": \"<boolean>\",\n        \"widgetOptions\": \"<string>\",\n        \"untieColIdFromLabel\": \"<boolean>\",\n        \"recalcWhen\": \"<integer>\",\n        \"visibleCol\": \"<integer>\",\n        \"recalcDeps\": \"<string>\",\n        \"colId\": \"<string>\"\n      }\n    },\n    {\n      \"id\": \"<string>\",\n      \"fields\": {\n        \"type\": \"<string>\",\n        \"label\": \"<string>\",\n        \"formula\": \"<string>\",\n        \"isFormula\": \"<boolean>\",\n        \"widgetOptions\": \"<string>\",\n        \"untieColIdFromLabel\": \"<boolean>\",\n        \"recalcWhen\": \"<integer>\",\n        \"visibleCol\": \"<integer>\",\n        \"recalcDeps\": \"<string>\",\n        \"colId\": \"<string>\"\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7bd491c3-0ad6-4204-9810-e44f14d081ef",
+          "name": "Delete a column of a table",
+          "request": {
+            "name": "Delete a column of a table",
+            "description": {},
+            "url": {
+              "path": [
+                "docs",
+                ":docId",
+                "tables",
+                ":tableId",
+                "columns",
+                ":colId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "docId",
+                  "description": "(Required) A string id (UUID)"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "tableId",
+                  "description": "(Required) normalized table name (see `TABLE ID` in Raw Data) or numeric row ID in `_grist_Tables`"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "colId",
+                  "description": "(Required) The column id (without the starting `$`) as shown in the column configuration below the label"
+                },
+                {
+                  "description": "The team name, or `docs` for personal areas",
+                  "type": "any",
+                  "value": "{{subdomain}}",
+                  "key": "subdomain"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1bb288c2-3a83-4711-bb90-41b918f6bed0",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "docs",
+                    ":docId",
+                    "tables",
+                    ":tableId",
+                    "columns",
+                    ":colId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "docId",
+                      "description": "(Required) A string id (UUID)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tableId",
+                      "description": "(Required) normalized table name (see `TABLE ID` in Raw Data) or numeric row ID in `_grist_Tables`"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "colId",
+                      "description": "(Required) The column id (without the starting `$`) as shown in the column configuration below the label"
+                    },
+                    {
+                      "description": "The team name, or `docs` for personal areas",
+                      "type": "any",
+                      "value": "{{subdomain}}",
+                      "key": "subdomain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "The team name, or `docs` for personal areas",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "docs",
+      "key": "subdomain"
+    },
+    {
+      "type": "string",
+      "value": "https://{{gristhost}}/api",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "b589aad4-27ce-4b68-960d-5c1205edbea2",
+    "name": "Grist attachments columns API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "An API for manipulating Grist sites, workspaces, and documents.\n\n# Authentication\n<SecurityDefinitions />\n",
+      "type": "text/plain"
+    }
+  }
+}

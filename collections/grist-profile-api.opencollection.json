@@ -1,0 +1,102 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Grist attachments profile API",
+    "version": "1.0.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "profile",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get current user's profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{gristhost}/api/profile/user"
+          },
+          "docs": "Returns the profile information of the currently authenticated user."
+        },
+        {
+          "info": {
+            "name": "Update user's name",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{gristhost}/api/profile/user/name",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update the display name for the current user."
+        },
+        {
+          "info": {
+            "name": "Update user's locale",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{gristhost}/api/profile/user/locale",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update the locale preference for the current user."
+        },
+        {
+          "info": {
+            "name": "Get user's API key",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{gristhost}/api/profile/apikey"
+          },
+          "docs": "Returns the current user's API key if one exists."
+        },
+        {
+          "info": {
+            "name": "Create or regenerate API key",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{gristhost}/api/profile/apikey",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new API key or regenerate an existing one."
+        },
+        {
+          "info": {
+            "name": "Delete user's API key",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{gristhost}/api/profile/apikey"
+          },
+          "docs": "Delete the current user's API key."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

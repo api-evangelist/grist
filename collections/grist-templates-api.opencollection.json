@@ -1,0 +1,54 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Grist attachments templates API",
+    "version": "1.0.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "templates",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List available templates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{gristhost}/api/templates"
+          },
+          "docs": "Get all available templates. Templates are organized by workspace within\na template organization configured on the server.\n\n**Note:** Requires a template organization to be configured on the server.\n"
+        },
+        {
+          "info": {
+            "name": "Get template details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{gristhost}/api/templates/:templateId",
+            "params": [
+              {
+                "name": "templateId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the template"
+              }
+            ]
+          },
+          "docs": "Get information about a specific template.\n\n**Note:** Requires a template organization to be configured on the server.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

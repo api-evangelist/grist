@@ -1,0 +1,71 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Grist attachments sql API",
+    "version": "1.0.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "sql",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Run an SQL query against a document",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{gristhost}/api/docs/:docId/sql",
+            "params": [
+              {
+                "name": "docId",
+                "value": "",
+                "type": "path",
+                "description": "A string id (UUID)"
+              },
+              {
+                "name": "q",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Execute a read-only SQL SELECT query against the document's SQLite database.\nThis is a simplified endpoint for basic queries. For queries with parameters\nor custom timeouts, use the POST endpoint instead.\n"
+        },
+        {
+          "info": {
+            "name": "Run an SQL query against a document, with options or parameters",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{gristhost}/api/docs/:docId/sql",
+            "params": [
+              {
+                "name": "docId",
+                "value": "",
+                "type": "path",
+                "description": "A string id (UUID)"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Execute a read-only SQL SELECT query with support for parameterized queries\nand custom timeouts. All Grist documents are SQLite databases, and queries\nare executed directly against SQLite with security restrictions.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

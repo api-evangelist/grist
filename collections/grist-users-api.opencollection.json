@@ -1,0 +1,85 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Grist attachments users API",
+    "version": "1.0.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "users",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Delete a user from Grist",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{gristhost}/api/users/:userId",
+            "params": [
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path",
+                "description": "A user id"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "This action also deletes the user's personal organisation and all the workspaces and documents it contains.\nCurrently, only the users themselves are allowed to delete their own accounts.\n\n⚠️ **This action cannot be undone, please be cautious when using this endpoint** ⚠️\n"
+        },
+        {
+          "info": {
+            "name": "Disable a user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{gristhost}/api/users/:userId/disable",
+            "params": [
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path",
+                "description": "A user id"
+              }
+            ]
+          },
+          "docs": "A disabled user can not log in and loses access to all pages,\nincluding public ones, as well as API access. The operation is\nnon-destructive. Disabled users can be re-enabled.\n\nOnly admin accounts can disable a user.\n"
+        },
+        {
+          "info": {
+            "name": "Enable a user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{gristhost}/api/users/:userId/enable",
+            "params": [
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path",
+                "description": "A user id"
+              }
+            ]
+          },
+          "docs": "If a user has been disabled, this will restore their access, including API access.\n\nOnly admin accounts can enable a user.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

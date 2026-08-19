@@ -1,0 +1,302 @@
+{
+  "item": [
+    {
+      "id": "153f80b4-cfb0-4eb2-b8a4-4d08ca7cf900",
+      "name": "sql",
+      "description": {
+        "content": "Sql endpoint to query data from documents.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "33909f42-d643-4737-8225-6439b56a779c",
+          "name": "Run an SQL query against a document",
+          "request": {
+            "name": "Run an SQL query against a document",
+            "description": {
+              "content": "Execute a read-only SQL SELECT query against the document's SQLite database.\nThis is a simplified endpoint for basic queries. For queries with parameters\nor custom timeouts, use the POST endpoint instead.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "docs",
+                ":docId",
+                "sql"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "q",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "docId",
+                  "description": "(Required) A string id (UUID)"
+                },
+                {
+                  "description": "The team name, or `docs` for personal areas",
+                  "type": "any",
+                  "value": "{{subdomain}}",
+                  "key": "subdomain"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ca0b1174-737f-4b70-b26b-79db6ed6bc97",
+              "name": "The result set for the query.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "docs",
+                    ":docId",
+                    "sql"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "docId",
+                      "description": "(Required) A string id (UUID)"
+                    },
+                    {
+                      "description": "The team name, or `docs` for personal areas",
+                      "type": "any",
+                      "value": "{{subdomain}}",
+                      "key": "subdomain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statement\": \"select * from Pets ...\",\n  \"records\": [\n    {\n      \"fields\": {\n        \"id\": 1,\n        \"pet\": \"cat\",\n        \"popularity\": 67\n      }\n    },\n    {\n      \"fields\": {\n        \"id\": 2,\n        \"pet\": \"dog\",\n        \"popularity\": 95\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "af9030d7-238e-4c57-a538-bceedab8d01d",
+          "name": "Run an SQL query against a document, with options or parameters",
+          "request": {
+            "name": "Run an SQL query against a document, with options or parameters",
+            "description": {
+              "content": "Execute a read-only SQL SELECT query with support for parameterized queries\nand custom timeouts. All Grist documents are SQLite databases, and queries\nare executed directly against SQLite with security restrictions.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "docs",
+                ":docId",
+                "sql"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "docId",
+                  "description": "(Required) A string id (UUID)"
+                },
+                {
+                  "description": "The team name, or `docs` for personal areas",
+                  "type": "any",
+                  "value": "{{subdomain}}",
+                  "key": "subdomain"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"sql\": \"<string>\",\n  \"args\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"timeout\": \"<number>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f6a32f2c-c821-4254-83dc-4f1afed0d765",
+              "name": "The result set for the query.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "docs",
+                    ":docId",
+                    "sql"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "docId",
+                      "description": "(Required) A string id (UUID)"
+                    },
+                    {
+                      "description": "The team name, or `docs` for personal areas",
+                      "type": "any",
+                      "value": "{{subdomain}}",
+                      "key": "subdomain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"sql\": \"select * from Pets where popularity >= ?\",\n  \"args\": [\n    50\n  ],\n  \"timeout\": 500\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statement\": \"select * from Pets ...\",\n  \"records\": [\n    {\n      \"fields\": {\n        \"id\": 1,\n        \"pet\": \"cat\",\n        \"popularity\": 67\n      }\n    },\n    {\n      \"fields\": {\n        \"id\": 2,\n        \"pet\": \"dog\",\n        \"popularity\": 95\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "The team name, or `docs` for personal areas",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "docs",
+      "key": "subdomain"
+    },
+    {
+      "type": "string",
+      "value": "https://{{gristhost}}/api",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "036c4635-0bfa-4585-a211-a49d8cb4a24c",
+    "name": "Grist attachments sql API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "An API for manipulating Grist sites, workspaces, and documents.\n\n# Authentication\n<SecurityDefinitions />\n",
+      "type": "text/plain"
+    }
+  }
+}

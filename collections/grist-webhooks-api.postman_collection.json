@@ -1,0 +1,786 @@
+{
+  "item": [
+    {
+      "id": "194bd844-3db2-4488-91a2-bbf3a38c7f0b",
+      "name": "webhooks",
+      "description": {
+        "content": "Document changes can trigger requests to URLs called webhooks.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "3024206b-0a71-4efc-870b-cd75443fdec0",
+          "name": "Webhooks associated with a document",
+          "request": {
+            "name": "Webhooks associated with a document",
+            "description": {
+              "content": "Returns all webhooks configured for this document, including their\nsettings and delivery statistics.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "docs",
+                ":docId",
+                "webhooks"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "docId",
+                  "description": "(Required) A string id (UUID)"
+                },
+                {
+                  "description": "The team name, or `docs` for personal areas",
+                  "type": "any",
+                  "value": "{{subdomain}}",
+                  "key": "subdomain"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "efe6ab19-118c-4075-bd2e-12ad4a4f52b3",
+              "name": "A list of webhooks.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "docs",
+                    ":docId",
+                    "webhooks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "docId",
+                      "description": "(Required) A string id (UUID)"
+                    },
+                    {
+                      "description": "The team name, or `docs` for personal areas",
+                      "type": "any",
+                      "value": "{{subdomain}}",
+                      "key": "subdomain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"webhooks\": [\n    {\n      \"id\": \"10812c79-0801-54e8-9ead-c8a249ffd8cd\",\n      \"fields\": {\n        \"name\": \"new-project-email\",\n        \"memo\": \"Send an email when a project is added\",\n        \"url\": \"https://example.com/webhook/123\",\n        \"enabled\": false,\n        \"unsubscribeKey\": \"string\",\n        \"eventTypes\": [\n          \"add\",\n          \"update\"\n        ],\n        \"isReadyColumn\": null,\n        \"tableId\": \"Projects\"\n      },\n      \"usage\": {\n        \"numWaiting\": 5659,\n        \"status\": \"idle\",\n        \"updatedTime\": 1685637500424,\n        \"lastSuccessTime\": 1685637500424,\n        \"lastFailureTime\": 1685637500424,\n        \"lastErrorMessage\": null,\n        \"lastHttpStatus\": 200,\n        \"lastEventBatch\": {\n          \"size\": 1,\n          \"attempts\": 1,\n          \"status\": \"success\",\n          \"errorMessage\": null,\n          \"httpStatus\": 200\n        }\n      }\n    },\n    {\n      \"id\": \"47142266-b4d5-b17b-b275-964d11a2baeb\",\n      \"fields\": {\n        \"name\": \"new-project-email\",\n        \"memo\": \"Send an email when a project is added\",\n        \"url\": \"https://example.com/webhook/123\",\n        \"enabled\": true,\n        \"unsubscribeKey\": \"string\",\n        \"eventTypes\": [\n          \"add\",\n          \"update\"\n        ],\n        \"isReadyColumn\": null,\n        \"tableId\": \"Projects\"\n      },\n      \"usage\": {\n        \"numWaiting\": 8991,\n        \"status\": \"idle\",\n        \"updatedTime\": 1685637500424,\n        \"lastSuccessTime\": 1685637500424,\n        \"lastFailureTime\": 1685637500424,\n        \"lastErrorMessage\": null,\n        \"lastHttpStatus\": 200,\n        \"lastEventBatch\": {\n          \"size\": 1,\n          \"attempts\": 1,\n          \"status\": \"success\",\n          \"errorMessage\": null,\n          \"httpStatus\": 200\n        }\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8c8dbaa0-84d9-4bba-a4db-f3477893baf0",
+          "name": "Create new webhooks for a document",
+          "request": {
+            "name": "Create new webhooks for a document",
+            "description": {
+              "content": "Creates one or more webhooks that will POST to specified URLs when\ndata in the document changes. Returns the IDs of the created webhooks.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "docs",
+                ":docId",
+                "webhooks"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "docId",
+                  "description": "(Required) A string id (UUID)"
+                },
+                {
+                  "description": "The team name, or `docs` for personal areas",
+                  "type": "any",
+                  "value": "{{subdomain}}",
+                  "key": "subdomain"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"webhooks\": [\n    {\n      \"fields\": {\n        \"name\": \"<string>\",\n        \"memo\": \"<string>\",\n        \"url\": \"<uri>\",\n        \"enabled\": \"<boolean>\",\n        \"eventTypes\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"isReadyColumn\": \"<string>\",\n        \"tableId\": \"<string>\"\n      }\n    },\n    {\n      \"fields\": {\n        \"name\": \"<string>\",\n        \"memo\": \"<string>\",\n        \"url\": \"<uri>\",\n        \"enabled\": \"<boolean>\",\n        \"eventTypes\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"isReadyColumn\": \"<string>\",\n        \"tableId\": \"<string>\"\n      }\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "2f5e93d5-c643-44b0-8c5c-fa6e41fdacb8",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "docs",
+                    ":docId",
+                    "webhooks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "docId",
+                      "description": "(Required) A string id (UUID)"
+                    },
+                    {
+                      "description": "The team name, or `docs` for personal areas",
+                      "type": "any",
+                      "value": "{{subdomain}}",
+                      "key": "subdomain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"webhooks\": [\n    {\n      \"fields\": {\n        \"name\": \"new-project-email\",\n        \"memo\": \"Send an email when a project is added\",\n        \"url\": \"https://example.com/webhook/123\",\n        \"enabled\": \"<boolean>\",\n        \"eventTypes\": [\n          \"add\",\n          \"update\"\n        ],\n        \"isReadyColumn\": null,\n        \"tableId\": \"Projects\"\n      }\n    },\n    {\n      \"fields\": {\n        \"name\": \"new-project-email\",\n        \"memo\": \"Send an email when a project is added\",\n        \"url\": \"https://example.com/webhook/123\",\n        \"enabled\": \"<boolean>\",\n        \"eventTypes\": [\n          \"add\",\n          \"update\"\n        ],\n        \"isReadyColumn\": null,\n        \"tableId\": \"Projects\"\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"webhooks\": [\n    {\n      \"id\": \"xxxxxxx-xxxx-xxxx-xxxxxxxxxxxxxxxx\"\n    },\n    {\n      \"id\": \"xxxxxxx-xxxx-xxxx-xxxxxxxxxxxxxxxx\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4f89b1a2-493b-49ea-a0a6-6a3f29dbc857",
+          "name": "Modify a webhook",
+          "request": {
+            "name": "Modify a webhook",
+            "description": {
+              "content": "Update the configuration of an existing webhook, such as its URL,\nenabled state, or event types.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "docs",
+                ":docId",
+                "webhooks",
+                ":webhookId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "docId",
+                  "description": "(Required) A string id (UUID)"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "webhookId",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "The team name, or `docs` for personal areas",
+                  "type": "any",
+                  "value": "{{subdomain}}",
+                  "key": "subdomain"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"memo\": \"<string>\",\n  \"url\": \"<uri>\",\n  \"enabled\": \"<boolean>\",\n  \"eventTypes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"isReadyColumn\": \"<string>\",\n  \"tableId\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "30535eb1-3f1a-4c45-a983-bc5610a8477a",
+              "name": "Webhook updated successfully. Returns empty body.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "docs",
+                    ":docId",
+                    "webhooks",
+                    ":webhookId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "docId",
+                      "description": "(Required) A string id (UUID)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "webhookId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "The team name, or `docs` for personal areas",
+                      "type": "any",
+                      "value": "{{subdomain}}",
+                      "key": "subdomain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"new-project-email\",\n  \"memo\": \"Send an email when a project is added\",\n  \"url\": \"https://example.com/webhook/123\",\n  \"enabled\": \"<boolean>\",\n  \"eventTypes\": [\n    \"add\",\n    \"update\"\n  ],\n  \"isReadyColumn\": null,\n  \"tableId\": \"Projects\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ed3bb94d-84e6-43b2-a5d2-5afde722aca6",
+          "name": "Remove a webhook",
+          "request": {
+            "name": "Remove a webhook",
+            "description": {
+              "content": "Permanently delete a webhook. Any pending deliveries in the queue\nfor this webhook will also be removed.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "docs",
+                ":docId",
+                "webhooks",
+                ":webhookId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "docId",
+                  "description": "(Required) A string id (UUID)"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "webhookId",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "The team name, or `docs` for personal areas",
+                  "type": "any",
+                  "value": "{{subdomain}}",
+                  "key": "subdomain"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "419fe379-dc34-4202-a7cc-6279caa27503",
+              "name": "Webhook deleted successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "docs",
+                    ":docId",
+                    "webhooks",
+                    ":webhookId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "docId",
+                      "description": "(Required) A string id (UUID)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "webhookId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "The team name, or `docs` for personal areas",
+                      "type": "any",
+                      "value": "{{subdomain}}",
+                      "key": "subdomain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b5e1ac48-21c4-4d79-92d4-41f1af155e25",
+          "name": "Empty a document's queue of undelivered payloads",
+          "request": {
+            "name": "Empty a document's queue of undelivered payloads",
+            "description": {
+              "content": "Clear all pending webhook deliveries for this document. Use this\nif the queue has built up due to unreachable endpoints.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "docs",
+                ":docId",
+                "webhooks",
+                "queue"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "docId",
+                  "description": "(Required) A string id (UUID)"
+                },
+                {
+                  "description": "The team name, or `docs` for personal areas",
+                  "type": "any",
+                  "value": "{{subdomain}}",
+                  "key": "subdomain"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "273ac4d5-a06c-4e7d-8ca0-3ec4a9ca77f4",
+              "name": "Queue cleared successfully. Returns empty body.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "docs",
+                    ":docId",
+                    "webhooks",
+                    "queue"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "docId",
+                      "description": "(Required) A string id (UUID)"
+                    },
+                    {
+                      "description": "The team name, or `docs` for personal areas",
+                      "type": "any",
+                      "value": "{{subdomain}}",
+                      "key": "subdomain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "898f74fb-3038-4119-8d8e-b945e9df468a",
+          "name": "Clear queue for a specific webhook",
+          "request": {
+            "name": "Clear queue for a specific webhook",
+            "description": {
+              "content": "Clear the queue of pending payloads for a specific webhook.\nOnly document owners can call this endpoint.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "docs",
+                ":docId",
+                "webhooks",
+                "queue",
+                ":webhookId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "docId",
+                  "description": "(Required) A string id (UUID)"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "webhookId",
+                  "description": "(Required) ID of the webhook"
+                },
+                {
+                  "description": "The team name, or `docs` for personal areas",
+                  "type": "any",
+                  "value": "{{subdomain}}",
+                  "key": "subdomain"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8fe5c979-30b2-48fb-8694-19c8f459b5a8",
+              "name": "Queue cleared",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "docs",
+                    ":docId",
+                    "webhooks",
+                    "queue",
+                    ":webhookId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "docId",
+                      "description": "(Required) A string id (UUID)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "webhookId",
+                      "description": "(Required) ID of the webhook"
+                    },
+                    {
+                      "description": "The team name, or `docs` for personal areas",
+                      "type": "any",
+                      "value": "{{subdomain}}",
+                      "key": "subdomain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "The team name, or `docs` for personal areas",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "docs",
+      "key": "subdomain"
+    },
+    {
+      "type": "string",
+      "value": "https://{{gristhost}}/api",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "dd60ab3b-8078-441e-8c40-d3553e92ddf5",
+    "name": "Grist attachments webhooks API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "An API for manipulating Grist sites, workspaces, and documents.\n\n# Authentication\n<SecurityDefinitions />\n",
+      "type": "text/plain"
+    }
+  }
+}

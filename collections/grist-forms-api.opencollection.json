@@ -1,0 +1,49 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Grist attachments forms API",
+    "version": "1.0.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "forms",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get form view data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{gristhost}/api/docs/:docId/forms/:viewSectionId",
+            "params": [
+              {
+                "name": "docId",
+                "value": "",
+                "type": "path",
+                "description": "A string id (UUID)"
+              },
+              {
+                "name": "viewSectionId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the view section (form)"
+              }
+            ]
+          },
+          "docs": "Get the form configuration for a specific view section. Forms are\na special view type that allows external users to submit data.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

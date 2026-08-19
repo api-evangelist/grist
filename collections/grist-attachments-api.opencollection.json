@@ -1,0 +1,356 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Grist attachments API",
+    "version": "1.0.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "attachments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List metadata of all attachments in a doc",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{gristhost}/api/docs/:docId/attachments",
+            "headers": [
+              {
+                "name": "X-Sort",
+                "value": "pet,-age"
+              },
+              {
+                "name": "X-Limit",
+                "value": "5"
+              }
+            ],
+            "params": [
+              {
+                "name": "docId",
+                "value": "",
+                "type": "path",
+                "description": "A string id (UUID)"
+              },
+              {
+                "name": "filter",
+                "value": "{\"pet\": [\"cat\", \"dog\"]}",
+                "type": "query",
+                "description": "This is a JSON object mapping column names to arrays of allowed values.  For example, to filter column `pet` for values `cat` and `dog`, the filter would be `{\"pet\": [\"cat\", \"dog\"]}`. JSON contains characters that are not safe to place in a URL, so it is important to url-encode them.  For this example, the url-encoding is `%7B%22pet%22%3A%20%5B%22cat%22%2C%20%22dog%22%5D%7D`. See https://rosettacode.org/wiki/URL_encoding for how to url-encode a string, or https://www.urlencoder.org/ to try some examples. Multiple columns can be filtered. For example the filter for `pet` being either `cat` or `dog`, AND `size` being either `tiny` or `outrageously small`, would be `{\"pet\": [\"cat\", \"dog\"], \"size\": [\"tiny\", \"outrageously small\"]}`."
+              },
+              {
+                "name": "sort",
+                "value": "pet,-age",
+                "type": "query",
+                "description": "Order in which to return results. If a single column name is given (e.g. `pet`), results are placed in ascending order of values in that column. To get results in an order that was previously prepared manually in Grist, use the special `manualSort` column name. Multiple columns can be specified, separated by commas (e.g. `pet,age`). For descending order, prefix a column name with a `-` character (e.g. `pet,-age`). To include additional sorting options append them after a colon (e.g. `pet,-age:naturalSort;emptyLast,owner`). Available options are: `orderByChoice`, `naturalSort`, `emptyLast`. Without the `sort` parameter, the order of results is unspecified."
+              },
+              {
+                "name": "limit",
+                "value": "5",
+                "type": "query",
+                "description": "Return at most this number of rows.  A value of 0 is equivalent to having no limit."
+              }
+            ]
+          },
+          "docs": "List metadata of all attachments in a doc"
+        },
+        {
+          "info": {
+            "name": "Upload attachments to a doc",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{gristhost}/api/docs/:docId/attachments",
+            "params": [
+              {
+                "name": "docId",
+                "value": "",
+                "type": "path",
+                "description": "A string id (UUID)"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            }
+          },
+          "docs": "Upload attachments to a doc"
+        },
+        {
+          "info": {
+            "name": "Get the metadata for an attachment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{gristhost}/api/docs/:docId/attachments/:attachmentId",
+            "params": [
+              {
+                "name": "docId",
+                "value": "",
+                "type": "path",
+                "description": "A string id (UUID)"
+              },
+              {
+                "name": "attachmentId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get the metadata for an attachment"
+        },
+        {
+          "info": {
+            "name": "Download the contents of an attachment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{gristhost}/api/docs/:docId/attachments/:attachmentId/download",
+            "params": [
+              {
+                "name": "docId",
+                "value": "",
+                "type": "path",
+                "description": "A string id (UUID)"
+              },
+              {
+                "name": "attachmentId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Download the contents of an attachment"
+        },
+        {
+          "info": {
+            "name": "Download all attachments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{gristhost}/api/docs/:docId/attachments/archive",
+            "params": [
+              {
+                "name": "docId",
+                "value": "",
+                "type": "path",
+                "description": "A string id (UUID)"
+              },
+              {
+                "name": "format",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Download all attachments"
+        },
+        {
+          "info": {
+            "name": "Upload missing attachments",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{gristhost}/api/docs/:docId/attachments/archive",
+            "params": [
+              {
+                "name": "docId",
+                "value": "",
+                "type": "path",
+                "description": "A string id (UUID)"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "file",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Restores attachments which are missing from external storage."
+        },
+        {
+          "info": {
+            "name": "Get external store",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{gristhost}/api/docs/:docId/attachments/store",
+            "params": [
+              {
+                "name": "docId",
+                "value": "",
+                "type": "path",
+                "description": "A string id (UUID)"
+              }
+            ]
+          },
+          "docs": "Get external store"
+        },
+        {
+          "info": {
+            "name": "Set external store",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{gristhost}/api/docs/:docId/attachments/store",
+            "params": [
+              {
+                "name": "docId",
+                "value": "",
+                "type": "path",
+                "description": "A string id (UUID)"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Set external store"
+        },
+        {
+          "info": {
+            "name": "List external attachment stores",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{gristhost}/api/docs/:docId/attachments/stores",
+            "params": [
+              {
+                "name": "docId",
+                "value": "",
+                "type": "path",
+                "description": "A string id (UUID)"
+              }
+            ]
+          },
+          "docs": "List external attachment stores"
+        },
+        {
+          "info": {
+            "name": "Start transferring attachments",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{gristhost}/api/docs/:docId/attachments/transferAll",
+            "params": [
+              {
+                "name": "docId",
+                "value": "",
+                "type": "path",
+                "description": "A string id (UUID)"
+              }
+            ]
+          },
+          "docs": "Start transferring attachments"
+        },
+        {
+          "info": {
+            "name": "Get attachment transfer status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{gristhost}/api/docs/:docId/attachments/transferStatus",
+            "params": [
+              {
+                "name": "docId",
+                "value": "",
+                "type": "path",
+                "description": "A string id (UUID)"
+              }
+            ]
+          },
+          "docs": "Get attachment transfer status"
+        },
+        {
+          "info": {
+            "name": "Delete unused attachments from the document",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{gristhost}/api/docs/:docId/attachments/removeUnused",
+            "params": [
+              {
+                "name": "docId",
+                "value": "",
+                "type": "path",
+                "description": "A string id (UUID)"
+              },
+              {
+                "name": "expiredOnly",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "When an uploaded attachment is no longer used in a Grist document,  it's retained for a period of time in case it's needed again (e.g. to facilitate an \"undo\").\nThis removes all of these retained attachments, reducing the amount of storage used. This is particularly useful if a document has hit its attachment storage limit.\n"
+        },
+        {
+          "info": {
+            "name": "Update attachment usage tracking",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{gristhost}/api/docs/:docId/attachments/updateUsed",
+            "params": [
+              {
+                "name": "docId",
+                "value": "",
+                "type": "path",
+                "description": "A string id (UUID)"
+              }
+            ]
+          },
+          "docs": "Recalculate which attachments are in use by scanning the document.\nThis is mostly used for testing and maintenance.\n"
+        },
+        {
+          "info": {
+            "name": "Verify attachment file integrity",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{gristhost}/api/docs/:docId/attachments/verifyFiles",
+            "params": [
+              {
+                "name": "docId",
+                "value": "",
+                "type": "path",
+                "description": "A string id (UUID)"
+              }
+            ]
+          },
+          "docs": "Verify that attachment records match the actual stored files.\nThis is a maintenance endpoint to check for data consistency.\nOnly document owners can call this endpoint.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

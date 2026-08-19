@@ -1,0 +1,61 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Grist attachments session API",
+    "version": "1.0.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "session",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get active session information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{gristhost}/api/session/access/active"
+          },
+          "docs": "Returns information about the active user and organization for the current session.\n"
+        },
+        {
+          "info": {
+            "name": "Set active user for organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{gristhost}/api/session/access/active",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Switch which user account is active for a given organization.\nUseful when a user has multiple accounts logged in.\n"
+        },
+        {
+          "info": {
+            "name": "Get all session users and organizations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{gristhost}/api/session/access/all"
+          },
+          "docs": "Returns all user profiles logged into the current session and all\norganizations they can access.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,188 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Grist attachments columns API",
+    "version": "1.0.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "columns",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List columns in a table",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{gristhost}/api/docs/:docId/tables/:tableId/columns",
+            "params": [
+              {
+                "name": "docId",
+                "value": "",
+                "type": "path",
+                "description": "A string id (UUID)"
+              },
+              {
+                "name": "tableId",
+                "value": "",
+                "type": "path",
+                "description": "normalized table name (see `TABLE ID` in Raw Data) or numeric row ID in `_grist_Tables`"
+              },
+              {
+                "name": "hidden",
+                "value": "",
+                "type": "query",
+                "description": "Set to true to include the hidden columns (like \"manualSort\")"
+              }
+            ]
+          },
+          "docs": "List columns in a table"
+        },
+        {
+          "info": {
+            "name": "Add columns to a table",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{gristhost}/api/docs/:docId/tables/:tableId/columns",
+            "params": [
+              {
+                "name": "docId",
+                "value": "",
+                "type": "path",
+                "description": "A string id (UUID)"
+              },
+              {
+                "name": "tableId",
+                "value": "",
+                "type": "path",
+                "description": "normalized table name (see `TABLE ID` in Raw Data) or numeric row ID in `_grist_Tables`"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add columns to a table"
+        },
+        {
+          "info": {
+            "name": "Add or update columns of a table",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{gristhost}/api/docs/:docId/tables/:tableId/columns",
+            "params": [
+              {
+                "name": "docId",
+                "value": "",
+                "type": "path",
+                "description": "A string id (UUID)"
+              },
+              {
+                "name": "tableId",
+                "value": "",
+                "type": "path",
+                "description": "normalized table name (see `TABLE ID` in Raw Data) or numeric row ID in `_grist_Tables`"
+              },
+              {
+                "name": "noadd",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "noupdate",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "replaceall",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add or update columns of a table"
+        },
+        {
+          "info": {
+            "name": "Modify columns of a table",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{gristhost}/api/docs/:docId/tables/:tableId/columns",
+            "params": [
+              {
+                "name": "docId",
+                "value": "",
+                "type": "path",
+                "description": "A string id (UUID)"
+              },
+              {
+                "name": "tableId",
+                "value": "",
+                "type": "path",
+                "description": "normalized table name (see `TABLE ID` in Raw Data) or numeric row ID in `_grist_Tables`"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Modify columns of a table"
+        },
+        {
+          "info": {
+            "name": "Delete a column of a table",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{gristhost}/api/docs/:docId/tables/:tableId/columns/:colId",
+            "params": [
+              {
+                "name": "docId",
+                "value": "",
+                "type": "path",
+                "description": "A string id (UUID)"
+              },
+              {
+                "name": "tableId",
+                "value": "",
+                "type": "path",
+                "description": "normalized table name (see `TABLE ID` in Raw Data) or numeric row ID in `_grist_Tables`"
+              },
+              {
+                "name": "colId",
+                "value": "",
+                "type": "path",
+                "description": "The column id (without the starting `$`) as shown in the column configuration below the label"
+              }
+            ]
+          },
+          "docs": "Delete a column of a table"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

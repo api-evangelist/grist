@@ -1,0 +1,35 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Grist attachments widgets API",
+    "version": "1.0.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "widgets",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List available custom widgets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{gristhost}/api/widgets"
+          },
+          "docs": "Get all widget definitions from the configured widget repository.\nCustom widgets extend Grist's functionality with specialized views.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

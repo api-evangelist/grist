@@ -1,0 +1,250 @@
+{
+  "item": [
+    {
+      "id": "785368a2-b8c9-4fcc-9b3c-0a2d9d909fa5",
+      "name": "templates",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "3461b36c-9463-449a-b79b-1919843c9138",
+          "name": "List available templates",
+          "request": {
+            "name": "List available templates",
+            "description": {
+              "content": "Get all available templates. Templates are organized by workspace within\na template organization configured on the server.\n\n**Note:** Requires a template organization to be configured on the server.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "templates"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "The team name, or `docs` for personal areas",
+                  "type": "any",
+                  "value": "{{subdomain}}",
+                  "key": "subdomain"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d3c5d7ae-a7c1-47cb-91c8-a494907baed0",
+              "name": "List of workspaces containing templates",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "templates"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The team name, or `docs` for personal areas",
+                      "type": "any",
+                      "value": "{{subdomain}}",
+                      "key": "subdomain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"access\": \"editors\",\n    \"docs\": [\n      {\n        \"id\": \"string\",\n        \"name\": \"Project Lollipop\",\n        \"isPinned\": true,\n        \"urlId\": null,\n        \"access\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      {\n        \"id\": \"string\",\n        \"name\": \"Project Lollipop\",\n        \"isPinned\": true,\n        \"urlId\": null,\n        \"access\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      }\n    ],\n    \"id\": 97,\n    \"name\": \"Secret Plans\",\n    \"orgDomain\": \"gristlabs\"\n  },\n  {\n    \"access\": \"viewers\",\n    \"docs\": [\n      {\n        \"id\": \"string\",\n        \"name\": \"Project Lollipop\",\n        \"isPinned\": true,\n        \"urlId\": null,\n        \"access\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      {\n        \"id\": \"string\",\n        \"name\": \"Project Lollipop\",\n        \"isPinned\": true,\n        \"urlId\": null,\n        \"access\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      }\n    ],\n    \"id\": 97,\n    \"name\": \"Secret Plans\",\n    \"orgDomain\": \"gristlabs\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c3e3f5dc-35b4-4206-963f-a0c0ae25aeb8",
+          "name": "Get template details",
+          "request": {
+            "name": "Get template details",
+            "description": {
+              "content": "Get information about a specific template.\n\n**Note:** Requires a template organization to be configured on the server.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "templates",
+                ":templateId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "templateId",
+                  "description": "(Required) ID of the template"
+                },
+                {
+                  "description": "The team name, or `docs` for personal areas",
+                  "type": "any",
+                  "value": "{{subdomain}}",
+                  "key": "subdomain"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "103d9459-8929-4121-8597-027df0602268",
+              "name": "Template information",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "templates",
+                    ":templateId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "templateId",
+                      "description": "(Required) ID of the template"
+                    },
+                    {
+                      "description": "The team name, or `docs` for personal areas",
+                      "type": "any",
+                      "value": "{{subdomain}}",
+                      "key": "subdomain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"access\": \"owners\",\n  \"id\": \"string\",\n  \"isPinned\": true,\n  \"name\": \"Project Lollipop\",\n  \"urlId\": null,\n  \"workspace\": {\n    \"access\": \"viewers\",\n    \"id\": 97,\n    \"name\": \"Secret Plans\",\n    \"org\": {\n      \"id\": 42,\n      \"name\": \"Grist Labs\",\n      \"domain\": \"gristlabs\",\n      \"owner\": {\n        \"id\": 101,\n        \"name\": \"Helga Hufflepuff\",\n        \"picture\": null\n      },\n      \"createdAt\": \"2019-09-13T15:42:35.000Z\",\n      \"updatedAt\": \"2019-09-13T15:42:35.000Z\",\n      \"access\": \"owners\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "The team name, or `docs` for personal areas",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "docs",
+      "key": "subdomain"
+    },
+    {
+      "type": "string",
+      "value": "https://{{gristhost}}/api",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "4ae24aa0-6e65-4882-90b9-6dcb965b5c43",
+    "name": "Grist attachments templates API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "An API for manipulating Grist sites, workspaces, and documents.\n\n# Authentication\n<SecurityDefinitions />\n",
+      "type": "text/plain"
+    }
+  }
+}

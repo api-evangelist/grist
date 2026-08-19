@@ -1,0 +1,1014 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Grist attachments docs API",
+    "version": "1.0.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "docs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create an empty document",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{gristhost}/api/workspaces/:workspaceId/docs",
+            "params": [
+              {
+                "name": "workspaceId",
+                "value": "",
+                "type": "path",
+                "description": "An integer id"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create an empty document"
+        },
+        {
+          "info": {
+            "name": "Import an existing document",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{gristhost}/api/workspaces/:workspaceId/import",
+            "params": [
+              {
+                "name": "workspaceId",
+                "value": "",
+                "type": "path",
+                "description": "An integer id"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "upload",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "documentName",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Import an existing document"
+        },
+        {
+          "info": {
+            "name": "Create a document",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{gristhost}/api/docs",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "A unified endpoint for creating documents. Can create an empty document,\ncopy an existing document, or import a file.\n\n- To create an empty unsaved document: provide no parameters\n- To create an empty saved document: provide `workspaceId`\n- To copy an existing document: provide `sourceDocumentId`, `workspaceId`, and `documentName`\n- To import a file: use multipart/form-data with a file upload and optional `workspaceId`\n"
+        },
+        {
+          "info": {
+            "name": "Describe a document",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{gristhost}/api/docs/:docId",
+            "params": [
+              {
+                "name": "docId",
+                "value": "",
+                "type": "path",
+                "description": "A string id (UUID)"
+              }
+            ]
+          },
+          "docs": "Describe a document"
+        },
+        {
+          "info": {
+            "name": "Modify document metadata (but not its contents)",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{gristhost}/api/docs/:docId",
+            "params": [
+              {
+                "name": "docId",
+                "value": "",
+                "type": "path",
+                "description": "A string id (UUID)"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Modify document metadata (but not its contents)"
+        },
+        {
+          "info": {
+            "name": "Delete a document",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{gristhost}/api/docs/:docId",
+            "params": [
+              {
+                "name": "docId",
+                "value": "",
+                "type": "path",
+                "description": "A string id (UUID)"
+              }
+            ]
+          },
+          "docs": "Delete a document"
+        },
+        {
+          "info": {
+            "name": "Move document to trash",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{gristhost}/api/docs/:docId/remove",
+            "params": [
+              {
+                "name": "docId",
+                "value": "",
+                "type": "path",
+                "description": "A string id (UUID)"
+              },
+              {
+                "name": "permanent",
+                "value": "",
+                "type": "query",
+                "description": "If true, permanently delete instead of moving to trash"
+              }
+            ]
+          },
+          "docs": "Soft-delete the document by moving it to trash. The document can be\nrestored using the unremove endpoint. If the `permanent` query parameter\nis set to true, the document is permanently deleted instead.\n"
+        },
+        {
+          "info": {
+            "name": "Restore document from trash",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{gristhost}/api/docs/:docId/unremove",
+            "params": [
+              {
+                "name": "docId",
+                "value": "",
+                "type": "path",
+                "description": "A string id (UUID)"
+              }
+            ]
+          },
+          "docs": "Recover a document that was previously soft-deleted. Only works if the\ndocument is still in the trash.\n"
+        },
+        {
+          "info": {
+            "name": "Move document to another workspace.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{gristhost}/api/docs/:docId/move",
+            "params": [
+              {
+                "name": "docId",
+                "value": "",
+                "type": "path",
+                "description": "A string id (UUID)"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Move document to another workspace."
+        },
+        {
+          "info": {
+            "name": "Pin a document",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{gristhost}/api/docs/:docId/pin",
+            "params": [
+              {
+                "name": "docId",
+                "value": "",
+                "type": "path",
+                "description": "A string id (UUID)"
+              }
+            ]
+          },
+          "docs": "Pin the document so it appears in a prominent location. Pinned documents\nare displayed at the top of workspace listings for easy access.\n"
+        },
+        {
+          "info": {
+            "name": "Unpin a document",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{gristhost}/api/docs/:docId/unpin",
+            "params": [
+              {
+                "name": "docId",
+                "value": "",
+                "type": "path",
+                "description": "A string id (UUID)"
+              }
+            ]
+          },
+          "docs": "Remove the pinned status from a document."
+        },
+        {
+          "info": {
+            "name": "Disable a document.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{gristhost}/api/docs/:docId/disable",
+            "params": [
+              {
+                "name": "docId",
+                "value": "",
+                "type": "path",
+                "description": "A string id (UUID)"
+              }
+            ]
+          },
+          "docs": "Disabled documents cannot be accessed or modified. Moving and\nrenaming a disabled doc is also forbidden, as well as\naccessing or submitting published forms associated to a\ndisabled document.\n\nDisabled documents, however, can be moved to and restored from\nthe trash.\n\nThe operation is non-destructive. Disabled documents can be\nre-enabled.\n\nOnly admin accounts can disable a document.\n"
+        },
+        {
+          "info": {
+            "name": "Enable a document.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{gristhost}/api/docs/:docId/enable",
+            "params": [
+              {
+                "name": "docId",
+                "value": "",
+                "type": "path",
+                "description": "A string id (UUID)"
+              }
+            ]
+          },
+          "docs": "If a document has been previously disabled, this will restore\nall former access to a document, including access to its\nassociated published forms.\n\nOnly admin accounts can enable a document.\n"
+        },
+        {
+          "info": {
+            "name": "Copies a document to a workspace.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{gristhost}/api/docs/:docId/copy",
+            "params": [
+              {
+                "name": "docId",
+                "value": "",
+                "type": "path",
+                "description": "A string id (UUID)"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Copies a document to a workspace."
+        },
+        {
+          "info": {
+            "name": "Fork a document",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{gristhost}/api/docs/:docId/fork",
+            "params": [
+              {
+                "name": "docId",
+                "value": "",
+                "type": "path",
+                "description": "A string id (UUID)"
+              }
+            ]
+          },
+          "docs": "Create a fork of a document. A fork is a personal copy that tracks its relationship\nto the original document. Forks can be used to experiment with changes before\napplying them to the original.\n\nThe fork will have a new docId and urlId that encode the relationship to the trunk\n(original) document.\n"
+        },
+        {
+          "info": {
+            "name": "List users with access to document",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{gristhost}/api/docs/:docId/access",
+            "params": [
+              {
+                "name": "docId",
+                "value": "",
+                "type": "path",
+                "description": "A string id (UUID)"
+              }
+            ]
+          },
+          "docs": "List users with access to document"
+        },
+        {
+          "info": {
+            "name": "Change who has access to document",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{gristhost}/api/docs/:docId/access",
+            "params": [
+              {
+                "name": "docId",
+                "value": "",
+                "type": "path",
+                "description": "A string id (UUID)"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Change who has access to document"
+        },
+        {
+          "info": {
+            "name": "Get users for 'View As' feature",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{gristhost}/api/docs/:docId/usersForViewAs",
+            "params": [
+              {
+                "name": "docId",
+                "value": "",
+                "type": "path",
+                "description": "A string id (UUID)"
+              }
+            ]
+          },
+          "docs": "Get users that can be used with the \"View As\" feature for testing access rules.\nOnly document owners can call this endpoint.\n\nUsers are drawn from:\n- Users the document is shared with\n- Users mentioned in user attribute tables\n- Predefined example users\n"
+        },
+        {
+          "info": {
+            "name": "Content of document, as an Sqlite file",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{gristhost}/api/docs/:docId/download",
+            "params": [
+              {
+                "name": "docId",
+                "value": "",
+                "type": "path",
+                "description": "A string id (UUID)"
+              },
+              {
+                "name": "nohistory",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "template",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Content of document, as an Sqlite file"
+        },
+        {
+          "info": {
+            "name": "Content of document, as an Excel file",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{gristhost}/api/docs/:docId/download/xlsx",
+            "params": [
+              {
+                "name": "docId",
+                "value": "",
+                "type": "path",
+                "description": "A string id (UUID)"
+              },
+              {
+                "name": "header",
+                "value": "",
+                "type": "query",
+                "description": "Format for headers. Labels tend to be more human-friendly while colIds are more normalized."
+              },
+              {
+                "name": "tableId",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Content of document, as an Excel file"
+        },
+        {
+          "info": {
+            "name": "Content of table, as a CSV file",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{gristhost}/api/docs/:docId/download/csv",
+            "params": [
+              {
+                "name": "docId",
+                "value": "",
+                "type": "path",
+                "description": "A string id (UUID)"
+              },
+              {
+                "name": "tableId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "header",
+                "value": "",
+                "type": "query",
+                "description": "Format for headers. Labels tend to be more human-friendly while colIds are more normalized."
+              }
+            ]
+          },
+          "docs": "Content of table, as a CSV file"
+        },
+        {
+          "info": {
+            "name": "Content of table, as a TSV file",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{gristhost}/api/docs/:docId/download/tsv",
+            "params": [
+              {
+                "name": "docId",
+                "value": "",
+                "type": "path",
+                "description": "A string id (UUID)"
+              },
+              {
+                "name": "tableId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "header",
+                "value": "",
+                "type": "query",
+                "description": "Format for headers. Labels tend to be more human-friendly while colIds are more normalized."
+              }
+            ]
+          },
+          "docs": "Download table data as tab-separated values."
+        },
+        {
+          "info": {
+            "name": "Content of table, as a DSV file",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{gristhost}/api/docs/:docId/download/dsv",
+            "params": [
+              {
+                "name": "docId",
+                "value": "",
+                "type": "path",
+                "description": "A string id (UUID)"
+              },
+              {
+                "name": "tableId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "header",
+                "value": "",
+                "type": "query",
+                "description": "Format for headers. Labels tend to be more human-friendly while colIds are more normalized."
+              }
+            ]
+          },
+          "docs": "Download table data using a custom delimiter (💩)."
+        },
+        {
+          "info": {
+            "name": "The schema of a table",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{gristhost}/api/docs/:docId/download/table-schema",
+            "params": [
+              {
+                "name": "docId",
+                "value": "",
+                "type": "path",
+                "description": "A string id (UUID)"
+              },
+              {
+                "name": "tableId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "header",
+                "value": "",
+                "type": "query",
+                "description": "Format for headers. Labels tend to be more human-friendly while colIds are more normalized."
+              }
+            ]
+          },
+          "docs": "The schema follows [frictionlessdata's table-schema standard](https://specs.frictionlessdata.io/table-schema/)."
+        },
+        {
+          "info": {
+            "name": "List document snapshots",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{gristhost}/api/docs/:docId/snapshots",
+            "params": [
+              {
+                "name": "docId",
+                "value": "",
+                "type": "path",
+                "description": "A string id (UUID)"
+              },
+              {
+                "name": "raw",
+                "value": "",
+                "type": "query",
+                "description": "If true, returns all snapshots including those not in the snapshot inventory"
+              }
+            ]
+          },
+          "docs": "Returns a list of snapshots (backups) of the document. Snapshots are created\nautomatically as the document is edited. Most recent snapshots are listed first.\n"
+        },
+        {
+          "info": {
+            "name": "Remove document snapshots",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{gristhost}/api/docs/:docId/snapshots/remove",
+            "params": [
+              {
+                "name": "docId",
+                "value": "",
+                "type": "path",
+                "description": "A string id (UUID)"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Remove specific snapshots from a document's backup history.\nOnly document owners can remove snapshots.\n"
+        },
+        {
+          "info": {
+            "name": "Get document action history states",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{gristhost}/api/docs/:docId/states",
+            "params": [
+              {
+                "name": "docId",
+                "value": "",
+                "type": "path",
+                "description": "A string id (UUID)"
+              }
+            ]
+          },
+          "docs": "Returns a list of document states representing the action history.\nEach state has a sequential number (n) and a hash (h) that uniquely\nidentifies that point in history. Most recent state is first.\n"
+        },
+        {
+          "info": {
+            "name": "Compare document versions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{gristhost}/api/docs/:docId/compare",
+            "params": [
+              {
+                "name": "docId",
+                "value": "",
+                "type": "path",
+                "description": "A string id (UUID)"
+              },
+              {
+                "name": "left",
+                "value": "",
+                "type": "query",
+                "description": "Hash of the left version to compare (defaults to HEAD)"
+              },
+              {
+                "name": "right",
+                "value": "",
+                "type": "query",
+                "description": "Hash of the right version to compare (defaults to HEAD)"
+              },
+              {
+                "name": "maxRows",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of row changes to include in details"
+              }
+            ]
+          },
+          "docs": "Compare two versions of the same document by their state hashes.\nReturns details about what changed between the versions.\n"
+        },
+        {
+          "info": {
+            "name": "Compare two documents",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{gristhost}/api/docs/:docId/compare/:docId2",
+            "params": [
+              {
+                "name": "docId",
+                "value": "",
+                "type": "path",
+                "description": "A string id (UUID)"
+              },
+              {
+                "name": "docId2",
+                "value": "",
+                "type": "path",
+                "description": "ID of the document to compare with"
+              },
+              {
+                "name": "detail",
+                "value": "",
+                "type": "query",
+                "description": "If true, include detailed change information"
+              },
+              {
+                "name": "maxRows",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of row changes to include"
+              }
+            ]
+          },
+          "docs": "Compare this document with another document. Useful for comparing\na fork with its trunk document.\n"
+        },
+        {
+          "info": {
+            "name": "Truncate the document's action history",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{gristhost}/api/docs/:docId/states/remove",
+            "params": [
+              {
+                "name": "docId",
+                "value": "",
+                "type": "path",
+                "description": "A string id (UUID)"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Truncate the document's action history"
+        },
+        {
+          "info": {
+            "name": "List change proposals",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{gristhost}/api/docs/:docId/proposals",
+            "params": [
+              {
+                "name": "docId",
+                "value": "",
+                "type": "path",
+                "description": "A string id (UUID)"
+              },
+              {
+                "name": "outgoing",
+                "value": "",
+                "type": "query",
+                "description": "If true, list proposals where this document is the source. Otherwise list proposals where this document is the destination."
+              }
+            ]
+          },
+          "docs": "List proposals associated with a document. Proposals are suggested changes\nfrom forks that can be reviewed and applied to the trunk document.\n"
+        },
+        {
+          "info": {
+            "name": "Create a change proposal",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{gristhost}/api/docs/:docId/propose",
+            "params": [
+              {
+                "name": "docId",
+                "value": "",
+                "type": "path",
+                "description": "A string id (UUID)"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a proposal from a fork to its trunk document. The proposal contains\nthe comparison of changes between the fork and trunk.\nThis endpoint can only be called on a fork document.\n"
+        },
+        {
+          "info": {
+            "name": "Apply a change proposal",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{gristhost}/api/docs/:docId/proposals/:proposalId/apply",
+            "params": [
+              {
+                "name": "docId",
+                "value": "",
+                "type": "path",
+                "description": "A string id (UUID)"
+              },
+              {
+                "name": "proposalId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the proposal to apply"
+              }
+            ]
+          },
+          "docs": "Apply a proposal's changes to the document. This merges the fork's\nchanges into the trunk document.\n"
+        },
+        {
+          "info": {
+            "name": "Reload a document",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{gristhost}/api/docs/:docId/force-reload",
+            "params": [
+              {
+                "name": "docId",
+                "value": "",
+                "type": "path",
+                "description": "A string id (UUID)"
+              }
+            ]
+          },
+          "docs": "Closes and reopens the document, forcing the python engine to restart."
+        },
+        {
+          "info": {
+            "name": "Flush document to storage",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{gristhost}/api/docs/:docId/flush",
+            "params": [
+              {
+                "name": "docId",
+                "value": "",
+                "type": "path",
+                "description": "A string id (UUID)"
+              }
+            ]
+          },
+          "docs": "Ensure all pending changes to the document are written to persistent storage.\nReturns true if the document was flushed, false if the document was not open.\n"
+        },
+        {
+          "info": {
+            "name": "Reassign document to appropriate worker",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{gristhost}/api/docs/:docId/assign",
+            "params": [
+              {
+                "name": "docId",
+                "value": "",
+                "type": "path",
+                "description": "A string id (UUID)"
+              },
+              {
+                "name": "group",
+                "value": "",
+                "type": "query",
+                "description": "Update the document's worker group (requires special permit)"
+              }
+            ]
+          },
+          "docs": "Administrative endpoint that checks if a document is assigned to the expected\nworker group and frees it for reassignment if not. Used for load balancing\nand maintenance operations.\n"
+        },
+        {
+          "info": {
+            "name": "Replace document content",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{gristhost}/api/docs/:docId/replace",
+            "params": [
+              {
+                "name": "docId",
+                "value": "",
+                "type": "path",
+                "description": "A string id (UUID)"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Replace the current document content with content from another source.\nCan restore from a snapshot or copy from another document.\n"
+        },
+        {
+          "info": {
+            "name": "Set recovery mode for a document",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{gristhost}/api/docs/:docId/recover",
+            "params": [
+              {
+                "name": "docId",
+                "value": "",
+                "type": "path",
+                "description": "A string id (UUID)"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Controls the recovery mode of a document. Recovery mode helps in recovering from errors or corrupted states. Only document owners can control recovery mode."
+        },
+        {
+          "info": {
+            "name": "Get formula timing status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{gristhost}/api/docs/:docId/timing",
+            "params": [
+              {
+                "name": "docId",
+                "value": "",
+                "type": "path",
+                "description": "A string id (UUID)"
+              }
+            ]
+          },
+          "docs": "Check if formula timing is enabled for a document and retrieve timing data\nif available. Only document owners can access timing information.\n"
+        },
+        {
+          "info": {
+            "name": "Start formula timing",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{gristhost}/api/docs/:docId/timing/start",
+            "params": [
+              {
+                "name": "docId",
+                "value": "",
+                "type": "path",
+                "description": "A string id (UUID)"
+              }
+            ]
+          },
+          "docs": "Start collecting timing information for formula calculations.\nOnly document owners can start timing.\n"
+        },
+        {
+          "info": {
+            "name": "Stop formula timing",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{gristhost}/api/docs/:docId/timing/stop",
+            "params": [
+              {
+                "name": "docId",
+                "value": "",
+                "type": "path",
+                "description": "A string id (UUID)"
+              }
+            ]
+          },
+          "docs": "Stop collecting timing information and return the collected data.\nOnly document owners can stop timing.\n"
+        },
+        {
+          "info": {
+            "name": "Apply a list of user actions",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{gristhost}/api/docs/:docId/apply",
+            "params": [
+              {
+                "name": "docId",
+                "value": "",
+                "type": "path",
+                "description": "A string id (UUID)"
+              },
+              {
+                "name": "noparse",
+                "value": "",
+                "type": "query",
+                "description": "If true, string values are stored as-is without parsing (e.g. dates won't be auto-converted)"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Apply a sequence of user actions to a document. This is a low-level endpoint\nfor making batch changes using Grist's internal action format.\n\nEach action is an array where the first element is the action type.\nCommon action types:\n- `[\"AddRecord\", tableId, rowId, {column: value}]` - Add a row (use null for auto-assigned rowId)\n- `[\"UpdateRecord\", tableId, rowId, {column: value}]` - Update a row\n- `[\"RemoveRecord\", tableId, rowId]` - Delete a row\n- `[\"BulkAddRecord\", tableId, [rowIds], {column: [v"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
