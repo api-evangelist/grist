@@ -35,7 +35,7 @@ tags:
 url: https://raw.githubusercontent.com/api-evangelist/grist/refs/heads/main/apis.yml
 created: '2026-06-12'
 modified: '2026-06-12'
-specificationVersion: '0.19'
+specificationVersion: '0.23'
 apis:
 - aid: grist:grist-attachments-api
   name: Grist attachments API
