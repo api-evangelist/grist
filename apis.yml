@@ -30,6 +30,14 @@ tags:
   - Collaboration
   - No-Code
   - Data Management
+  - Webhook
+  - Open-Source
+tags_raw:
+  - Spreadsheet
+  - Database
+  - Collaboration
+  - No-Code
+  - Data Management
   - Webhooks
   - Open Source
 url: https://raw.githubusercontent.com/api-evangelist/grist/refs/heads/main/apis.yml
@@ -44,6 +52,8 @@ apis:
   humanURL: https://support.getgrist.com/api/
   baseURL: https://docs.getgrist.com/api
   tags:
+  - Attachments
+  tags_raw:
   - attachments
   properties:
   - type: OpenAPI
@@ -58,6 +68,8 @@ apis:
   humanURL: https://support.getgrist.com/api/
   baseURL: https://docs.getgrist.com/api
   tags:
+  - Columns
+  tags_raw:
   - columns
   properties:
   - type: OpenAPI
@@ -73,6 +85,8 @@ apis:
   humanURL: https://support.getgrist.com/api/
   baseURL: https://docs.getgrist.com/api
   tags:
+  - Data
+  tags_raw:
   - data
   properties:
   - type: OpenAPI
@@ -87,6 +101,8 @@ apis:
   humanURL: https://support.getgrist.com/api/
   baseURL: https://docs.getgrist.com/api
   tags:
+  - Docs
+  tags_raw:
   - docs
   properties:
   - type: OpenAPI
@@ -101,6 +117,8 @@ apis:
   humanURL: https://support.getgrist.com/api/
   baseURL: https://docs.getgrist.com/api
   tags:
+  - Forms
+  tags_raw:
   - forms
   properties:
   - type: OpenAPI
@@ -115,6 +133,8 @@ apis:
   humanURL: https://support.getgrist.com/api/
   baseURL: https://docs.getgrist.com/api
   tags:
+  - Organization
+  tags_raw:
   - orgs
   properties:
   - type: OpenAPI
@@ -129,6 +149,8 @@ apis:
   humanURL: https://support.getgrist.com/api/
   baseURL: https://docs.getgrist.com/api
   tags:
+  - Profile
+  tags_raw:
   - profile
   properties:
   - type: OpenAPI
@@ -143,6 +165,8 @@ apis:
   humanURL: https://support.getgrist.com/api/
   baseURL: https://docs.getgrist.com/api
   tags:
+  - Records
+  tags_raw:
   - records
   properties:
   - type: OpenAPI
@@ -157,6 +181,8 @@ apis:
   humanURL: https://support.getgrist.com/api/
   baseURL: https://docs.getgrist.com/api
   tags:
+  - Service Accounts
+  tags_raw:
   - service accounts
   properties:
   - type: OpenAPI
@@ -171,6 +197,8 @@ apis:
   humanURL: https://support.getgrist.com/api/
   baseURL: https://docs.getgrist.com/api
   tags:
+  - Session
+  tags_raw:
   - session
   properties:
   - type: OpenAPI
@@ -185,6 +213,8 @@ apis:
   humanURL: https://support.getgrist.com/api/
   baseURL: https://docs.getgrist.com/api
   tags:
+  - SQL
+  tags_raw:
   - sql
   properties:
   - type: OpenAPI
@@ -199,6 +229,8 @@ apis:
   humanURL: https://support.getgrist.com/api/
   baseURL: https://docs.getgrist.com/api
   tags:
+  - Tables
+  tags_raw:
   - tables
   properties:
   - type: OpenAPI
@@ -213,6 +245,8 @@ apis:
   humanURL: https://support.getgrist.com/api/
   baseURL: https://docs.getgrist.com/api
   tags:
+  - Templates
+  tags_raw:
   - templates
   properties:
   - type: OpenAPI
@@ -227,6 +261,8 @@ apis:
   humanURL: https://support.getgrist.com/api/
   baseURL: https://docs.getgrist.com/api
   tags:
+  - User
+  tags_raw:
   - users
   properties:
   - type: OpenAPI
@@ -241,6 +277,8 @@ apis:
   humanURL: https://support.getgrist.com/api/
   baseURL: https://docs.getgrist.com/api
   tags:
+  - Webhook
+  tags_raw:
   - webhooks
   properties:
   - type: OpenAPI
@@ -255,6 +293,8 @@ apis:
   humanURL: https://support.getgrist.com/api/
   baseURL: https://docs.getgrist.com/api
   tags:
+  - Widgets
+  tags_raw:
   - widgets
   properties:
   - type: OpenAPI
@@ -269,6 +309,8 @@ apis:
   humanURL: https://support.getgrist.com/api/
   baseURL: https://docs.getgrist.com/api
   tags:
+  - Workspaces
+  tags_raw:
   - workspaces
   properties:
   - type: OpenAPI
