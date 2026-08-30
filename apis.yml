@@ -80,7 +80,7 @@ apis:
   humanURL: https://support.getgrist.com/api/
   baseURL: https://docs.getgrist.com/api
   tags:
-  - Columns
+  - columns
   tags_raw:
   - columns
   properties:
@@ -145,7 +145,7 @@ apis:
   humanURL: https://support.getgrist.com/api/
   baseURL: https://docs.getgrist.com/api
   tags:
-  - Organization
+  - orgs
   tags_raw:
   - orgs
   properties:
@@ -193,7 +193,7 @@ apis:
   humanURL: https://support.getgrist.com/api/
   baseURL: https://docs.getgrist.com/api
   tags:
-  - Service Accounts
+  - service accounts
   tags_raw:
   - service accounts
   properties:
