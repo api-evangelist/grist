@@ -38,7 +38,7 @@ accessModel:
   method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/grist.png
 tags:
-  - Spreadsheet
+  - Spreadsheets
   - Database
   - Collaboration
   - No-Code
@@ -162,7 +162,7 @@ apis:
   humanURL: https://support.getgrist.com/api/
   baseURL: https://docs.getgrist.com/api
   tags:
-  - Profile
+  - Profiles
   tags_raw:
   - profile
   properties:
@@ -210,7 +210,7 @@ apis:
   humanURL: https://support.getgrist.com/api/
   baseURL: https://docs.getgrist.com/api
   tags:
-  - Session
+  - Sessions
   tags_raw:
   - session
   properties:
@@ -322,7 +322,7 @@ apis:
   humanURL: https://support.getgrist.com/api/
   baseURL: https://docs.getgrist.com/api
   tags:
-  - Workspaces
+  - Workspace
   tags_raw:
   - workspaces
   properties:
