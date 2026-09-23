@@ -1,15 +1,11 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   description: 'An API for manipulating Grist sites, workspaces, and documents.
 
 
-    # Authentication
-
-    <SecurityDefinitions />
-
-    '
+    # Authentication'
   version: 1.0.1
-  title: Grist attachments orgs API
+  title: Grist Orgs API
 servers:
 - url: https://{gristhost}/api
   variables:
@@ -19,14 +15,14 @@ servers:
 security:
 - ApiKey: []
 tags:
-- name: orgs
+- name: Orgs
   description: Team sites and personal spaces are called 'orgs' in the API.
 paths:
   /orgs:
     get:
       operationId: listOrgs
       tags:
-      - orgs
+      - Orgs
       summary: List the orgs you have access to
       description: This enumerates all the team sites or personal areas available.
       responses:
@@ -40,7 +36,7 @@ paths:
     get:
       operationId: describeOrg
       tags:
-      - orgs
+      - Orgs
       summary: Describe an org
       parameters:
       - $ref: '#/components/parameters/orgIdPathParam'
@@ -54,7 +50,7 @@ paths:
     patch:
       operationId: modifyOrg
       tags:
-      - orgs
+      - Orgs
       summary: Modify an org
       parameters:
       - $ref: '#/components/parameters/orgIdPathParam'
@@ -72,7 +68,7 @@ paths:
     delete:
       operationId: deleteOrg
       tags:
-      - orgs
+      - Orgs
       summary: Delete an org
       parameters:
       - $ref: '#/components/parameters/orgIdPathParam'
@@ -93,7 +89,7 @@ paths:
     get:
       operationId: listOrgAccess
       tags:
-      - orgs
+      - Orgs
       summary: List users with access to org
       parameters:
       - $ref: '#/components/parameters/orgIdPathParam'
@@ -107,7 +103,7 @@ paths:
     patch:
       operationId: modifyOrgAccess
       tags:
-      - orgs
+      - Orgs
       summary: Change who has access to org
       parameters:
       - $ref: '#/components/parameters/orgIdPathParam'
@@ -130,13 +126,11 @@ paths:
     get:
       operationId: getOrgUsage
       tags:
-      - orgs
+      - Orgs
       summary: Get organization usage summary
       description: 'Get usage statistics for all non-deleted documents in the organization.
 
-        Only accessible to organization owners.
-
-        '
+        Only accessible to organization owners.'
       parameters:
       - $ref: '#/components/parameters/orgIdPathParam'
       responses:
@@ -170,47 +164,6 @@ paths:
                         description: Whether the attachment limit has been exceeded (only present when limit is exceeded)
 components:
   schemas:
-    Access:
-      type: string
-      enum:
-      - owners
-      - editors
-      - viewers
-    Org:
-      type: object
-      required:
-      - id
-      - name
-      - domain
-      - owner
-      - createdAt
-      - updatedAt
-      - access
-      properties:
-        id:
-          type: integer
-          format: int64
-          example: 42
-        name:
-          type: string
-          example: Grist Labs
-        domain:
-          type: string
-          nullable: true
-          example: gristlabs
-        owner:
-          type: object
-          $ref: '#/components/schemas/User'
-          nullable: true
-        access:
-          type: string
-          $ref: '#/components/schemas/Access'
-        createdAt:
-          type: string
-          example: '2019-09-13T15:42:35.000Z'
-        updatedAt:
-          type: string
-          example: '2019-09-13T15:42:35.000Z'
     OrgAccessRead:
       type: object
       required:
@@ -241,6 +194,67 @@ components:
         name:
           type: string
           example: ACME Unlimited
+    OrgAccessWrite:
+      type: object
+      required:
+      - users
+      properties:
+        users:
+          type: object
+          additionalProperties:
+            type: string
+            enum:
+            - owners
+            - editors
+            - viewers
+            - members
+            - null
+          example:
+            foo@getgrist.com: owners
+            bar@getgrist.com: null
+    Org:
+      type: object
+      required:
+      - id
+      - name
+      - domain
+      - owner
+      - createdAt
+      - updatedAt
+      - access
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 42
+        name:
+          type: string
+          example: Grist Labs
+        domain:
+          type:
+          - string
+          - 'null'
+          example: gristlabs
+        owner:
+          type:
+          - object
+          - 'null'
+          $ref: '#/components/schemas/User'
+        access:
+          type: string
+          $ref: '#/components/schemas/Access'
+        createdAt:
+          type: string
+          example: '2019-09-13T15:42:35.000Z'
+        updatedAt:
+          type: string
+          example: '2019-09-13T15:42:35.000Z'
+    Access:
+      type: string
+      enum:
+      - owners
+      - editors
+      - viewers
     Orgs:
       type: array
       items:
@@ -260,27 +274,10 @@ components:
           type: string
           example: Helga Hufflepuff
         picture:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           example: null
-    OrgAccessWrite:
-      type: object
-      required:
-      - users
-      properties:
-        users:
-          type: object
-          additionalProperties:
-            type: string
-            enum:
-            - owners
-            - editors
-            - viewers
-            - members
-            - null
-          example:
-            foo@getgrist.com: owners
-            bar@getgrist.com: null
   parameters:
     orgIdPathParam:
       in: path

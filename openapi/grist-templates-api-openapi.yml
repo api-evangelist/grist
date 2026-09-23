@@ -1,15 +1,11 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   description: 'An API for manipulating Grist sites, workspaces, and documents.
 
 
-    # Authentication
-
-    <SecurityDefinitions />
-
-    '
+    # Authentication'
   version: 1.0.1
-  title: Grist attachments templates API
+  title: Grist Templates API
 servers:
 - url: https://{gristhost}/api
   variables:
@@ -19,22 +15,20 @@ servers:
 security:
 - ApiKey: []
 tags:
-- name: templates
+- name: Templates
 paths:
   /templates:
     get:
       operationId: listTemplates
       tags:
-      - templates
+      - Templates
       summary: List available templates
       description: 'Get all available templates. Templates are organized by workspace within
 
         a template organization configured on the server.
 
 
-        **Note:** Requires a template organization to be configured on the server.
-
-        '
+        **Note:** Requires a template organization to be configured on the server.'
       responses:
         200:
           description: List of workspaces containing templates
@@ -48,14 +42,12 @@ paths:
     get:
       operationId: getTemplate
       tags:
-      - templates
+      - Templates
       summary: Get template details
       description: 'Get information about a specific template.
 
 
-        **Note:** Requires a template organization to be configured on the server.
-
-        '
+        **Note:** Requires a template organization to be configured on the server.'
       parameters:
       - name: templateId
         in: path
@@ -72,15 +64,51 @@ paths:
                 $ref: '#/components/schemas/DocWithWorkspace'
 components:
   schemas:
-    WorkspaceWithOrg:
+    WorkspaceWithDocs:
       allOf:
       - $ref: '#/components/schemas/Workspace'
       - type: object
         required:
-        - org
+        - docs
         properties:
-          org:
-            $ref: '#/components/schemas/Org'
+          docs:
+            type: array
+            items:
+              $ref: '#/components/schemas/Doc'
+    Workspace:
+      type: object
+      required:
+      - id
+      - name
+      - access
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 97
+        name:
+          type: string
+          example: Secret Plans
+        access:
+          type: string
+          $ref: '#/components/schemas/Access'
+    DocWithWorkspace:
+      allOf:
+      - $ref: '#/components/schemas/Doc'
+      - type: object
+        required:
+        - workspace
+        properties:
+          workspace:
+            $ref: '#/components/schemas/WorkspaceWithOrg'
+    WorkspaceWithDocsAndDomain:
+      allOf:
+      - $ref: '#/components/schemas/WorkspaceWithDocs'
+      - type: object
+        properties:
+          orgDomain:
+            type: string
+            example: gristlabs
     Access:
       type: string
       enum:
@@ -106,13 +134,15 @@ components:
           type: string
           example: Grist Labs
         domain:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           example: gristlabs
         owner:
-          type: object
+          type:
+          - object
+          - 'null'
           $ref: '#/components/schemas/User'
-          nullable: true
         access:
           type: string
           $ref: '#/components/schemas/Access'
@@ -122,41 +152,6 @@ components:
         updatedAt:
           type: string
           example: '2019-09-13T15:42:35.000Z'
-    WorkspaceWithDocsAndDomain:
-      allOf:
-      - $ref: '#/components/schemas/WorkspaceWithDocs'
-      - type: object
-        properties:
-          orgDomain:
-            type: string
-            example: gristlabs
-    DocWithWorkspace:
-      allOf:
-      - $ref: '#/components/schemas/Doc'
-      - type: object
-        required:
-        - workspace
-        properties:
-          workspace:
-            $ref: '#/components/schemas/WorkspaceWithOrg'
-    User:
-      type: object
-      required:
-      - id
-      - name
-      - picture
-      properties:
-        id:
-          type: integer
-          format: int64
-          example: 101
-        name:
-          type: string
-          example: Helga Hufflepuff
-        picture:
-          type: string
-          nullable: true
-          example: null
     Doc:
       type: object
       required:
@@ -179,37 +174,38 @@ components:
           type: boolean
           example: true
         urlId:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           example: null
-    Workspace:
-      type: object
-      required:
-      - id
-      - name
-      - access
-      properties:
-        id:
-          type: integer
-          format: int64
-          example: 97
-        name:
-          type: string
-          example: Secret Plans
-        access:
-          type: string
-          $ref: '#/components/schemas/Access'
-    WorkspaceWithDocs:
+    WorkspaceWithOrg:
       allOf:
       - $ref: '#/components/schemas/Workspace'
       - type: object
         required:
-        - docs
+        - org
         properties:
-          docs:
-            type: array
-            items:
-              $ref: '#/components/schemas/Doc'
+          org:
+            $ref: '#/components/schemas/Org'
+    User:
+      type: object
+      required:
+      - id
+      - name
+      - picture
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 101
+        name:
+          type: string
+          example: Helga Hufflepuff
+        picture:
+          type:
+          - string
+          - 'null'
+          example: null
   securitySchemes:
     ApiKey:
       type: http

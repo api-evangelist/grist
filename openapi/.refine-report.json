@@ -1,23 +1,7 @@
 {
   "provider": "grist",
   "sources": [
-    "grist-attachments-api-openapi.yml",
-    "grist-columns-api-openapi.yml",
-    "grist-data-api-openapi.yml",
-    "grist-docs-api-openapi.yml",
-    "grist-forms-api-openapi.yml",
-    "grist-orgs-api-openapi.yml",
-    "grist-profile-api-openapi.yml",
-    "grist-records-api-openapi.yml",
-    "grist-service-accounts-api-openapi.yml",
-    "grist-session-api-openapi.yml",
-    "grist-sql-api-openapi.yml",
-    "grist-tables-api-openapi.yml",
-    "grist-templates-api-openapi.yml",
-    "grist-users-api-openapi.yml",
-    "grist-webhooks-api-openapi.yml",
-    "grist-widgets-api-openapi.yml",
-    "grist-workspaces-api-openapi.yml"
+    "_original/grist-rest-api-openapi.yml"
   ],
   "outputs": [
     "grist-attachments-api-openapi.yml",
@@ -41,6 +25,33 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "grist-rest-api-openapi.yml: upgraded openapi 3.0.0 -> OpenAPI 3.2.0",
+    "grist-rest-api-openapi.yml: declared missing tag: forms",
+    "grist-rest-api-openapi.yml: declared missing tag: profile",
+    "grist-rest-api-openapi.yml: declared missing tag: session",
+    "grist-rest-api-openapi.yml: declared missing tag: templates",
+    "grist-rest-api-openapi.yml: declared missing tag: widgets",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "grist-attachments-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "grist-columns-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "grist-data-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "grist-docs-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "grist-forms-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "grist-orgs-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "grist-profile-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "grist-records-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "grist-service-accounts-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "grist-session-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "grist-sql-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "grist-tables-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "grist-templates-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "grist-users-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "grist-webhooks-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "grist-widgets-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "grist-workspaces-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

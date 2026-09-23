@@ -1,15 +1,11 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   description: 'An API for manipulating Grist sites, workspaces, and documents.
 
 
-    # Authentication
-
-    <SecurityDefinitions />
-
-    '
+    # Authentication'
   version: 1.0.1
-  title: Grist attachments forms API
+  title: Grist Forms API
 servers:
 - url: https://{gristhost}/api
   variables:
@@ -19,19 +15,17 @@ servers:
 security:
 - ApiKey: []
 tags:
-- name: forms
+- name: Forms
 paths:
   /docs/{docId}/forms/{viewSectionId}:
     get:
       operationId: getFormData
       tags:
-      - forms
+      - Forms
       summary: Get form view data
       description: 'Get the form configuration for a specific view section. Forms are
 
-        a special view type that allows external users to submit data.
-
-        '
+        a special view type that allows external users to submit data.'
       parameters:
       - $ref: '#/components/parameters/docIdPathParam'
       - name: viewSectionId

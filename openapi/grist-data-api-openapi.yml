@@ -1,15 +1,11 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   description: 'An API for manipulating Grist sites, workspaces, and documents.
 
 
-    # Authentication
-
-    <SecurityDefinitions />
-
-    '
+    # Authentication'
   version: 1.0.1
-  title: Grist attachments data API
+  title: Grist Data API
 servers:
 - url: https://{gristhost}/api
   variables:
@@ -19,14 +15,14 @@ servers:
 security:
 - ApiKey: []
 tags:
-- name: data
+- name: Data
   description: Work with table data, using a (now deprecated) columnar format. We now recommend the `records` endpoints.
 paths:
   /docs/{docId}/tables/{tableId}/data:
     get:
       operationId: getTableData
       tags:
-      - data
+      - Data
       summary: Fetch data from a table
       deprecated: true
       description: Deprecated in favor of `records` endpoints. We have no immediate plans to remove these endpoints, but consider `records` a better starting point for new projects.
@@ -48,7 +44,7 @@ paths:
     post:
       operationId: addRows
       tags:
-      - data
+      - Data
       summary: Add rows to a table
       deprecated: true
       description: Deprecated in favor of `records` endpoints. We have no immediate plans to remove these endpoints, but consider `records` a better starting point for new projects.
@@ -73,7 +69,7 @@ paths:
     patch:
       operationId: modifyRows
       tags:
-      - data
+      - Data
       summary: Modify rows of a table
       deprecated: true
       description: Deprecated in favor of `records` endpoints. We have no immediate plans to remove these endpoints, but consider `records` a better starting point for new projects.
@@ -99,7 +95,7 @@ paths:
     post:
       operationId: deleteRows
       tags:
-      - data
+      - Data
       summary: Delete rows of a table
       deprecated: true
       parameters:
@@ -116,89 +112,7 @@ paths:
         200:
           description: Nothing returned
 components:
-  parameters:
-    sortHeaderParam:
-      in: header
-      name: X-Sort
-      schema:
-        type: string
-      description: Same as `sort` query parameter.
-      example: pet,-age
-      required: false
-    docIdPathParam:
-      in: path
-      name: docId
-      schema:
-        type: string
-      description: A string id (UUID)
-      required: true
-    sortQueryParam:
-      in: query
-      name: sort
-      schema:
-        type: string
-      description: 'Order in which to return results. If a single column name is given (e.g. `pet`), results are placed in ascending order of values in that column. To get results in an order that was previously prepared manually in Grist, use the special `manualSort` column name. Multiple columns can be specified, separated by commas (e.g. `pet,age`). For descending order, prefix a column name with a `-` character (e.g. `pet,-age`). To include additional sorting options append them after a colon (e.g. `pet,-age:naturalSort;emptyLast,owner`). Available options are: `orderByChoice`, `naturalSort`, `emptyLast`. Without the `sort` parameter, the order of results is unspecified.'
-      example: pet,-age
-      required: false
-    filterQueryParam:
-      in: query
-      name: filter
-      schema:
-        type: string
-      description: 'This is a JSON object mapping column names to arrays of allowed values.  For example, to filter column `pet` for values `cat` and `dog`, the filter would be `{"pet": ["cat", "dog"]}`. JSON contains characters that are not safe to place in a URL, so it is important to url-encode them.  For this example, the url-encoding is `%7B%22pet%22%3A%20%5B%22cat%22%2C%20%22dog%22%5D%7D`. See https://rosettacode.org/wiki/URL_encoding for how to url-encode a string, or https://www.urlencoder.org/ to try some examples. Multiple columns can be filtered. For example the filter for `pet` being either `cat` or `dog`, AND `size` being either `tiny` or `outrageously small`, would be `{"pet": ["cat", "dog"], "size": ["tiny", "outrageously small"]}`.'
-      example: '{"pet": ["cat", "dog"]}'
-      required: false
-    tableIdPathParam:
-      in: path
-      name: tableId
-      schema:
-        type: string
-      description: normalized table name (see `TABLE ID` in Raw Data) or numeric row ID in `_grist_Tables`
-      required: true
-    limitQueryParam:
-      in: query
-      name: limit
-      schema:
-        type: number
-      description: Return at most this number of rows.  A value of 0 is equivalent to having no limit.
-      example: '5'
-      required: false
-    noparseQueryParam:
-      in: query
-      name: noparse
-      schema:
-        type: boolean
-      description: Set to true to prohibit parsing strings according to the column type.
-    limitHeaderParam:
-      in: header
-      name: X-Limit
-      schema:
-        type: number
-      description: Same as `limit` query parameter.
-      example: '5'
-      required: false
   schemas:
-    DataWithoutId:
-      type: object
-      additionalProperties:
-        type: array
-        items:
-          type: object
-      example:
-        pet:
-        - cat
-        - dog
-        popularity:
-        - 67
-        - 95
-    RowIds:
-      type: array
-      example:
-      - 101
-      - 102
-      - 103
-      items:
-        type: integer
     Data:
       type: object
       required:
@@ -222,6 +136,88 @@ components:
         popularity:
         - 67
         - 95
+    RowIds:
+      type: array
+      example:
+      - 101
+      - 102
+      - 103
+      items:
+        type: integer
+    DataWithoutId:
+      type: object
+      additionalProperties:
+        type: array
+        items:
+          type: object
+      example:
+        pet:
+        - cat
+        - dog
+        popularity:
+        - 67
+        - 95
+  parameters:
+    sortQueryParam:
+      in: query
+      name: sort
+      schema:
+        type: string
+      description: 'Order in which to return results. If a single column name is given (e.g. `pet`), results are placed in ascending order of values in that column. To get results in an order that was previously prepared manually in Grist, use the special `manualSort` column name. Multiple columns can be specified, separated by commas (e.g. `pet,age`). For descending order, prefix a column name with a `-` character (e.g. `pet,-age`). To include additional sorting options append them after a colon (e.g. `pet,-age:naturalSort;emptyLast,owner`). Available options are: `orderByChoice`, `naturalSort`, `emptyLast`. Without the `sort` parameter, the order of results is unspecified.'
+      example: pet,-age
+      required: false
+    noparseQueryParam:
+      in: query
+      name: noparse
+      schema:
+        type: boolean
+      description: Set to true to prohibit parsing strings according to the column type.
+    sortHeaderParam:
+      in: header
+      name: X-Sort
+      schema:
+        type: string
+      description: Same as `sort` query parameter.
+      example: pet,-age
+      required: false
+    tableIdPathParam:
+      in: path
+      name: tableId
+      schema:
+        type: string
+      description: normalized table name (see `TABLE ID` in Raw Data) or numeric row ID in `_grist_Tables`
+      required: true
+    limitQueryParam:
+      in: query
+      name: limit
+      schema:
+        type: number
+      description: Return at most this number of rows.  A value of 0 is equivalent to having no limit.
+      example: '5'
+      required: false
+    docIdPathParam:
+      in: path
+      name: docId
+      schema:
+        type: string
+      description: A string id (UUID)
+      required: true
+    filterQueryParam:
+      in: query
+      name: filter
+      schema:
+        type: string
+      description: 'This is a JSON object mapping column names to arrays of allowed values.  For example, to filter column `pet` for values `cat` and `dog`, the filter would be `{"pet": ["cat", "dog"]}`. JSON contains characters that are not safe to place in a URL, so it is important to url-encode them.  For this example, the url-encoding is `%7B%22pet%22%3A%20%5B%22cat%22%2C%20%22dog%22%5D%7D`. See https://rosettacode.org/wiki/URL_encoding for how to url-encode a string, or https://www.urlencoder.org/ to try some examples. Multiple columns can be filtered. For example the filter for `pet` being either `cat` or `dog`, AND `size` being either `tiny` or `outrageously small`, would be `{"pet": ["cat", "dog"], "size": ["tiny", "outrageously small"]}`.'
+      example: '{"pet": ["cat", "dog"]}'
+      required: false
+    limitHeaderParam:
+      in: header
+      name: X-Limit
+      schema:
+        type: number
+      description: Same as `limit` query parameter.
+      example: '5'
+      required: false
   securitySchemes:
     ApiKey:
       type: http

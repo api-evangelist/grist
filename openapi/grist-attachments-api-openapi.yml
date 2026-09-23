@@ -1,15 +1,11 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   description: 'An API for manipulating Grist sites, workspaces, and documents.
 
 
-    # Authentication
-
-    <SecurityDefinitions />
-
-    '
+    # Authentication'
   version: 1.0.1
-  title: Grist attachments API
+  title: Grist Attachments API
 servers:
 - url: https://{gristhost}/api
   variables:
@@ -19,14 +15,14 @@ servers:
 security:
 - ApiKey: []
 tags:
-- name: attachments
+- name: Attachments
   description: Documents may include attached files. Data records can refer to these using a column of type `Attachments`.
 paths:
   /docs/{docId}/attachments:
     get:
       operationId: listAttachments
       tags:
-      - attachments
+      - Attachments
       summary: List metadata of all attachments in a doc
       parameters:
       - $ref: '#/components/parameters/docIdPathParam'
@@ -45,7 +41,7 @@ paths:
     post:
       operationId: uploadAttachments
       tags:
-      - attachments
+      - Attachments
       summary: Upload attachments to a doc
       parameters:
       - $ref: '#/components/parameters/docIdPathParam'
@@ -67,7 +63,7 @@ paths:
     get:
       operationId: getAttachmentMetadata
       tags:
-      - attachments
+      - Attachments
       summary: Get the metadata for an attachment
       parameters:
       - $ref: '#/components/parameters/docIdPathParam'
@@ -87,7 +83,7 @@ paths:
     get:
       operationId: downloadAttachment
       tags:
-      - attachments
+      - Attachments
       summary: Download the contents of an attachment
       parameters:
       - $ref: '#/components/parameters/docIdPathParam'
@@ -103,7 +99,7 @@ paths:
     get:
       operationId: downloadAttachments
       tags:
-      - attachments
+      - Attachments
       summary: Download all attachments
       parameters:
       - $ref: '#/components/parameters/docIdPathParam'
@@ -120,7 +116,7 @@ paths:
     post:
       operationId: uploadMissingAttachments
       tags:
-      - attachments
+      - Attachments
       summary: Upload missing attachments
       description: Restores attachments which are missing from external storage.
       parameters:
@@ -157,7 +153,7 @@ paths:
     get:
       operationId: getDocumentAttachmentStore
       tags:
-      - attachments
+      - Attachments
       summary: Get external store
       parameters:
       - $ref: '#/components/parameters/docIdPathParam'
@@ -171,7 +167,7 @@ paths:
     post:
       operationId: setDocumentAttachmentStore
       tags:
-      - attachments
+      - Attachments
       summary: Set external store
       parameters:
       - $ref: '#/components/parameters/docIdPathParam'
@@ -194,7 +190,7 @@ paths:
     get:
       operationId: listAttachmentStores
       tags:
-      - attachments
+      - Attachments
       summary: List external attachment stores
       parameters:
       - $ref: '#/components/parameters/docIdPathParam'
@@ -209,7 +205,7 @@ paths:
     post:
       operationId: startAttachmentTransfer
       tags:
-      - attachments
+      - Attachments
       summary: Start transferring attachments
       parameters:
       - $ref: '#/components/parameters/docIdPathParam'
@@ -224,7 +220,7 @@ paths:
     get:
       operationId: getAttachmentTransferStatus
       tags:
-      - attachments
+      - Attachments
       summary: Get attachment transfer status
       parameters:
       - $ref: '#/components/parameters/docIdPathParam'
@@ -239,13 +235,11 @@ paths:
     post:
       operationId: removeUnusedAttachments
       tags:
-      - attachments
+      - Attachments
       summary: Delete unused attachments from the document
-      description: 'When an uploaded attachment is no longer used in a Grist document,  it''s retained for a period of time in case it''s needed again (e.g. to facilitate an "undo").
+      description: 'When an uploaded attachment is no longer used in a Grist document, it''s retained for a period of time in case it''s needed again (e.g. to facilitate an "undo").
 
-        This removes all of these retained attachments, reducing the amount of storage used. This is particularly useful if a document has hit its attachment storage limit.
-
-        '
+        This removes all of these retained attachments, reducing the amount of storage used. This is particularly useful if a document has hit its attachment storage limit.'
       parameters:
       - $ref: '#/components/parameters/docIdPathParam'
       - in: query
@@ -260,13 +254,11 @@ paths:
     post:
       operationId: updateUsedAttachments
       tags:
-      - attachments
+      - Attachments
       summary: Update attachment usage tracking
       description: 'Recalculate which attachments are in use by scanning the document.
 
-        This is mostly used for testing and maintenance.
-
-        '
+        This is mostly used for testing and maintenance.'
       parameters:
       - $ref: '#/components/parameters/docIdPathParam'
       responses:
@@ -276,90 +268,20 @@ paths:
     post:
       operationId: verifyAttachmentFiles
       tags:
-      - attachments
+      - Attachments
       summary: Verify attachment file integrity
       description: 'Verify that attachment records match the actual stored files.
 
         This is a maintenance endpoint to check for data consistency.
 
-        Only document owners can call this endpoint.
-
-        '
+        Only document owners can call this endpoint.'
       parameters:
       - $ref: '#/components/parameters/docIdPathParam'
       responses:
         200:
           description: Verification passed
 components:
-  parameters:
-    sortHeaderParam:
-      in: header
-      name: X-Sort
-      schema:
-        type: string
-      description: Same as `sort` query parameter.
-      example: pet,-age
-      required: false
-    docIdPathParam:
-      in: path
-      name: docId
-      schema:
-        type: string
-      description: A string id (UUID)
-      required: true
-    sortQueryParam:
-      in: query
-      name: sort
-      schema:
-        type: string
-      description: 'Order in which to return results. If a single column name is given (e.g. `pet`), results are placed in ascending order of values in that column. To get results in an order that was previously prepared manually in Grist, use the special `manualSort` column name. Multiple columns can be specified, separated by commas (e.g. `pet,age`). For descending order, prefix a column name with a `-` character (e.g. `pet,-age`). To include additional sorting options append them after a colon (e.g. `pet,-age:naturalSort;emptyLast,owner`). Available options are: `orderByChoice`, `naturalSort`, `emptyLast`. Without the `sort` parameter, the order of results is unspecified.'
-      example: pet,-age
-      required: false
-    filterQueryParam:
-      in: query
-      name: filter
-      schema:
-        type: string
-      description: 'This is a JSON object mapping column names to arrays of allowed values.  For example, to filter column `pet` for values `cat` and `dog`, the filter would be `{"pet": ["cat", "dog"]}`. JSON contains characters that are not safe to place in a URL, so it is important to url-encode them.  For this example, the url-encoding is `%7B%22pet%22%3A%20%5B%22cat%22%2C%20%22dog%22%5D%7D`. See https://rosettacode.org/wiki/URL_encoding for how to url-encode a string, or https://www.urlencoder.org/ to try some examples. Multiple columns can be filtered. For example the filter for `pet` being either `cat` or `dog`, AND `size` being either `tiny` or `outrageously small`, would be `{"pet": ["cat", "dog"], "size": ["tiny", "outrageously small"]}`.'
-      example: '{"pet": ["cat", "dog"]}'
-      required: false
-    limitQueryParam:
-      in: query
-      name: limit
-      schema:
-        type: number
-      description: Return at most this number of rows.  A value of 0 is equivalent to having no limit.
-      example: '5'
-      required: false
-    limitHeaderParam:
-      in: header
-      name: X-Limit
-      schema:
-        type: number
-      description: Same as `limit` query parameter.
-      example: '5'
-      required: false
   schemas:
-    DocumentStoreId:
-      type: string
-      nullable: true
-      example: 83395209-fc3b-4d02-8934-b2619efec712-filesystem
-    AttachmentUpload:
-      type: object
-      properties:
-        upload:
-          type: array
-          items:
-            type: string
-            format: binary
-    RowIds:
-      type: array
-      example:
-      - 101
-      - 102
-      - 103
-      items:
-        type: integer
     DocumentAttachmentsLocation:
       type: string
       description: The current location of attachment files in the document
@@ -369,33 +291,6 @@ components:
       - mixed
       - external
       example: mixed
-    AttachmentsTransferStatus:
-      type: object
-      properties:
-        status:
-          type: object
-          properties:
-            pendingTransferCount:
-              type: integer
-              description: Remaining transfers be performed
-              example: 19
-            isRunning:
-              type: boolean
-              description: Are files actively being transferred?
-              example: true
-        locationSummary:
-          $ref: '#/components/schemas/DocumentAttachmentsLocation'
-    AttachmentId:
-      type: number
-      description: An integer ID
-    DocumentStoreSetting:
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - external
-          - internal
     AttachmentMetadataList:
       type: object
       required:
@@ -414,6 +309,22 @@ components:
                 example: 1
               fields:
                 $ref: '#/components/schemas/AttachmentMetadata'
+    DocumentStoreId:
+      type:
+      - string
+      - 'null'
+      example: 83395209-fc3b-4d02-8934-b2619efec712-filesystem
+    DocumentStoreSetting:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - external
+          - internal
+    AttachmentId:
+      type: number
+      description: An integer ID
     AttachmentMetadata:
       type: object
       properties:
@@ -426,6 +337,86 @@ components:
         timeUploaded:
           type: string
           example: '2020-02-13T12:17:19.000Z'
+    RowIds:
+      type: array
+      example:
+      - 101
+      - 102
+      - 103
+      items:
+        type: integer
+    AttachmentUpload:
+      type: object
+      properties:
+        upload:
+          type: array
+          items:
+            type: string
+            format: binary
+    AttachmentsTransferStatus:
+      type: object
+      properties:
+        status:
+          type: object
+          properties:
+            pendingTransferCount:
+              type: integer
+              description: Remaining transfers be performed
+              example: 19
+            isRunning:
+              type: boolean
+              description: Are files actively being transferred?
+              example: true
+        locationSummary:
+          $ref: '#/components/schemas/DocumentAttachmentsLocation'
+  parameters:
+    sortQueryParam:
+      in: query
+      name: sort
+      schema:
+        type: string
+      description: 'Order in which to return results. If a single column name is given (e.g. `pet`), results are placed in ascending order of values in that column. To get results in an order that was previously prepared manually in Grist, use the special `manualSort` column name. Multiple columns can be specified, separated by commas (e.g. `pet,age`). For descending order, prefix a column name with a `-` character (e.g. `pet,-age`). To include additional sorting options append them after a colon (e.g. `pet,-age:naturalSort;emptyLast,owner`). Available options are: `orderByChoice`, `naturalSort`, `emptyLast`. Without the `sort` parameter, the order of results is unspecified.'
+      example: pet,-age
+      required: false
+    sortHeaderParam:
+      in: header
+      name: X-Sort
+      schema:
+        type: string
+      description: Same as `sort` query parameter.
+      example: pet,-age
+      required: false
+    limitQueryParam:
+      in: query
+      name: limit
+      schema:
+        type: number
+      description: Return at most this number of rows.  A value of 0 is equivalent to having no limit.
+      example: '5'
+      required: false
+    docIdPathParam:
+      in: path
+      name: docId
+      schema:
+        type: string
+      description: A string id (UUID)
+      required: true
+    filterQueryParam:
+      in: query
+      name: filter
+      schema:
+        type: string
+      description: 'This is a JSON object mapping column names to arrays of allowed values.  For example, to filter column `pet` for values `cat` and `dog`, the filter would be `{"pet": ["cat", "dog"]}`. JSON contains characters that are not safe to place in a URL, so it is important to url-encode them.  For this example, the url-encoding is `%7B%22pet%22%3A%20%5B%22cat%22%2C%20%22dog%22%5D%7D`. See https://rosettacode.org/wiki/URL_encoding for how to url-encode a string, or https://www.urlencoder.org/ to try some examples. Multiple columns can be filtered. For example the filter for `pet` being either `cat` or `dog`, AND `size` being either `tiny` or `outrageously small`, would be `{"pet": ["cat", "dog"], "size": ["tiny", "outrageously small"]}`.'
+      example: '{"pet": ["cat", "dog"]}'
+      required: false
+    limitHeaderParam:
+      in: header
+      name: X-Limit
+      schema:
+        type: number
+      description: Same as `limit` query parameter.
+      example: '5'
+      required: false
   securitySchemes:
     ApiKey:
       type: http

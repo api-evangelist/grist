@@ -1,15 +1,11 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   description: 'An API for manipulating Grist sites, workspaces, and documents.
 
 
-    # Authentication
-
-    <SecurityDefinitions />
-
-    '
+    # Authentication'
   version: 1.0.1
-  title: Grist attachments docs API
+  title: Grist Docs API
 servers:
 - url: https://{gristhost}/api
   variables:
@@ -19,14 +15,14 @@ servers:
 security:
 - ApiKey: []
 tags:
-- name: docs
+- name: Docs
   description: Workspaces contain collections of Grist documents.
 paths:
   /workspaces/{workspaceId}/docs:
     post:
       operationId: createDoc
       tags:
-      - docs
+      - Docs
       summary: Create an empty document
       parameters:
       - $ref: '#/components/parameters/workspaceIdPathParam'
@@ -50,7 +46,7 @@ paths:
     post:
       operationId: importDoc
       tags:
-      - docs
+      - Docs
       summary: Import an existing document
       parameters:
       - $ref: '#/components/parameters/workspaceIdPathParam'
@@ -85,7 +81,7 @@ paths:
     post:
       operationId: createDocUnified
       tags:
-      - docs
+      - Docs
       summary: Create a document
       description: 'A unified endpoint for creating documents. Can create an empty document,
 
@@ -98,9 +94,7 @@ paths:
 
         - To copy an existing document: provide `sourceDocumentId`, `workspaceId`, and `documentName`
 
-        - To import a file: use multipart/form-data with a file upload and optional `workspaceId`
-
-        '
+        - To import a file: use multipart/form-data with a file upload and optional `workspaceId`'
       requestBody:
         description: settings for the document
         content:
@@ -155,7 +149,7 @@ paths:
     get:
       operationId: describeDoc
       tags:
-      - docs
+      - Docs
       summary: Describe a document
       parameters:
       - $ref: '#/components/parameters/docIdPathParam'
@@ -169,7 +163,7 @@ paths:
     patch:
       operationId: modifyDoc
       tags:
-      - docs
+      - Docs
       summary: Modify document metadata (but not its contents)
       parameters:
       - $ref: '#/components/parameters/docIdPathParam'
@@ -186,7 +180,7 @@ paths:
     delete:
       operationId: deleteDoc
       tags:
-      - docs
+      - Docs
       summary: Delete a document
       parameters:
       - $ref: '#/components/parameters/docIdPathParam'
@@ -197,15 +191,13 @@ paths:
     post:
       operationId: removeDoc
       tags:
-      - docs
+      - Docs
       summary: Move document to trash
       description: 'Soft-delete the document by moving it to trash. The document can be
 
         restored using the unremove endpoint. If the `permanent` query parameter
 
-        is set to true, the document is permanently deleted instead.
-
-        '
+        is set to true, the document is permanently deleted instead.'
       parameters:
       - $ref: '#/components/parameters/docIdPathParam'
       - in: query
@@ -220,13 +212,11 @@ paths:
     post:
       operationId: unremoveDoc
       tags:
-      - docs
+      - Docs
       summary: Restore document from trash
       description: 'Recover a document that was previously soft-deleted. Only works if the
 
-        document is still in the trash.
-
-        '
+        document is still in the trash.'
       parameters:
       - $ref: '#/components/parameters/docIdPathParam'
       responses:
@@ -236,8 +226,8 @@ paths:
     patch:
       operationId: moveDoc
       tags:
-      - docs
-      summary: Move document to another workspace.
+      - Docs
+      summary: Move document to another workspace
       parameters:
       - $ref: '#/components/parameters/docIdPathParam'
       requestBody:
@@ -259,13 +249,11 @@ paths:
     patch:
       operationId: pinDoc
       tags:
-      - docs
+      - Docs
       summary: Pin a document
       description: 'Pin the document so it appears in a prominent location. Pinned documents
 
-        are displayed at the top of workspace listings for easy access.
-
-        '
+        are displayed at the top of workspace listings for easy access.'
       parameters:
       - $ref: '#/components/parameters/docIdPathParam'
       responses:
@@ -275,7 +263,7 @@ paths:
     patch:
       operationId: unpinDoc
       tags:
-      - docs
+      - Docs
       summary: Unpin a document
       description: Remove the pinned status from a document.
       parameters:
@@ -287,8 +275,8 @@ paths:
     post:
       operationId: disableDoc
       tags:
-      - docs
-      summary: Disable a document.
+      - Docs
+      summary: Disable a document
       description: 'Disabled documents cannot be accessed or modified. Moving and
 
         renaming a disabled doc is also forbidden, as well as
@@ -308,9 +296,7 @@ paths:
         re-enabled.
 
 
-        Only admin accounts can disable a document.
-
-        '
+        Only admin accounts can disable a document.'
       parameters:
       - $ref: '#/components/parameters/docIdPathParam'
       responses:
@@ -324,8 +310,8 @@ paths:
     post:
       operationId: enableDoc
       tags:
-      - docs
-      summary: Enable a document.
+      - Docs
+      summary: Enable a document
       description: 'If a document has been previously disabled, this will restore
 
         all former access to a document, including access to its
@@ -333,9 +319,7 @@ paths:
         associated published forms.
 
 
-        Only admin accounts can enable a document.
-
-        '
+        Only admin accounts can enable a document.'
       parameters:
       - $ref: '#/components/parameters/docIdPathParam'
       responses:
@@ -349,8 +333,8 @@ paths:
     post:
       operationId: copyDoc
       tags:
-      - docs
-      summary: Copies a document to a workspace.
+      - Docs
+      summary: Copies a document to a workspace
       parameters:
       - $ref: '#/components/parameters/docIdPathParam'
       requestBody:
@@ -385,7 +369,7 @@ paths:
     post:
       operationId: forkDoc
       tags:
-      - docs
+      - Docs
       summary: Fork a document
       description: 'Create a fork of a document. A fork is a personal copy that tracks its relationship
 
@@ -396,9 +380,7 @@ paths:
 
         The fork will have a new docId and urlId that encode the relationship to the trunk
 
-        (original) document.
-
-        '
+        (original) document.'
       parameters:
       - $ref: '#/components/parameters/docIdPathParam'
       responses:
@@ -433,7 +415,7 @@ paths:
     get:
       operationId: listDocAccess
       tags:
-      - docs
+      - Docs
       summary: List users with access to document
       parameters:
       - $ref: '#/components/parameters/docIdPathParam'
@@ -447,7 +429,7 @@ paths:
     patch:
       operationId: modifyDocAccess
       tags:
-      - docs
+      - Docs
       summary: Change who has access to document
       parameters:
       - $ref: '#/components/parameters/docIdPathParam'
@@ -470,7 +452,7 @@ paths:
     get:
       operationId: getUsersForViewAs
       tags:
-      - docs
+      - Docs
       summary: Get users for 'View As' feature
       description: 'Get users that can be used with the "View As" feature for testing access rules.
 
@@ -483,9 +465,7 @@ paths:
 
         - Users mentioned in user attribute tables
 
-        - Predefined example users
-
-        '
+        - Predefined example users'
       parameters:
       - $ref: '#/components/parameters/docIdPathParam'
       responses:
@@ -515,7 +495,7 @@ paths:
     get:
       operationId: downloadDoc
       tags:
-      - docs
+      - Docs
       summary: Content of document, as an Sqlite file
       parameters:
       - $ref: '#/components/parameters/docIdPathParam'
@@ -543,7 +523,7 @@ paths:
     get:
       operationId: downloadDocXlsx
       tags:
-      - docs
+      - Docs
       summary: Content of document, as an Excel file
       parameters:
       - $ref: '#/components/parameters/docIdPathParam'
@@ -565,7 +545,7 @@ paths:
     get:
       operationId: downloadDocCsv
       tags:
-      - docs
+      - Docs
       summary: Content of table, as a CSV file
       parameters:
       - $ref: '#/components/parameters/docIdPathParam'
@@ -587,7 +567,7 @@ paths:
     get:
       operationId: downloadDocTsv
       tags:
-      - docs
+      - Docs
       summary: Content of table, as a TSV file
       description: Download table data as tab-separated values.
       parameters:
@@ -610,7 +590,7 @@ paths:
     get:
       operationId: downloadDocDsv
       tags:
-      - docs
+      - Docs
       summary: Content of table, as a DSV file
       description: Download table data using a custom delimiter (💩).
       parameters:
@@ -633,9 +613,9 @@ paths:
     get:
       operationId: downloadTableSchema
       tags:
-      - docs
+      - Docs
       summary: The schema of a table
-      description: The schema follows [frictionlessdata's table-schema standard](https://specs.frictionlessdata.io/table-schema/).
+      description: The schema follows frictionlessdata's table-schema standard.
       parameters:
       - $ref: '#/components/parameters/docIdPathParam'
       - in: query
@@ -656,13 +636,11 @@ paths:
     get:
       operationId: listSnapshots
       tags:
-      - docs
+      - Docs
       summary: List document snapshots
       description: 'Returns a list of snapshots (backups) of the document. Snapshots are created
 
-        automatically as the document is edited. Most recent snapshots are listed first.
-
-        '
+        automatically as the document is edited. Most recent snapshots are listed first.'
       parameters:
       - $ref: '#/components/parameters/docIdPathParam'
       - in: query
@@ -703,13 +681,11 @@ paths:
     post:
       operationId: removeSnapshots
       tags:
-      - docs
+      - Docs
       summary: Remove document snapshots
       description: 'Remove specific snapshots from a document''s backup history.
 
-        Only document owners can remove snapshots.
-
-        '
+        Only document owners can remove snapshots.'
       parameters:
       - $ref: '#/components/parameters/docIdPathParam'
       requestBody:
@@ -744,15 +720,13 @@ paths:
     get:
       operationId: getStates
       tags:
-      - docs
+      - Docs
       summary: Get document action history states
       description: 'Returns a list of document states representing the action history.
 
         Each state has a sequential number (n) and a hash (h) that uniquely
 
-        identifies that point in history. Most recent state is first.
-
-        '
+        identifies that point in history. Most recent state is first.'
       parameters:
       - $ref: '#/components/parameters/docIdPathParam'
       responses:
@@ -783,13 +757,11 @@ paths:
     get:
       operationId: compareVersions
       tags:
-      - docs
+      - Docs
       summary: Compare document versions
       description: 'Compare two versions of the same document by their state hashes.
 
-        Returns details about what changed between the versions.
-
-        '
+        Returns details about what changed between the versions.'
       parameters:
       - $ref: '#/components/parameters/docIdPathParam'
       - in: query
@@ -820,13 +792,11 @@ paths:
     get:
       operationId: compareDocuments
       tags:
-      - docs
+      - Docs
       summary: Compare two documents
       description: 'Compare this document with another document. Useful for comparing
 
-        a fork with its trunk document.
-
-        '
+        a fork with its trunk document.'
       parameters:
       - $ref: '#/components/parameters/docIdPathParam'
       - name: docId2
@@ -858,7 +828,7 @@ paths:
     post:
       operationId: deleteActions
       tags:
-      - docs
+      - Docs
       summary: Truncate the document's action history
       parameters:
       - $ref: '#/components/parameters/docIdPathParam'
@@ -879,13 +849,11 @@ paths:
     get:
       operationId: listProposals
       tags:
-      - docs
+      - Docs
       summary: List change proposals
       description: 'List proposals associated with a document. Proposals are suggested changes
 
-        from forks that can be reviewed and applied to the trunk document.
-
-        '
+        from forks that can be reviewed and applied to the trunk document.'
       parameters:
       - $ref: '#/components/parameters/docIdPathParam'
       - in: query
@@ -924,15 +892,13 @@ paths:
     post:
       operationId: createProposal
       tags:
-      - docs
+      - Docs
       summary: Create a change proposal
       description: 'Create a proposal from a fork to its trunk document. The proposal contains
 
         the comparison of changes between the fork and trunk.
 
-        This endpoint can only be called on a fork document.
-
-        '
+        This endpoint can only be called on a fork document.'
       parameters:
       - $ref: '#/components/parameters/docIdPathParam'
       requestBody:
@@ -964,13 +930,11 @@ paths:
     post:
       operationId: applyProposal
       tags:
-      - docs
+      - Docs
       summary: Apply a change proposal
       description: 'Apply a proposal''s changes to the document. This merges the fork''s
 
-        changes into the trunk document.
-
-        '
+        changes into the trunk document.'
       parameters:
       - $ref: '#/components/parameters/docIdPathParam'
       - name: proposalId
@@ -996,7 +960,7 @@ paths:
     post:
       operationId: forceReload
       tags:
-      - docs
+      - Docs
       summary: Reload a document
       description: Closes and reopens the document, forcing the python engine to restart.
       parameters:
@@ -1008,13 +972,11 @@ paths:
     post:
       operationId: flushDoc
       tags:
-      - docs
+      - Docs
       summary: Flush document to storage
       description: 'Ensure all pending changes to the document are written to persistent storage.
 
-        Returns true if the document was flushed, false if the document was not open.
-
-        '
+        Returns true if the document was flushed, false if the document was not open.'
       parameters:
       - $ref: '#/components/parameters/docIdPathParam'
       responses:
@@ -1029,15 +991,13 @@ paths:
     post:
       operationId: assignDoc
       tags:
-      - docs
+      - Docs
       summary: Reassign document to appropriate worker
       description: 'Administrative endpoint that checks if a document is assigned to the expected
 
         worker group and frees it for reassignment if not. Used for load balancing
 
-        and maintenance operations.
-
-        '
+        and maintenance operations.'
       parameters:
       - $ref: '#/components/parameters/docIdPathParam'
       - in: query
@@ -1057,13 +1017,11 @@ paths:
     post:
       operationId: replaceDoc
       tags:
-      - docs
+      - Docs
       summary: Replace document content
       description: 'Replace the current document content with content from another source.
 
-        Can restore from a snapshot or copy from another document.
-
-        '
+        Can restore from a snapshot or copy from another document.'
       parameters:
       - $ref: '#/components/parameters/docIdPathParam'
       requestBody:
@@ -1088,7 +1046,7 @@ paths:
     post:
       operationId: recoverDoc
       tags:
-      - docs
+      - Docs
       summary: Set recovery mode for a document
       description: Controls the recovery mode of a document. Recovery mode helps in recovering from errors or corrupted states. Only document owners can control recovery mode.
       parameters:
@@ -1127,13 +1085,11 @@ paths:
     get:
       operationId: getTimingStatus
       tags:
-      - docs
+      - Docs
       summary: Get formula timing status
       description: 'Check if formula timing is enabled for a document and retrieve timing data
 
-        if available. Only document owners can access timing information.
-
-        '
+        if available. Only document owners can access timing information.'
       parameters:
       - $ref: '#/components/parameters/docIdPathParam'
       responses:
@@ -1166,13 +1122,11 @@ paths:
     post:
       operationId: startTiming
       tags:
-      - docs
+      - Docs
       summary: Start formula timing
       description: 'Start collecting timing information for formula calculations.
 
-        Only document owners can start timing.
-
-        '
+        Only document owners can start timing.'
       parameters:
       - $ref: '#/components/parameters/docIdPathParam'
       responses:
@@ -1184,13 +1138,11 @@ paths:
     post:
       operationId: stopTiming
       tags:
-      - docs
+      - Docs
       summary: Stop formula timing
       description: 'Stop collecting timing information and return the collected data.
 
-        Only document owners can stop timing.
-
-        '
+        Only document owners can stop timing.'
       parameters:
       - $ref: '#/components/parameters/docIdPathParam'
       responses:
@@ -1207,7 +1159,7 @@ paths:
     post:
       operationId: applyUserActions
       tags:
-      - docs
+      - Docs
       summary: Apply a list of user actions
       description: 'Apply a sequence of user actions to a document. This is a low-level endpoint
 
@@ -1238,9 +1190,7 @@ paths:
 
         - `["AddTable", tableId, [{id, type, ...}]]` - Add a table
 
-        - `["RemoveTable", tableId]` - Remove a table
-
-        '
+        - `["RemoveTable", tableId]` - Remove a table'
       parameters:
       - $ref: '#/components/parameters/docIdPathParam'
       - in: query
@@ -1284,172 +1234,6 @@ paths:
                     description: Return values from each action (e.g. new row IDs)
 components:
   schemas:
-    WorkspaceWithOrg:
-      allOf:
-      - $ref: '#/components/schemas/Workspace'
-      - type: object
-        required:
-        - org
-        properties:
-          org:
-            $ref: '#/components/schemas/Org'
-    Access:
-      type: string
-      enum:
-      - owners
-      - editors
-      - viewers
-    DocAccessWrite:
-      $ref: '#/components/schemas/WorkspaceAccessWrite'
-    Org:
-      type: object
-      required:
-      - id
-      - name
-      - domain
-      - owner
-      - createdAt
-      - updatedAt
-      - access
-      properties:
-        id:
-          type: integer
-          format: int64
-          example: 42
-        name:
-          type: string
-          example: Grist Labs
-        domain:
-          type: string
-          nullable: true
-          example: gristlabs
-        owner:
-          type: object
-          $ref: '#/components/schemas/User'
-          nullable: true
-        access:
-          type: string
-          $ref: '#/components/schemas/Access'
-        createdAt:
-          type: string
-          example: '2019-09-13T15:42:35.000Z'
-        updatedAt:
-          type: string
-          example: '2019-09-13T15:42:35.000Z'
-    DocAccessRead:
-      $ref: '#/components/schemas/WorkspaceAccessRead'
-    TableSchemaResult:
-      type: object
-      required:
-      - name
-      - title
-      - schema
-      properties:
-        name:
-          type: string
-          description: The ID (technical name) of the table
-        title:
-          type: string
-          description: The human readable name of the table
-        path:
-          type: string
-          description: The URL to download the CSV
-          example: https://getgrist.com/o/docs/api/docs/ID/download/csv?tableId=Table1&....
-        format:
-          type: string
-          enum:
-          - csv
-        mediatype:
-          type: string
-          enum:
-          - text/csv
-        encoding:
-          type: string
-          enum:
-          - utf-8
-        dialect:
-          $ref: https://specs.frictionlessdata.io/schemas/csv-dialect.json
-        schema:
-          $ref: https://specs.frictionlessdata.io/schemas/table-schema.json
-    DocParameters:
-      type: object
-      properties:
-        name:
-          type: string
-          example: Competitive Analysis
-        isPinned:
-          type: boolean
-          example: false
-    WorkspaceAccessWrite:
-      type: object
-      properties:
-        maxInheritedRole:
-          $ref: '#/components/schemas/Access'
-        users:
-          type: object
-          additionalProperties:
-            type: string
-            enum:
-            - owners
-            - editors
-            - viewers
-            - members
-            - null
-          example:
-            foo@getgrist.com: owners
-            bar@getgrist.com: null
-    DocWithWorkspace:
-      allOf:
-      - $ref: '#/components/schemas/Doc'
-      - type: object
-        required:
-        - workspace
-        properties:
-          workspace:
-            $ref: '#/components/schemas/WorkspaceWithOrg'
-    User:
-      type: object
-      required:
-      - id
-      - name
-      - picture
-      properties:
-        id:
-          type: integer
-          format: int64
-          example: 101
-        name:
-          type: string
-          example: Helga Hufflepuff
-        picture:
-          type: string
-          nullable: true
-          example: null
-    Doc:
-      type: object
-      required:
-      - id
-      - name
-      - isPinned
-      - urlId
-      - access
-      properties:
-        id:
-          type: string
-          example: 145
-        name:
-          type: string
-          example: Project Lollipop
-        access:
-          type: string
-          $ref: '#/components/schemas/Access'
-        isPinned:
-          type: boolean
-          example: true
-        urlId:
-          type: string
-          nullable: true
-          example: null
     WorkspaceAccessRead:
       type: object
       required:
@@ -1496,6 +1280,100 @@ components:
         access:
           type: string
           $ref: '#/components/schemas/Access'
+    TableSchemaResult:
+      type: object
+      required:
+      - name
+      - title
+      - schema
+      properties:
+        name:
+          type: string
+          description: The ID (technical name) of the table
+        title:
+          type: string
+          description: The human readable name of the table
+        path:
+          type: string
+          description: The URL to download the CSV
+          example: https://getgrist.com/o/docs/api/docs/ID/download/csv?tableId=Table1&....
+        format:
+          type: string
+          enum:
+          - csv
+        mediatype:
+          type: string
+          enum:
+          - text/csv
+        encoding:
+          type: string
+          enum:
+          - utf-8
+        dialect:
+          $ref: https://specs.frictionlessdata.io/schemas/csv-dialect.json
+        schema:
+          $ref: https://specs.frictionlessdata.io/schemas/table-schema.json
+    User:
+      type: object
+      required:
+      - id
+      - name
+      - picture
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 101
+        name:
+          type: string
+          example: Helga Hufflepuff
+        picture:
+          type:
+          - string
+          - 'null'
+          example: null
+    DocWithWorkspace:
+      allOf:
+      - $ref: '#/components/schemas/Doc'
+      - type: object
+        required:
+        - workspace
+        properties:
+          workspace:
+            $ref: '#/components/schemas/WorkspaceWithOrg'
+    WorkspaceWithOrg:
+      allOf:
+      - $ref: '#/components/schemas/Workspace'
+      - type: object
+        required:
+        - org
+        properties:
+          org:
+            $ref: '#/components/schemas/Org'
+    Access:
+      type: string
+      enum:
+      - owners
+      - editors
+      - viewers
+    WorkspaceAccessWrite:
+      type: object
+      properties:
+        maxInheritedRole:
+          $ref: '#/components/schemas/Access'
+        users:
+          type: object
+          additionalProperties:
+            type: string
+            enum:
+            - owners
+            - editors
+            - viewers
+            - members
+            - null
+          example:
+            foo@getgrist.com: owners
+            bar@getgrist.com: null
     DocComparison:
       type: object
       description: Comparison result between two document versions
@@ -1524,8 +1402,9 @@ components:
             h:
               type: string
         parent:
-          type: object
-          nullable: true
+          type:
+          - object
+          - 'null'
           description: Most recent common ancestor state
           properties:
             n:
@@ -1563,6 +1442,82 @@ components:
             rightChanges:
               type: object
               description: Changes in the right document relative to common ancestor
+    DocAccessWrite:
+      $ref: '#/components/schemas/WorkspaceAccessWrite'
+    DocParameters:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Competitive Analysis
+        isPinned:
+          type: boolean
+          example: false
+    Doc:
+      type: object
+      required:
+      - id
+      - name
+      - isPinned
+      - urlId
+      - access
+      properties:
+        id:
+          type: string
+          example: 145
+        name:
+          type: string
+          example: Project Lollipop
+        access:
+          type: string
+          $ref: '#/components/schemas/Access'
+        isPinned:
+          type: boolean
+          example: true
+        urlId:
+          type:
+          - string
+          - 'null'
+          example: null
+    Org:
+      type: object
+      required:
+      - id
+      - name
+      - domain
+      - owner
+      - createdAt
+      - updatedAt
+      - access
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 42
+        name:
+          type: string
+          example: Grist Labs
+        domain:
+          type:
+          - string
+          - 'null'
+          example: gristlabs
+        owner:
+          type:
+          - object
+          - 'null'
+          $ref: '#/components/schemas/User'
+        access:
+          type: string
+          $ref: '#/components/schemas/Access'
+        createdAt:
+          type: string
+          example: '2019-09-13T15:42:35.000Z'
+        updatedAt:
+          type: string
+          example: '2019-09-13T15:42:35.000Z'
+    DocAccessRead:
+      $ref: '#/components/schemas/WorkspaceAccessRead'
   parameters:
     workspaceIdPathParam:
       in: path
@@ -1570,6 +1525,13 @@ components:
       description: An integer id
       schema:
         type: integer
+      required: true
+    docIdPathParam:
+      in: path
+      name: docId
+      schema:
+        type: string
+      description: A string id (UUID)
       required: true
     headerQueryParam:
       in: query
@@ -1581,13 +1543,6 @@ components:
         - label
       description: Format for headers. Labels tend to be more human-friendly while colIds are more normalized.
       required: false
-    docIdPathParam:
-      in: path
-      name: docId
-      schema:
-        type: string
-      description: A string id (UUID)
-      required: true
   securitySchemes:
     ApiKey:
       type: http

@@ -1,15 +1,11 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   description: 'An API for manipulating Grist sites, workspaces, and documents.
 
 
-    # Authentication
-
-    <SecurityDefinitions />
-
-    '
+    # Authentication'
   version: 1.0.1
-  title: Grist attachments workspaces API
+  title: Grist Workspaces API
 servers:
 - url: https://{gristhost}/api
   variables:
@@ -19,14 +15,14 @@ servers:
 security:
 - ApiKey: []
 tags:
-- name: workspaces
+- name: Workspaces
   description: Sites can be organized into groups of documents called workspaces.
 paths:
   /orgs/{orgId}/workspaces:
     get:
       operationId: listWorkspaces
       tags:
-      - workspaces
+      - Workspaces
       summary: List workspaces and documents within an org
       parameters:
       - $ref: '#/components/parameters/orgIdPathParam'
@@ -42,7 +38,7 @@ paths:
     post:
       operationId: createWorkspace
       tags:
-      - workspaces
+      - Workspaces
       summary: Create an empty workspace
       parameters:
       - $ref: '#/components/parameters/orgIdPathParam'
@@ -66,7 +62,7 @@ paths:
     get:
       operationId: describeWorkspace
       tags:
-      - workspaces
+      - Workspaces
       summary: Describe a workspace
       parameters:
       - $ref: '#/components/parameters/workspaceIdPathParam'
@@ -80,7 +76,7 @@ paths:
     patch:
       operationId: modifyWorkspace
       tags:
-      - workspaces
+      - Workspaces
       summary: Modify a workspace
       parameters:
       - $ref: '#/components/parameters/workspaceIdPathParam'
@@ -97,7 +93,7 @@ paths:
     delete:
       operationId: deleteWorkspace
       tags:
-      - workspaces
+      - Workspaces
       summary: Delete a workspace
       parameters:
       - $ref: '#/components/parameters/workspaceIdPathParam'
@@ -108,15 +104,13 @@ paths:
     post:
       operationId: removeWorkspace
       tags:
-      - workspaces
+      - Workspaces
       summary: Move workspace to trash
       description: 'Soft-delete the workspace by moving it to trash. The workspace can be
 
         restored using the unremove endpoint. If the `permanent` query parameter
 
-        is set to true, the workspace is permanently deleted instead.
-
-        '
+        is set to true, the workspace is permanently deleted instead.'
       parameters:
       - $ref: '#/components/parameters/workspaceIdPathParam'
       - in: query
@@ -131,13 +125,11 @@ paths:
     post:
       operationId: unremoveWorkspace
       tags:
-      - workspaces
+      - Workspaces
       summary: Restore workspace from trash
       description: 'Recover a workspace that was previously soft-deleted. Only works if the
 
-        workspace is still in the trash.
-
-        '
+        workspace is still in the trash.'
       parameters:
       - $ref: '#/components/parameters/workspaceIdPathParam'
       responses:
@@ -147,7 +139,7 @@ paths:
     get:
       operationId: listWorkspaceAccess
       tags:
-      - workspaces
+      - Workspaces
       summary: List users with access to workspace
       parameters:
       - $ref: '#/components/parameters/workspaceIdPathParam'
@@ -161,7 +153,7 @@ paths:
     patch:
       operationId: modifyWorkspaceAccess
       tags:
-      - workspaces
+      - Workspaces
       summary: Change who has access to workspace
       parameters:
       - $ref: '#/components/parameters/workspaceIdPathParam'
@@ -182,104 +174,17 @@ paths:
           description: Success
 components:
   schemas:
-    Access:
-      type: string
-      enum:
-      - owners
-      - editors
-      - viewers
-    WorkspaceWithOrg:
+    WorkspaceWithDocs:
       allOf:
       - $ref: '#/components/schemas/Workspace'
       - type: object
         required:
-        - org
+        - docs
         properties:
-          org:
-            $ref: '#/components/schemas/Org'
-    WorkspaceWithDocsAndOrg:
-      allOf:
-      - $ref: '#/components/schemas/WorkspaceWithDocs'
-      - $ref: '#/components/schemas/WorkspaceWithOrg'
-    Org:
-      type: object
-      required:
-      - id
-      - name
-      - domain
-      - owner
-      - createdAt
-      - updatedAt
-      - access
-      properties:
-        id:
-          type: integer
-          format: int64
-          example: 42
-        name:
-          type: string
-          example: Grist Labs
-        domain:
-          type: string
-          nullable: true
-          example: gristlabs
-        owner:
-          type: object
-          $ref: '#/components/schemas/User'
-          nullable: true
-        access:
-          type: string
-          $ref: '#/components/schemas/Access'
-        createdAt:
-          type: string
-          example: '2019-09-13T15:42:35.000Z'
-        updatedAt:
-          type: string
-          example: '2019-09-13T15:42:35.000Z'
-    WorkspaceAccessWrite:
-      type: object
-      properties:
-        maxInheritedRole:
-          $ref: '#/components/schemas/Access'
-        users:
-          type: object
-          additionalProperties:
-            type: string
-            enum:
-            - owners
-            - editors
-            - viewers
-            - members
-            - null
-          example:
-            foo@getgrist.com: owners
-            bar@getgrist.com: null
-    WorkspaceWithDocsAndDomain:
-      allOf:
-      - $ref: '#/components/schemas/WorkspaceWithDocs'
-      - type: object
-        properties:
-          orgDomain:
-            type: string
-            example: gristlabs
-    User:
-      type: object
-      required:
-      - id
-      - name
-      - picture
-      properties:
-        id:
-          type: integer
-          format: int64
-          example: 101
-        name:
-          type: string
-          example: Helga Hufflepuff
-        picture:
-          type: string
-          nullable: true
-          example: null
+          docs:
+            type: array
+            items:
+              $ref: '#/components/schemas/Doc'
     WorkspaceAccessRead:
       type: object
       required:
@@ -309,6 +214,59 @@ components:
                 $ref: '#/components/schemas/Access'
               parentAccess:
                 $ref: '#/components/schemas/Access'
+    Workspace:
+      type: object
+      required:
+      - id
+      - name
+      - access
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 97
+        name:
+          type: string
+          example: Secret Plans
+        access:
+          type: string
+          $ref: '#/components/schemas/Access'
+    WorkspaceWithDocsAndOrg:
+      allOf:
+      - $ref: '#/components/schemas/WorkspaceWithDocs'
+      - $ref: '#/components/schemas/WorkspaceWithOrg'
+    WorkspaceWithDocsAndDomain:
+      allOf:
+      - $ref: '#/components/schemas/WorkspaceWithDocs'
+      - type: object
+        properties:
+          orgDomain:
+            type: string
+            example: gristlabs
+    WorkspaceAccessWrite:
+      type: object
+      properties:
+        maxInheritedRole:
+          $ref: '#/components/schemas/Access'
+        users:
+          type: object
+          additionalProperties:
+            type: string
+            enum:
+            - owners
+            - editors
+            - viewers
+            - members
+            - null
+          example:
+            foo@getgrist.com: owners
+            bar@getgrist.com: null
+    Access:
+      type: string
+      enum:
+      - owners
+      - editors
+      - viewers
     Doc:
       type: object
       required:
@@ -331,43 +289,81 @@ components:
           type: boolean
           example: true
         urlId:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           example: null
-    Workspace:
-      type: object
-      required:
-      - id
-      - name
-      - access
-      properties:
-        id:
-          type: integer
-          format: int64
-          example: 97
-        name:
-          type: string
-          example: Secret Plans
-        access:
-          type: string
-          $ref: '#/components/schemas/Access'
     WorkspaceParameters:
       type: object
       properties:
         name:
           type: string
           example: Retreat Docs
-    WorkspaceWithDocs:
+    Org:
+      type: object
+      required:
+      - id
+      - name
+      - domain
+      - owner
+      - createdAt
+      - updatedAt
+      - access
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 42
+        name:
+          type: string
+          example: Grist Labs
+        domain:
+          type:
+          - string
+          - 'null'
+          example: gristlabs
+        owner:
+          type:
+          - object
+          - 'null'
+          $ref: '#/components/schemas/User'
+        access:
+          type: string
+          $ref: '#/components/schemas/Access'
+        createdAt:
+          type: string
+          example: '2019-09-13T15:42:35.000Z'
+        updatedAt:
+          type: string
+          example: '2019-09-13T15:42:35.000Z'
+    WorkspaceWithOrg:
       allOf:
       - $ref: '#/components/schemas/Workspace'
       - type: object
         required:
-        - docs
+        - org
         properties:
-          docs:
-            type: array
-            items:
-              $ref: '#/components/schemas/Doc'
+          org:
+            $ref: '#/components/schemas/Org'
+    User:
+      type: object
+      required:
+      - id
+      - name
+      - picture
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 101
+        name:
+          type: string
+          example: Helga Hufflepuff
+        picture:
+          type:
+          - string
+          - 'null'
+          example: null
   parameters:
     workspaceIdPathParam:
       in: path

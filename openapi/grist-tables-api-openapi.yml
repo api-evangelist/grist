@@ -1,15 +1,11 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   description: 'An API for manipulating Grist sites, workspaces, and documents.
 
 
-    # Authentication
-
-    <SecurityDefinitions />
-
-    '
+    # Authentication'
   version: 1.0.1
-  title: Grist attachments tables API
+  title: Grist Tables API
 servers:
 - url: https://{gristhost}/api
   variables:
@@ -19,14 +15,14 @@ servers:
 security:
 - ApiKey: []
 tags:
-- name: tables
+- name: Tables
   description: Documents are structured as a collection of tables.
 paths:
   /docs/{docId}/tables:
     get:
       operationId: listTables
       tags:
-      - tables
+      - Tables
       summary: List tables in a document
       parameters:
       - $ref: '#/components/parameters/docIdPathParam'
@@ -79,7 +75,7 @@ paths:
     post:
       operationId: addTables
       tags:
-      - tables
+      - Tables
       summary: Add tables to a document
       parameters:
       - $ref: '#/components/parameters/docIdPathParam'
@@ -100,15 +96,13 @@ paths:
     patch:
       operationId: modifyTables
       tags:
-      - tables
+      - Tables
       summary: Modify tables of a document
       description: 'Modify metadata for existing tables. This endpoint is primarily useful for:
 
         - Renaming tables (via the `tableId` field)
 
-        - Setting on-demand loading (via the `onDemand` field)
-
-        '
+        - Setting on-demand loading (via the `onDemand` field)'
       parameters:
       - $ref: '#/components/parameters/docIdPathParam'
       requestBody:
@@ -122,37 +116,96 @@ paths:
         200:
           description: Success
 components:
-  parameters:
-    docIdPathParam:
-      in: path
-      name: docId
-      schema:
-        type: string
-      description: A string id (UUID)
-      required: true
-    expandQueryParam:
-      in: query
-      name: expand
-      schema:
-        type: string
-        enum:
-        - column
-      description: Set to "column" to include column metadata for each table in the response.
-      required: false
   schemas:
-    GetFields:
-      allOf:
-      - $ref: '#/components/schemas/Fields'
-      - type: object
-        properties:
-          recalcDeps:
-            type: array
-            items:
-              type: integer
-            description: 'An array of column identifiers (colRefs) that this column depends on, prefixed with "L" constant. If any of these columns change, the column will be recalculated. E.g.: <code>["L", 2, 3]</code>'
-          colRef:
-            type: integer
-            description: 'Column reference, e.g.: <code>2</code>'
+    TablesList:
+      type: object
+      required:
+      - tables
+      properties:
+        tables:
+          type: array
+          items:
+            type: object
+            required:
+            - id
+            - fields
+            properties:
+              id:
+                type: string
+                example: Table1
+              fields:
+                type: object
+                properties:
+                  tableRef:
+                    type: integer
+                    description: Row ID of the table in the _grist_Tables metadata table
+                  onDemand:
+                    type: boolean
+                    description: Whether the table uses on-demand loading
+              columns:
+                type: array
+                description: Included when expand=column is set. Contains metadata for each column in the table.
+                items:
+                  type: object
+                  required:
+                  - id
+                  - fields
+                  properties:
+                    id:
+                      type: string
+                      example: ColumnName
+                    fields:
+                      $ref: '#/components/schemas/GetFields'
+      example:
+        tables:
+        - id: People
+          fields:
+            tableRef: 1
+            onDemand: false
+        - id: Places
+          fields:
+            tableRef: 2
+            onDemand: false
+    Fields:
+      type: object
+      properties:
+        type:
+          type: string
+          description: Column type, by default Any. Ref, RefList and DateTime types requires a postfix, e.g. <code>DateTime:America/New_York</code>, <code>Ref:Users</code>
+          enum:
+          - Any
+          - Text
+          - Numeric
+          - Int
+          - Bool
+          - Date
+          - DateTime:<timezone>
+          - Choice
+          - ChoiceList
+          - Ref:<tableId>
+          - RefList:<tableId>
+          - Attachments
+        label:
+          type: string
+          description: Column label.
+        formula:
+          type: string
+          description: 'A python formula, e.g.: <code>$A + Table1.lookupOne(B=$B)</code>'
+        isFormula:
+          type: boolean
+          description: Use "true" to indicate that the column is a formula column. Use "false" for trigger formula column.
+        widgetOptions:
+          type: string
+          description: 'A JSON object with widget options, e.g.: <code>{"choices": ["cat", "dog"], "alignment": "right"}</code>'
+        untieColIdFromLabel:
+          type: boolean
+          description: Use "true" to indicate that the column label should not be used as the column identifier. Use "false" to use the label as the identifier.
+        recalcWhen:
+          type: integer
+          description: A number indicating when the column should be recalculated. <ol start='0'><li>On new records or when any field in recalcDeps changes, it's a 'data-cleaning'.</li><li>Never.</li><li>Calculate on new records and on manual updates to any data field.</li></ol>
+        visibleCol:
+          type: integer
+          description: For Ref and RefList columns, the colRef of a column to display
     CreateTables:
       type: object
       required:
@@ -221,6 +274,19 @@ components:
         - id: Places
           fields:
             onDemand: true
+    GetFields:
+      allOf:
+      - $ref: '#/components/schemas/Fields'
+      - type: object
+        properties:
+          recalcDeps:
+            type: array
+            items:
+              type: integer
+            description: 'An array of column identifiers (colRefs) that this column depends on, prefixed with "L" constant. If any of these columns change, the column will be recalculated. E.g.: <code>["L", 2, 3]</code>'
+          colRef:
+            type: integer
+            description: 'Column reference, e.g.: <code>2</code>'
     TablesWithoutFields:
       type: object
       required:
@@ -240,95 +306,23 @@ components:
         tables:
         - id: People
         - id: Places
-    Fields:
-      type: object
-      properties:
-        type:
-          type: string
-          description: Column type, by default Any. Ref, RefList and DateTime types requires a postfix, e.g. <code>DateTime:America/New_York</code>, <code>Ref:Users</code>
-          enum:
-          - Any
-          - Text
-          - Numeric
-          - Int
-          - Bool
-          - Date
-          - DateTime:<timezone>
-          - Choice
-          - ChoiceList
-          - Ref:<tableId>
-          - RefList:<tableId>
-          - Attachments
-        label:
-          type: string
-          description: Column label.
-        formula:
-          type: string
-          description: 'A python formula, e.g.: <code>$A + Table1.lookupOne(B=$B)</code>'
-        isFormula:
-          type: boolean
-          description: Use "true" to indicate that the column is a formula column. Use "false" for trigger formula column.
-        widgetOptions:
-          type: string
-          description: 'A JSON object with widget options, e.g.: <code>{"choices": ["cat", "dog"], "alignment": "right"}</code>'
-        untieColIdFromLabel:
-          type: boolean
-          description: Use "true" to indicate that the column label should not be used as the column identifier. Use "false" to use the label as the identifier.
-        recalcWhen:
-          type: integer
-          description: A number indicating when the column should be recalculated. <ol start='0'><li>On new records or when any field in recalcDeps changes, it's a 'data-cleaning'.</li><li>Never.</li><li>Calculate on new records and on manual updates to any data field.</li></ol>
-        visibleCol:
-          type: integer
-          description: For Ref and RefList columns, the colRef of a column to display
-    TablesList:
-      type: object
-      required:
-      - tables
-      properties:
-        tables:
-          type: array
-          items:
-            type: object
-            required:
-            - id
-            - fields
-            properties:
-              id:
-                type: string
-                example: Table1
-              fields:
-                type: object
-                properties:
-                  tableRef:
-                    type: integer
-                    description: Row ID of the table in the _grist_Tables metadata table
-                  onDemand:
-                    type: boolean
-                    description: Whether the table uses on-demand loading
-              columns:
-                type: array
-                description: Included when expand=column is set. Contains metadata for each column in the table.
-                items:
-                  type: object
-                  required:
-                  - id
-                  - fields
-                  properties:
-                    id:
-                      type: string
-                      example: ColumnName
-                    fields:
-                      $ref: '#/components/schemas/GetFields'
-      example:
-        tables:
-        - id: People
-          fields:
-            tableRef: 1
-            onDemand: false
-        - id: Places
-          fields:
-            tableRef: 2
-            onDemand: false
+  parameters:
+    expandQueryParam:
+      in: query
+      name: expand
+      schema:
+        type: string
+        enum:
+        - column
+      description: Set to "column" to include column metadata for each table in the response.
+      required: false
+    docIdPathParam:
+      in: path
+      name: docId
+      schema:
+        type: string
+      description: A string id (UUID)
+      required: true
   securitySchemes:
     ApiKey:
       type: http

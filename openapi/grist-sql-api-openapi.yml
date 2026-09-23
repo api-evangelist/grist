@@ -1,15 +1,11 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   description: 'An API for manipulating Grist sites, workspaces, and documents.
 
 
-    # Authentication
-
-    <SecurityDefinitions />
-
-    '
+    # Authentication'
   version: 1.0.1
-  title: Grist attachments sql API
+  title: Grist Sql API
 servers:
 - url: https://{gristhost}/api
   variables:
@@ -32,9 +28,7 @@ paths:
 
         This is a simplified endpoint for basic queries. For queries with parameters
 
-        or custom timeouts, use the POST endpoint instead.
-
-        '
+        or custom timeouts, use the POST endpoint instead.'
       parameters:
       - $ref: '#/components/parameters/docIdPathParam'
       - in: query
@@ -58,9 +52,7 @@ paths:
 
         and custom timeouts. All Grist documents are SQLite databases, and queries
 
-        are executed directly against SQLite with security restrictions.
-
-        '
+        are executed directly against SQLite with security restrictions.'
       parameters:
       - $ref: '#/components/parameters/docIdPathParam'
       requestBody:

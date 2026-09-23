@@ -1,15 +1,11 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   description: 'An API for manipulating Grist sites, workspaces, and documents.
 
 
-    # Authentication
-
-    <SecurityDefinitions />
-
-    '
+    # Authentication'
   version: 1.0.1
-  title: Grist attachments widgets API
+  title: Grist Widgets API
 servers:
 - url: https://{gristhost}/api
   variables:
@@ -19,19 +15,17 @@ servers:
 security:
 - ApiKey: []
 tags:
-- name: widgets
+- name: Widgets
 paths:
   /widgets:
     get:
       operationId: listWidgets
       tags:
-      - widgets
+      - Widgets
       summary: List available custom widgets
       description: 'Get all widget definitions from the configured widget repository.
 
-        Custom widgets extend Grist''s functionality with specialized views.
-
-        '
+        Custom widgets extend Grist''s functionality with specialized views.'
       responses:
         200:
           description: List of widgets

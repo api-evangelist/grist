@@ -1,15 +1,11 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   description: 'An API for manipulating Grist sites, workspaces, and documents.
 
 
-    # Authentication
-
-    <SecurityDefinitions />
-
-    '
+    # Authentication'
   version: 1.0.1
-  title: Grist attachments session API
+  title: Grist Session API
 servers:
 - url: https://{gristhost}/api
   variables:
@@ -19,17 +15,15 @@ servers:
 security:
 - ApiKey: []
 tags:
-- name: session
+- name: Session
 paths:
   /session/access/active:
     get:
       operationId: getActiveSession
       tags:
-      - session
+      - Session
       summary: Get active session information
-      description: 'Returns information about the active user and organization for the current session.
-
-        '
+      description: Returns information about the active user and organization for the current session.
       responses:
         200:
           description: Active session info
@@ -53,13 +47,11 @@ paths:
     post:
       operationId: setActiveUser
       tags:
-      - session
+      - Session
       summary: Set active user for organization
       description: 'Switch which user account is active for a given organization.
 
-        Useful when a user has multiple accounts logged in.
-
-        '
+        Useful when a user has multiple accounts logged in.'
       requestBody:
         content:
           application/json:
@@ -90,13 +82,11 @@ paths:
     get:
       operationId: getAllSessions
       tags:
-      - session
+      - Session
       summary: Get all session users and organizations
       description: 'Returns all user profiles logged into the current session and all
 
-        organizations they can access.
-
-        '
+        organizations they can access.'
       responses:
         200:
           description: All session info
@@ -115,12 +105,6 @@ paths:
                       $ref: '#/components/schemas/Org'
 components:
   schemas:
-    Access:
-      type: string
-      enum:
-      - owners
-      - editors
-      - viewers
     Org:
       type: object
       required:
@@ -140,13 +124,15 @@ components:
           type: string
           example: Grist Labs
         domain:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           example: gristlabs
         owner:
-          type: object
+          type:
+          - object
+          - 'null'
           $ref: '#/components/schemas/User'
-          nullable: true
         access:
           type: string
           $ref: '#/components/schemas/Access'
@@ -156,6 +142,12 @@ components:
         updatedAt:
           type: string
           example: '2019-09-13T15:42:35.000Z'
+    Access:
+      type: string
+      enum:
+      - owners
+      - editors
+      - viewers
     User:
       type: object
       required:
@@ -171,8 +163,9 @@ components:
           type: string
           example: Helga Hufflepuff
         picture:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           example: null
   securitySchemes:
     ApiKey:

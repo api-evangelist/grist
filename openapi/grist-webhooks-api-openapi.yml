@@ -1,15 +1,11 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   description: 'An API for manipulating Grist sites, workspaces, and documents.
 
 
-    # Authentication
-
-    <SecurityDefinitions />
-
-    '
+    # Authentication'
   version: 1.0.1
-  title: Grist attachments webhooks API
+  title: Grist Webhooks API
 servers:
 - url: https://{gristhost}/api
   variables:
@@ -19,20 +15,18 @@ servers:
 security:
 - ApiKey: []
 tags:
-- name: webhooks
+- name: Webhooks
   description: Document changes can trigger requests to URLs called webhooks.
 paths:
   /docs/{docId}/webhooks:
     get:
       operationId: listWebhooks
       tags:
-      - webhooks
+      - Webhooks
       summary: Webhooks associated with a document
       description: 'Returns all webhooks configured for this document, including their
 
-        settings and delivery statistics.
-
-        '
+        settings and delivery statistics.'
       parameters:
       - $ref: '#/components/parameters/docIdPathParam'
       responses:
@@ -50,13 +44,11 @@ paths:
     post:
       operationId: createWebhooks
       tags:
-      - webhooks
+      - Webhooks
       summary: Create new webhooks for a document
       description: 'Creates one or more webhooks that will POST to specified URLs when
 
-        data in the document changes. Returns the IDs of the created webhooks.
-
-        '
+        data in the document changes. Returns the IDs of the created webhooks.'
       parameters:
       - $ref: '#/components/parameters/docIdPathParam'
       requestBody:
@@ -95,13 +87,11 @@ paths:
     patch:
       operationId: modifyWebhook
       tags:
-      - webhooks
+      - Webhooks
       summary: Modify a webhook
       description: 'Update the configuration of an existing webhook, such as its URL,
 
-        enabled state, or event types.
-
-        '
+        enabled state, or event types.'
       parameters:
       - $ref: '#/components/parameters/docIdPathParam'
       - in: path
@@ -121,13 +111,11 @@ paths:
     delete:
       operationId: deleteWebhook
       tags:
-      - webhooks
+      - Webhooks
       summary: Remove a webhook
       description: 'Permanently delete a webhook. Any pending deliveries in the queue
 
-        for this webhook will also be removed.
-
-        '
+        for this webhook will also be removed.'
       parameters:
       - $ref: '#/components/parameters/docIdPathParam'
       - in: path
@@ -152,13 +140,11 @@ paths:
     delete:
       operationId: clearWebhookQueue
       tags:
-      - webhooks
+      - Webhooks
       summary: Empty a document's queue of undelivered payloads
       description: 'Clear all pending webhook deliveries for this document. Use this
 
-        if the queue has built up due to unreachable endpoints.
-
-        '
+        if the queue has built up due to unreachable endpoints.'
       parameters:
       - $ref: '#/components/parameters/docIdPathParam'
       responses:
@@ -168,13 +154,11 @@ paths:
     delete:
       operationId: clearWebhookQueueForWebhook
       tags:
-      - webhooks
+      - Webhooks
       summary: Clear queue for a specific webhook
       description: 'Clear the queue of pending payloads for a specific webhook.
 
-        Only document owners can call this endpoint.
-
-        '
+        Only document owners can call this endpoint.'
       parameters:
       - $ref: '#/components/parameters/docIdPathParam'
       - name: webhookId
@@ -195,59 +179,15 @@ paths:
                     type: boolean
                     example: true
 components:
-  parameters:
-    docIdPathParam:
-      in: path
-      name: docId
-      schema:
-        type: string
-      description: A string id (UUID)
-      required: true
   schemas:
-    WebhookId:
-      type: object
-      required:
-      - id
-      properties:
-        id:
-          type: string
-          description: Webhook identifier
-          example: xxxxxxx-xxxx-xxxx-xxxxxxxxxxxxxxxx
-    Webhook:
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-          example: xxxxxxx-xxxx-xxxx-xxxxxxxxxxxxxxxx
-        fields:
-          $ref: '#/components/schemas/WebhookFields'
-        usage:
-          $ref: '#/components/schemas/WebhookUsage'
-    WebhookBatchStatus:
-      type: object
-      nullable: true
-      required:
-      - size
-      - attempts
-      - status
-      properties:
-        size:
-          type: number
-          example: 1
-        attempts:
-          type: number
-          example: 1
-        errorMessage:
-          type: string
-          nullable: true
-          example: null
-        httpStatus:
-          type: number
-          example: 200
-        status:
-          type: string
-          example: success
+    Webhooks:
+      type: array
+      items:
+        $ref: '#/components/schemas/Webhook'
+    WebhookFields:
+      allOf:
+      - $ref: '#/components/schemas/WebhookPartialFields'
+      - $ref: '#/components/schemas/WebhookRequiredFields'
     WebhookRequiredFields:
       type: object
       required:
@@ -262,25 +202,71 @@ components:
       properties:
         unsubscribeKey:
           type: string
-    Webhooks:
-      type: array
-      items:
-        $ref: '#/components/schemas/Webhook'
-    WebhookFields:
-      allOf:
-      - $ref: '#/components/schemas/WebhookPartialFields'
-      - $ref: '#/components/schemas/WebhookRequiredFields'
+    WebhookId:
+      type: object
+      required:
+      - id
+      properties:
+        id:
+          type: string
+          description: Webhook identifier
+          example: xxxxxxx-xxxx-xxxx-xxxxxxxxxxxxxxxx
+    WebhookUsage:
+      type:
+      - object
+      - 'null'
+      required:
+      - numWaiting
+      - status
+      properties:
+        numWaiting:
+          type: integer
+        status:
+          type: string
+          example: idle
+        updatedTime:
+          type:
+          - number
+          - 'null'
+          format: UNIX epoch in milliseconds
+          example: 1685637500424
+        lastSuccessTime:
+          type:
+          - number
+          - 'null'
+          format: UNIX epoch in milliseconds
+          example: 1685637500424
+        lastFailureTime:
+          type:
+          - number
+          - 'null'
+          format: UNIX epoch in milliseconds
+          example: 1685637500424
+        lastErrorMessage:
+          type:
+          - string
+          - 'null'
+          example: null
+        lastHttpStatus:
+          type:
+          - number
+          - 'null'
+          example: 200
+        lastEventBatch:
+          $ref: '#/components/schemas/WebhookBatchStatus'
     WebhookPartialFields:
       type: object
       properties:
         name:
-          type: string
+          type:
+          - string
+          - 'null'
           example: new-project-email
-          nullable: true
         memo:
-          type: string
+          type:
+          - string
+          - 'null'
           example: Send an email when a project is added
-          nullable: true
         url:
           type: string
           format: uri
@@ -295,49 +281,58 @@ components:
           - add
           - update
         isReadyColumn:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           example: null
         tableId:
           type: string
           example: Projects
-    WebhookUsage:
-      type: object
-      nullable: true
+    WebhookBatchStatus:
+      type:
+      - object
+      - 'null'
       required:
-      - numWaiting
+      - size
+      - attempts
       - status
       properties:
-        numWaiting:
-          type: integer
+        size:
+          type: number
+          example: 1
+        attempts:
+          type: number
+          example: 1
+        errorMessage:
+          type:
+          - string
+          - 'null'
+          example: null
+        httpStatus:
+          type: number
+          example: 200
         status:
           type: string
-          example: idle
-        updatedTime:
-          type: number
-          nullable: true
-          format: UNIX epoch in milliseconds
-          example: 1685637500424
-        lastSuccessTime:
-          type: number
-          nullable: true
-          format: UNIX epoch in milliseconds
-          example: 1685637500424
-        lastFailureTime:
-          type: number
-          nullable: true
-          format: UNIX epoch in milliseconds
-          example: 1685637500424
-        lastErrorMessage:
+          example: success
+    Webhook:
+      type: object
+      properties:
+        id:
           type: string
-          nullable: true
-          example: null
-        lastHttpStatus:
-          type: number
-          nullable: true
-          example: 200
-        lastEventBatch:
-          $ref: '#/components/schemas/WebhookBatchStatus'
+          format: uuid
+          example: xxxxxxx-xxxx-xxxx-xxxxxxxxxxxxxxxx
+        fields:
+          $ref: '#/components/schemas/WebhookFields'
+        usage:
+          $ref: '#/components/schemas/WebhookUsage'
+  parameters:
+    docIdPathParam:
+      in: path
+      name: docId
+      schema:
+        type: string
+      description: A string id (UUID)
+      required: true
   securitySchemes:
     ApiKey:
       type: http
