@@ -64,51 +64,6 @@ paths:
                 $ref: '#/components/schemas/DocWithWorkspace'
 components:
   schemas:
-    WorkspaceWithDocs:
-      allOf:
-      - $ref: '#/components/schemas/Workspace'
-      - type: object
-        required:
-        - docs
-        properties:
-          docs:
-            type: array
-            items:
-              $ref: '#/components/schemas/Doc'
-    Workspace:
-      type: object
-      required:
-      - id
-      - name
-      - access
-      properties:
-        id:
-          type: integer
-          format: int64
-          example: 97
-        name:
-          type: string
-          example: Secret Plans
-        access:
-          type: string
-          $ref: '#/components/schemas/Access'
-    DocWithWorkspace:
-      allOf:
-      - $ref: '#/components/schemas/Doc'
-      - type: object
-        required:
-        - workspace
-        properties:
-          workspace:
-            $ref: '#/components/schemas/WorkspaceWithOrg'
-    WorkspaceWithDocsAndDomain:
-      allOf:
-      - $ref: '#/components/schemas/WorkspaceWithDocs'
-      - type: object
-        properties:
-          orgDomain:
-            type: string
-            example: gristlabs
     Access:
       type: string
       enum:
@@ -152,6 +107,15 @@ components:
         updatedAt:
           type: string
           example: '2019-09-13T15:42:35.000Z'
+    DocWithWorkspace:
+      allOf:
+      - $ref: '#/components/schemas/Doc'
+      - type: object
+        required:
+        - workspace
+        properties:
+          workspace:
+            $ref: '#/components/schemas/WorkspaceWithOrg'
     Doc:
       type: object
       required:
@@ -178,15 +142,17 @@ components:
           - string
           - 'null'
           example: null
-    WorkspaceWithOrg:
+    WorkspaceWithDocs:
       allOf:
       - $ref: '#/components/schemas/Workspace'
       - type: object
         required:
-        - org
+        - docs
         properties:
-          org:
-            $ref: '#/components/schemas/Org'
+          docs:
+            type: array
+            items:
+              $ref: '#/components/schemas/Doc'
     User:
       type: object
       required:
@@ -206,6 +172,40 @@ components:
           - string
           - 'null'
           example: null
+    WorkspaceWithOrg:
+      allOf:
+      - $ref: '#/components/schemas/Workspace'
+      - type: object
+        required:
+        - org
+        properties:
+          org:
+            $ref: '#/components/schemas/Org'
+    WorkspaceWithDocsAndDomain:
+      allOf:
+      - $ref: '#/components/schemas/WorkspaceWithDocs'
+      - type: object
+        properties:
+          orgDomain:
+            type: string
+            example: gristlabs
+    Workspace:
+      type: object
+      required:
+      - id
+      - name
+      - access
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 97
+        name:
+          type: string
+          example: Secret Plans
+        access:
+          type: string
+          $ref: '#/components/schemas/Access'
   securitySchemes:
     ApiKey:
       type: http

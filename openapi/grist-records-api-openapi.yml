@@ -148,6 +148,35 @@ paths:
           description: Nothing returned
 components:
   schemas:
+    RecordsList:
+      type: object
+      required:
+      - records
+      properties:
+        records:
+          type: array
+          items:
+            type: object
+            required:
+            - id
+            - fields
+            properties:
+              id:
+                type: number
+                example: 1
+              fields:
+                type: object
+                description: A JSON object mapping column names to [cell values](https://support.getgrist.com/code/modules/GristData/#cellvalue).
+      example:
+        records:
+        - id: 1
+          fields:
+            pet: cat
+            popularity: 67
+        - id: 2
+          fields:
+            pet: dog
+            popularity: 95
     RecordsWithRequire:
       type: object
       required:
@@ -179,43 +208,6 @@ components:
         - require:
             pet: dog
           fields:
-            popularity: 95
-    RowIds:
-      type: array
-      example:
-      - 101
-      - 102
-      - 103
-      items:
-        type: integer
-    RecordsList:
-      type: object
-      required:
-      - records
-      properties:
-        records:
-          type: array
-          items:
-            type: object
-            required:
-            - id
-            - fields
-            properties:
-              id:
-                type: number
-                example: 1
-              fields:
-                type: object
-                description: A JSON object mapping column names to [cell values](https://support.getgrist.com/code/modules/GristData/#cellvalue).
-      example:
-        records:
-        - id: 1
-          fields:
-            pet: cat
-            popularity: 67
-        - id: 2
-          fields:
-            pet: dog
             popularity: 95
     RecordsWithoutId:
       type: object
@@ -259,7 +251,21 @@ components:
         records:
         - id: 1
         - id: 2
+    RowIds:
+      type: array
+      example:
+      - 101
+      - 102
+      - 103
+      items:
+        type: integer
   parameters:
+    hiddenQueryParam:
+      in: query
+      name: hidden
+      schema:
+        type: boolean
+      description: Set to true to include the hidden columns (like "manualSort")
     sortQueryParam:
       in: query
       name: sort
@@ -268,12 +274,14 @@ components:
       description: 'Order in which to return results. If a single column name is given (e.g. `pet`), results are placed in ascending order of values in that column. To get results in an order that was previously prepared manually in Grist, use the special `manualSort` column name. Multiple columns can be specified, separated by commas (e.g. `pet,age`). For descending order, prefix a column name with a `-` character (e.g. `pet,-age`). To include additional sorting options append them after a colon (e.g. `pet,-age:naturalSort;emptyLast,owner`). Available options are: `orderByChoice`, `naturalSort`, `emptyLast`. Without the `sort` parameter, the order of results is unspecified.'
       example: pet,-age
       required: false
-    noparseQueryParam:
+    limitQueryParam:
       in: query
-      name: noparse
+      name: limit
       schema:
-        type: boolean
-      description: Set to true to prohibit parsing strings according to the column type.
+        type: number
+      description: Return at most this number of rows.  A value of 0 is equivalent to having no limit.
+      example: '5'
+      required: false
     sortHeaderParam:
       in: header
       name: X-Sort
@@ -289,27 +297,6 @@ components:
         type: string
       description: normalized table name (see `TABLE ID` in Raw Data) or numeric row ID in `_grist_Tables`
       required: true
-    hiddenQueryParam:
-      in: query
-      name: hidden
-      schema:
-        type: boolean
-      description: Set to true to include the hidden columns (like "manualSort")
-    docIdPathParam:
-      in: path
-      name: docId
-      schema:
-        type: string
-      description: A string id (UUID)
-      required: true
-    limitQueryParam:
-      in: query
-      name: limit
-      schema:
-        type: number
-      description: Return at most this number of rows.  A value of 0 is equivalent to having no limit.
-      example: '5'
-      required: false
     filterQueryParam:
       in: query
       name: filter
@@ -326,6 +313,19 @@ components:
       description: Same as `limit` query parameter.
       example: '5'
       required: false
+    docIdPathParam:
+      in: path
+      name: docId
+      schema:
+        type: string
+      description: A string id (UUID)
+      required: true
+    noparseQueryParam:
+      in: query
+      name: noparse
+      schema:
+        type: boolean
+      description: Set to true to prohibit parsing strings according to the column type.
   securitySchemes:
     ApiKey:
       type: http

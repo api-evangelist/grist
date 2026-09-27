@@ -44,7 +44,7 @@ tags:
   - No-Code
   - Data Management
   - Webhook
-  - Open-Source
+  - Open Source
 tags_raw:
   - Spreadsheet
   - Database
@@ -53,13 +53,14 @@ tags_raw:
   - Data Management
   - Webhooks
   - Open Source
+  - Open-Source
 url: https://raw.githubusercontent.com/api-evangelist/grist/refs/heads/main/apis.yml
 created: '2026-06-12'
 modified: '2026-06-12'
 specificationVersion: '0.23'
 apis:
 - aid: grist:grist-attachments-api
-  name: Grist attachments API
+  name: Grist Attachments API
   description: >-
     Documents may include attached files. Data records can refer to these using a column of type `Attachments`.
   humanURL: https://support.getgrist.com/api/
@@ -76,7 +77,7 @@ apis:
   - type: OpenAPIConsole
     url: https://docs.getgrist.com/apiconsole
 - aid: grist:grist-columns-api
-  name: Grist columns API
+  name: Grist Columns API
   description: Tables are structured as a collection of columns.
   humanURL: https://support.getgrist.com/api/
   baseURL: https://docs.getgrist.com/api
@@ -92,7 +93,7 @@ apis:
   - type: OpenAPIConsole
     url: https://docs.getgrist.com/apiconsole
 - aid: grist:grist-data-api
-  name: Grist data API
+  name: Grist Data API
   description: >-
     Work with table data, using a (now deprecated) columnar format. We now recommend the `records` endpoints.
   humanURL: https://support.getgrist.com/api/
@@ -109,7 +110,7 @@ apis:
   - type: OpenAPIConsole
     url: https://docs.getgrist.com/apiconsole
 - aid: grist:grist-docs-api
-  name: Grist docs API
+  name: Grist Docs API
   description: Workspaces contain collections of Grist documents.
   humanURL: https://support.getgrist.com/api/
   baseURL: https://docs.getgrist.com/api
@@ -125,7 +126,7 @@ apis:
   - type: OpenAPIConsole
     url: https://docs.getgrist.com/apiconsole
 - aid: grist:grist-forms-api
-  name: Grist forms API
+  name: Grist Forms API
   description: The forms API from Grist — 1 operation(s) for forms.
   humanURL: https://support.getgrist.com/api/
   baseURL: https://docs.getgrist.com/api
@@ -141,7 +142,7 @@ apis:
   - type: OpenAPIConsole
     url: https://docs.getgrist.com/apiconsole
 - aid: grist:grist-orgs-api
-  name: Grist orgs API
+  name: Grist Orgs API
   description: Team sites and personal spaces are called 'orgs' in the API.
   humanURL: https://support.getgrist.com/api/
   baseURL: https://docs.getgrist.com/api
@@ -157,7 +158,7 @@ apis:
   - type: OpenAPIConsole
     url: https://docs.getgrist.com/apiconsole
 - aid: grist:grist-profile-api
-  name: Grist profile API
+  name: Grist Profile API
   description: The profile API from Grist — 4 operation(s) for profile.
   humanURL: https://support.getgrist.com/api/
   baseURL: https://docs.getgrist.com/api
@@ -173,7 +174,7 @@ apis:
   - type: OpenAPIConsole
     url: https://docs.getgrist.com/apiconsole
 - aid: grist:grist-records-api
-  name: Grist records API
+  name: Grist Records API
   description: Tables contain collections of records (also called rows).
   humanURL: https://support.getgrist.com/api/
   baseURL: https://docs.getgrist.com/api
@@ -205,7 +206,7 @@ apis:
   - type: OpenAPIConsole
     url: https://docs.getgrist.com/apiconsole
 - aid: grist:grist-session-api
-  name: Grist session API
+  name: Grist Session API
   description: The session API from Grist — 2 operation(s) for session.
   humanURL: https://support.getgrist.com/api/
   baseURL: https://docs.getgrist.com/api
@@ -221,7 +222,7 @@ apis:
   - type: OpenAPIConsole
     url: https://docs.getgrist.com/apiconsole
 - aid: grist:grist-sql-api
-  name: Grist sql API
+  name: Grist Sql API
   description: Sql endpoint to query data from documents.
   humanURL: https://support.getgrist.com/api/
   baseURL: https://docs.getgrist.com/api
@@ -237,7 +238,7 @@ apis:
   - type: OpenAPIConsole
     url: https://docs.getgrist.com/apiconsole
 - aid: grist:grist-tables-api
-  name: Grist tables API
+  name: Grist Tables API
   description: Documents are structured as a collection of tables.
   humanURL: https://support.getgrist.com/api/
   baseURL: https://docs.getgrist.com/api
@@ -253,7 +254,7 @@ apis:
   - type: OpenAPIConsole
     url: https://docs.getgrist.com/apiconsole
 - aid: grist:grist-templates-api
-  name: Grist templates API
+  name: Grist Templates API
   description: The templates API from Grist — 2 operation(s) for templates.
   humanURL: https://support.getgrist.com/api/
   baseURL: https://docs.getgrist.com/api
@@ -269,7 +270,7 @@ apis:
   - type: OpenAPIConsole
     url: https://docs.getgrist.com/apiconsole
 - aid: grist:grist-users-api
-  name: Grist users API
+  name: Grist Users API
   description: Grist users.
   humanURL: https://support.getgrist.com/api/
   baseURL: https://docs.getgrist.com/api
@@ -285,7 +286,7 @@ apis:
   - type: OpenAPIConsole
     url: https://docs.getgrist.com/apiconsole
 - aid: grist:grist-webhooks-api
-  name: Grist webhooks API
+  name: Grist Webhooks API
   description: Document changes can trigger requests to URLs called webhooks.
   humanURL: https://support.getgrist.com/api/
   baseURL: https://docs.getgrist.com/api
@@ -301,7 +302,7 @@ apis:
   - type: OpenAPIConsole
     url: https://docs.getgrist.com/apiconsole
 - aid: grist:grist-widgets-api
-  name: Grist widgets API
+  name: Grist Widgets API
   description: The widgets API from Grist — 1 operation(s) for widgets.
   humanURL: https://support.getgrist.com/api/
   baseURL: https://docs.getgrist.com/api
@@ -317,7 +318,7 @@ apis:
   - type: OpenAPIConsole
     url: https://docs.getgrist.com/apiconsole
 - aid: grist:grist-workspaces-api
-  name: Grist workspaces API
+  name: Grist Workspaces API
   description: Sites can be organized into groups of documents called workspaces.
   humanURL: https://support.getgrist.com/api/
   baseURL: https://docs.getgrist.com/api

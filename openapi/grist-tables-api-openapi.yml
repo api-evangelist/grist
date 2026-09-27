@@ -166,6 +166,38 @@ components:
           fields:
             tableRef: 2
             onDemand: false
+    TablesWithoutFields:
+      type: object
+      required:
+      - tables
+      properties:
+        tables:
+          type: array
+          items:
+            type: object
+            required:
+            - id
+            properties:
+              id:
+                type: string
+                example: Table1
+      example:
+        tables:
+        - id: People
+        - id: Places
+    GetFields:
+      allOf:
+      - $ref: '#/components/schemas/Fields'
+      - type: object
+        properties:
+          recalcDeps:
+            type: array
+            items:
+              type: integer
+            description: 'An array of column identifiers (colRefs) that this column depends on, prefixed with "L" constant. If any of these columns change, the column will be recalculated. E.g.: <code>["L", 2, 3]</code>'
+          colRef:
+            type: integer
+            description: 'Column reference, e.g.: <code>2</code>'
     Fields:
       type: object
       properties:
@@ -274,38 +306,6 @@ components:
         - id: Places
           fields:
             onDemand: true
-    GetFields:
-      allOf:
-      - $ref: '#/components/schemas/Fields'
-      - type: object
-        properties:
-          recalcDeps:
-            type: array
-            items:
-              type: integer
-            description: 'An array of column identifiers (colRefs) that this column depends on, prefixed with "L" constant. If any of these columns change, the column will be recalculated. E.g.: <code>["L", 2, 3]</code>'
-          colRef:
-            type: integer
-            description: 'Column reference, e.g.: <code>2</code>'
-    TablesWithoutFields:
-      type: object
-      required:
-      - tables
-      properties:
-        tables:
-          type: array
-          items:
-            type: object
-            required:
-            - id
-            properties:
-              id:
-                type: string
-                example: Table1
-      example:
-        tables:
-        - id: People
-        - id: Places
   parameters:
     expandQueryParam:
       in: query

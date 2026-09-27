@@ -127,6 +127,38 @@ paths:
           description: Success
 components:
   schemas:
+    ColumnsWithoutFields:
+      type: object
+      required:
+      - columns
+      properties:
+        columns:
+          type: array
+          items:
+            type: object
+            required:
+            - id
+            properties:
+              id:
+                type: string
+                example: ColumnName
+      example:
+        columns:
+        - id: pet
+        - id: popularity
+    GetFields:
+      allOf:
+      - $ref: '#/components/schemas/Fields'
+      - type: object
+        properties:
+          recalcDeps:
+            type: array
+            items:
+              type: integer
+            description: 'An array of column identifiers (colRefs) that this column depends on, prefixed with "L" constant. If any of these columns change, the column will be recalculated. E.g.: <code>["L", 2, 3]</code>'
+          colRef:
+            type: integer
+            description: 'Column reference, e.g.: <code>2</code>'
     UpdateColumns:
       type: object
       required:
@@ -151,6 +183,73 @@ components:
                     colId:
                       type: string
                       description: Set it to the new column ID when you want to change it.
+      example:
+        columns:
+        - id: pet
+          fields:
+            label: Pet
+        - id: popularity
+          fields:
+            label: Popularity ❤
+            type: Int
+    CreateFields:
+      allOf:
+      - $ref: '#/components/schemas/Fields'
+      - type: object
+        properties:
+          recalcDeps:
+            type: string
+            description: 'An encoded array of column identifiers (colRefs) that this column depends on. If any of these columns change, the column will be recalculated. E.g.: <code>[2, 3]</code>'
+    CreateColumns:
+      type: object
+      required:
+      - columns
+      properties:
+        columns:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                description: Column identifier
+              fields:
+                $ref: '#/components/schemas/CreateFields'
+      example:
+        columns:
+        - id: pet
+          fields:
+            label: Pet
+        - id: popularity
+          fields:
+            label: Popularity ❤
+            type: Int
+        - id: Order
+          fields:
+            type: Ref:Orders
+            visibleCol: 2
+        - id: Formula
+          fields:
+            type: Int
+            formula: $A + $B
+            isFormula: true
+        - id: Status
+          fields:
+            type: Choice
+            widgetOptions: '{"choices":["New","Old"],"choiceOptions":{"New":{"fillColor":"#FF0000","textColor":"#FFFFFF"}}}'
+    ColumnsList:
+      type: object
+      properties:
+        columns:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                example: ColumnName
+              fields:
+                $ref: '#/components/schemas/GetFields'
       example:
         columns:
         - id: pet
@@ -200,106 +299,13 @@ components:
         visibleCol:
           type: integer
           description: For Ref and RefList columns, the colRef of a column to display
-    ColumnsWithoutFields:
-      type: object
-      required:
-      - columns
-      properties:
-        columns:
-          type: array
-          items:
-            type: object
-            required:
-            - id
-            properties:
-              id:
-                type: string
-                example: ColumnName
-      example:
-        columns:
-        - id: pet
-        - id: popularity
-    CreateFields:
-      allOf:
-      - $ref: '#/components/schemas/Fields'
-      - type: object
-        properties:
-          recalcDeps:
-            type: string
-            description: 'An encoded array of column identifiers (colRefs) that this column depends on. If any of these columns change, the column will be recalculated. E.g.: <code>[2, 3]</code>'
-    CreateColumns:
-      type: object
-      required:
-      - columns
-      properties:
-        columns:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: string
-                description: Column identifier
-              fields:
-                $ref: '#/components/schemas/CreateFields'
-      example:
-        columns:
-        - id: pet
-          fields:
-            label: Pet
-        - id: popularity
-          fields:
-            label: Popularity ❤
-            type: Int
-        - id: Order
-          fields:
-            type: Ref:Orders
-            visibleCol: 2
-        - id: Formula
-          fields:
-            type: Int
-            formula: $A + $B
-            isFormula: true
-        - id: Status
-          fields:
-            type: Choice
-            widgetOptions: '{"choices":["New","Old"],"choiceOptions":{"New":{"fillColor":"#FF0000","textColor":"#FFFFFF"}}}'
-    GetFields:
-      allOf:
-      - $ref: '#/components/schemas/Fields'
-      - type: object
-        properties:
-          recalcDeps:
-            type: array
-            items:
-              type: integer
-            description: 'An array of column identifiers (colRefs) that this column depends on, prefixed with "L" constant. If any of these columns change, the column will be recalculated. E.g.: <code>["L", 2, 3]</code>'
-          colRef:
-            type: integer
-            description: 'Column reference, e.g.: <code>2</code>'
-    ColumnsList:
-      type: object
-      properties:
-        columns:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: string
-                example: ColumnName
-              fields:
-                $ref: '#/components/schemas/GetFields'
-      example:
-        columns:
-        - id: pet
-          fields:
-            label: Pet
-        - id: popularity
-          fields:
-            label: Popularity ❤
-            type: Int
   parameters:
+    hiddenQueryParam:
+      in: query
+      name: hidden
+      schema:
+        type: boolean
+      description: Set to true to include the hidden columns (like "manualSort")
     tableIdPathParam:
       in: path
       name: tableId
@@ -314,12 +320,6 @@ components:
         type: string
       description: A string id (UUID)
       required: true
-    hiddenQueryParam:
-      in: query
-      name: hidden
-      schema:
-        type: boolean
-      description: Set to true to include the hidden columns (like "manualSort")
     colIdPathParam:
       in: path
       name: colId

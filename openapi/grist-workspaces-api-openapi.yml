@@ -174,131 +174,16 @@ paths:
           description: Success
 components:
   schemas:
-    WorkspaceWithDocs:
-      allOf:
-      - $ref: '#/components/schemas/Workspace'
-      - type: object
-        required:
-        - docs
-        properties:
-          docs:
-            type: array
-            items:
-              $ref: '#/components/schemas/Doc'
-    WorkspaceAccessRead:
-      type: object
-      required:
-      - maxInheritedRole
-      - users
-      properties:
-        maxInheritedRole:
-          $ref: '#/components/schemas/Access'
-        users:
-          type: array
-          items:
-            type: object
-            required:
-            - id
-            - name
-            properties:
-              id:
-                type: integer
-                example: 1
-              name:
-                type: string
-                example: Andrea
-              email:
-                type: string
-                example: andrea@getgrist.com
-              access:
-                $ref: '#/components/schemas/Access'
-              parentAccess:
-                $ref: '#/components/schemas/Access'
-    Workspace:
-      type: object
-      required:
-      - id
-      - name
-      - access
-      properties:
-        id:
-          type: integer
-          format: int64
-          example: 97
-        name:
-          type: string
-          example: Secret Plans
-        access:
-          type: string
-          $ref: '#/components/schemas/Access'
-    WorkspaceWithDocsAndOrg:
-      allOf:
-      - $ref: '#/components/schemas/WorkspaceWithDocs'
-      - $ref: '#/components/schemas/WorkspaceWithOrg'
-    WorkspaceWithDocsAndDomain:
-      allOf:
-      - $ref: '#/components/schemas/WorkspaceWithDocs'
-      - type: object
-        properties:
-          orgDomain:
-            type: string
-            example: gristlabs
-    WorkspaceAccessWrite:
-      type: object
-      properties:
-        maxInheritedRole:
-          $ref: '#/components/schemas/Access'
-        users:
-          type: object
-          additionalProperties:
-            type: string
-            enum:
-            - owners
-            - editors
-            - viewers
-            - members
-            - null
-          example:
-            foo@getgrist.com: owners
-            bar@getgrist.com: null
     Access:
       type: string
       enum:
       - owners
       - editors
       - viewers
-    Doc:
-      type: object
-      required:
-      - id
-      - name
-      - isPinned
-      - urlId
-      - access
-      properties:
-        id:
-          type: string
-          example: 145
-        name:
-          type: string
-          example: Project Lollipop
-        access:
-          type: string
-          $ref: '#/components/schemas/Access'
-        isPinned:
-          type: boolean
-          example: true
-        urlId:
-          type:
-          - string
-          - 'null'
-          example: null
-    WorkspaceParameters:
-      type: object
-      properties:
-        name:
-          type: string
-          example: Retreat Docs
+    WorkspaceWithDocsAndOrg:
+      allOf:
+      - $ref: '#/components/schemas/WorkspaceWithDocs'
+      - $ref: '#/components/schemas/WorkspaceWithOrg'
     Org:
       type: object
       required:
@@ -336,15 +221,96 @@ components:
         updatedAt:
           type: string
           example: '2019-09-13T15:42:35.000Z'
-    WorkspaceWithOrg:
+    WorkspaceAccessRead:
+      type: object
+      required:
+      - maxInheritedRole
+      - users
+      properties:
+        maxInheritedRole:
+          $ref: '#/components/schemas/Access'
+        users:
+          type: array
+          items:
+            type: object
+            required:
+            - id
+            - name
+            properties:
+              id:
+                type: integer
+                example: 1
+              name:
+                type: string
+                example: Andrea
+              email:
+                type: string
+                example: andrea@getgrist.com
+              access:
+                $ref: '#/components/schemas/Access'
+              parentAccess:
+                $ref: '#/components/schemas/Access'
+    WorkspaceParameters:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Retreat Docs
+    WorkspaceAccessWrite:
+      type: object
+      properties:
+        maxInheritedRole:
+          $ref: '#/components/schemas/Access'
+        users:
+          type: object
+          additionalProperties:
+            type: string
+            enum:
+            - owners
+            - editors
+            - viewers
+            - members
+            - null
+          example:
+            foo@getgrist.com: owners
+            bar@getgrist.com: null
+    WorkspaceWithDocs:
       allOf:
       - $ref: '#/components/schemas/Workspace'
       - type: object
         required:
-        - org
+        - docs
         properties:
-          org:
-            $ref: '#/components/schemas/Org'
+          docs:
+            type: array
+            items:
+              $ref: '#/components/schemas/Doc'
+    Doc:
+      type: object
+      required:
+      - id
+      - name
+      - isPinned
+      - urlId
+      - access
+      properties:
+        id:
+          type: string
+          example: 145
+        name:
+          type: string
+          example: Project Lollipop
+        access:
+          type: string
+          $ref: '#/components/schemas/Access'
+        isPinned:
+          type: boolean
+          example: true
+        urlId:
+          type:
+          - string
+          - 'null'
+          example: null
     User:
       type: object
       required:
@@ -364,14 +330,41 @@ components:
           - string
           - 'null'
           example: null
+    WorkspaceWithOrg:
+      allOf:
+      - $ref: '#/components/schemas/Workspace'
+      - type: object
+        required:
+        - org
+        properties:
+          org:
+            $ref: '#/components/schemas/Org'
+    WorkspaceWithDocsAndDomain:
+      allOf:
+      - $ref: '#/components/schemas/WorkspaceWithDocs'
+      - type: object
+        properties:
+          orgDomain:
+            type: string
+            example: gristlabs
+    Workspace:
+      type: object
+      required:
+      - id
+      - name
+      - access
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 97
+        name:
+          type: string
+          example: Secret Plans
+        access:
+          type: string
+          $ref: '#/components/schemas/Access'
   parameters:
-    workspaceIdPathParam:
-      in: path
-      name: workspaceId
-      description: An integer id
-      schema:
-        type: integer
-      required: true
     orgIdPathParam:
       in: path
       name: orgId
@@ -380,6 +373,13 @@ components:
         - type: integer
         - type: string
       description: This can be an integer id, or a string subdomain (e.g. `gristlabs`), or `current` if the org is implied by the domain in the url
+      required: true
+    workspaceIdPathParam:
+      in: path
+      name: workspaceId
+      description: An integer id
+      schema:
+        type: integer
       required: true
   securitySchemes:
     ApiKey:

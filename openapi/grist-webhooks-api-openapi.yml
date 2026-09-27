@@ -180,28 +180,6 @@ paths:
                     example: true
 components:
   schemas:
-    Webhooks:
-      type: array
-      items:
-        $ref: '#/components/schemas/Webhook'
-    WebhookFields:
-      allOf:
-      - $ref: '#/components/schemas/WebhookPartialFields'
-      - $ref: '#/components/schemas/WebhookRequiredFields'
-    WebhookRequiredFields:
-      type: object
-      required:
-      - name
-      - memo
-      - url
-      - enabled
-      - unsubscribeKey
-      - eventTypes
-      - isReadyColumn
-      - tableId
-      properties:
-        unsubscribeKey:
-          type: string
     WebhookId:
       type: object
       required:
@@ -211,49 +189,17 @@ components:
           type: string
           description: Webhook identifier
           example: xxxxxxx-xxxx-xxxx-xxxxxxxxxxxxxxxx
-    WebhookUsage:
-      type:
-      - object
-      - 'null'
-      required:
-      - numWaiting
-      - status
+    Webhook:
+      type: object
       properties:
-        numWaiting:
-          type: integer
-        status:
+        id:
           type: string
-          example: idle
-        updatedTime:
-          type:
-          - number
-          - 'null'
-          format: UNIX epoch in milliseconds
-          example: 1685637500424
-        lastSuccessTime:
-          type:
-          - number
-          - 'null'
-          format: UNIX epoch in milliseconds
-          example: 1685637500424
-        lastFailureTime:
-          type:
-          - number
-          - 'null'
-          format: UNIX epoch in milliseconds
-          example: 1685637500424
-        lastErrorMessage:
-          type:
-          - string
-          - 'null'
-          example: null
-        lastHttpStatus:
-          type:
-          - number
-          - 'null'
-          example: 200
-        lastEventBatch:
-          $ref: '#/components/schemas/WebhookBatchStatus'
+          format: uuid
+          example: xxxxxxx-xxxx-xxxx-xxxxxxxxxxxxxxxx
+        fields:
+          $ref: '#/components/schemas/WebhookFields'
+        usage:
+          $ref: '#/components/schemas/WebhookUsage'
     WebhookPartialFields:
       type: object
       properties:
@@ -314,17 +260,71 @@ components:
         status:
           type: string
           example: success
-    Webhook:
-      type: object
+    WebhookUsage:
+      type:
+      - object
+      - 'null'
+      required:
+      - numWaiting
+      - status
       properties:
-        id:
+        numWaiting:
+          type: integer
+        status:
           type: string
-          format: uuid
-          example: xxxxxxx-xxxx-xxxx-xxxxxxxxxxxxxxxx
-        fields:
-          $ref: '#/components/schemas/WebhookFields'
-        usage:
-          $ref: '#/components/schemas/WebhookUsage'
+          example: idle
+        updatedTime:
+          type:
+          - number
+          - 'null'
+          format: UNIX epoch in milliseconds
+          example: 1685637500424
+        lastSuccessTime:
+          type:
+          - number
+          - 'null'
+          format: UNIX epoch in milliseconds
+          example: 1685637500424
+        lastFailureTime:
+          type:
+          - number
+          - 'null'
+          format: UNIX epoch in milliseconds
+          example: 1685637500424
+        lastErrorMessage:
+          type:
+          - string
+          - 'null'
+          example: null
+        lastHttpStatus:
+          type:
+          - number
+          - 'null'
+          example: 200
+        lastEventBatch:
+          $ref: '#/components/schemas/WebhookBatchStatus'
+    WebhookFields:
+      allOf:
+      - $ref: '#/components/schemas/WebhookPartialFields'
+      - $ref: '#/components/schemas/WebhookRequiredFields'
+    WebhookRequiredFields:
+      type: object
+      required:
+      - name
+      - memo
+      - url
+      - enabled
+      - unsubscribeKey
+      - eventTypes
+      - isReadyColumn
+      - tableId
+      properties:
+        unsubscribeKey:
+          type: string
+    Webhooks:
+      type: array
+      items:
+        $ref: '#/components/schemas/Webhook'
   parameters:
     docIdPathParam:
       in: path
