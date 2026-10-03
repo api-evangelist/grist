@@ -117,74 +117,6 @@ paths:
           description: Success
 components:
   schemas:
-    TablesList:
-      type: object
-      required:
-      - tables
-      properties:
-        tables:
-          type: array
-          items:
-            type: object
-            required:
-            - id
-            - fields
-            properties:
-              id:
-                type: string
-                example: Table1
-              fields:
-                type: object
-                properties:
-                  tableRef:
-                    type: integer
-                    description: Row ID of the table in the _grist_Tables metadata table
-                  onDemand:
-                    type: boolean
-                    description: Whether the table uses on-demand loading
-              columns:
-                type: array
-                description: Included when expand=column is set. Contains metadata for each column in the table.
-                items:
-                  type: object
-                  required:
-                  - id
-                  - fields
-                  properties:
-                    id:
-                      type: string
-                      example: ColumnName
-                    fields:
-                      $ref: '#/components/schemas/GetFields'
-      example:
-        tables:
-        - id: People
-          fields:
-            tableRef: 1
-            onDemand: false
-        - id: Places
-          fields:
-            tableRef: 2
-            onDemand: false
-    TablesWithoutFields:
-      type: object
-      required:
-      - tables
-      properties:
-        tables:
-          type: array
-          items:
-            type: object
-            required:
-            - id
-            properties:
-              id:
-                type: string
-                example: Table1
-      example:
-        tables:
-        - id: People
-        - id: Places
     GetFields:
       allOf:
       - $ref: '#/components/schemas/Fields'
@@ -198,46 +130,6 @@ components:
           colRef:
             type: integer
             description: 'Column reference, e.g.: <code>2</code>'
-    Fields:
-      type: object
-      properties:
-        type:
-          type: string
-          description: Column type, by default Any. Ref, RefList and DateTime types requires a postfix, e.g. <code>DateTime:America/New_York</code>, <code>Ref:Users</code>
-          enum:
-          - Any
-          - Text
-          - Numeric
-          - Int
-          - Bool
-          - Date
-          - DateTime:<timezone>
-          - Choice
-          - ChoiceList
-          - Ref:<tableId>
-          - RefList:<tableId>
-          - Attachments
-        label:
-          type: string
-          description: Column label.
-        formula:
-          type: string
-          description: 'A python formula, e.g.: <code>$A + Table1.lookupOne(B=$B)</code>'
-        isFormula:
-          type: boolean
-          description: Use "true" to indicate that the column is a formula column. Use "false" for trigger formula column.
-        widgetOptions:
-          type: string
-          description: 'A JSON object with widget options, e.g.: <code>{"choices": ["cat", "dog"], "alignment": "right"}</code>'
-        untieColIdFromLabel:
-          type: boolean
-          description: Use "true" to indicate that the column label should not be used as the column identifier. Use "false" to use the label as the identifier.
-        recalcWhen:
-          type: integer
-          description: A number indicating when the column should be recalculated. <ol start='0'><li>On new records or when any field in recalcDeps changes, it's a 'data-cleaning'.</li><li>Never.</li><li>Calculate on new records and on manual updates to any data field.</li></ol>
-        visibleCol:
-          type: integer
-          description: For Ref and RefList columns, the colRef of a column to display
     CreateTables:
       type: object
       required:
@@ -306,6 +198,114 @@ components:
         - id: Places
           fields:
             onDemand: true
+    TablesWithoutFields:
+      type: object
+      required:
+      - tables
+      properties:
+        tables:
+          type: array
+          items:
+            type: object
+            required:
+            - id
+            properties:
+              id:
+                type: string
+                example: Table1
+      example:
+        tables:
+        - id: People
+        - id: Places
+    TablesList:
+      type: object
+      required:
+      - tables
+      properties:
+        tables:
+          type: array
+          items:
+            type: object
+            required:
+            - id
+            - fields
+            properties:
+              id:
+                type: string
+                example: Table1
+              fields:
+                type: object
+                properties:
+                  tableRef:
+                    type: integer
+                    description: Row ID of the table in the _grist_Tables metadata table
+                  onDemand:
+                    type: boolean
+                    description: Whether the table uses on-demand loading
+              columns:
+                type: array
+                description: Included when expand=column is set. Contains metadata for each column in the table.
+                items:
+                  type: object
+                  required:
+                  - id
+                  - fields
+                  properties:
+                    id:
+                      type: string
+                      example: ColumnName
+                    fields:
+                      $ref: '#/components/schemas/GetFields'
+      example:
+        tables:
+        - id: People
+          fields:
+            tableRef: 1
+            onDemand: false
+        - id: Places
+          fields:
+            tableRef: 2
+            onDemand: false
+    Fields:
+      type: object
+      properties:
+        type:
+          type: string
+          description: Column type, by default Any. Ref, RefList and DateTime types requires a postfix, e.g. <code>DateTime:America/New_York</code>, <code>Ref:Users</code>
+          enum:
+          - Any
+          - Text
+          - Numeric
+          - Int
+          - Bool
+          - Date
+          - DateTime:<timezone>
+          - Choice
+          - ChoiceList
+          - Ref:<tableId>
+          - RefList:<tableId>
+          - Attachments
+        label:
+          type: string
+          description: Column label.
+        formula:
+          type: string
+          description: 'A python formula, e.g.: <code>$A + Table1.lookupOne(B=$B)</code>'
+        isFormula:
+          type: boolean
+          description: Use "true" to indicate that the column is a formula column. Use "false" for trigger formula column.
+        widgetOptions:
+          type: string
+          description: 'A JSON object with widget options, e.g.: <code>{"choices": ["cat", "dog"], "alignment": "right"}</code>'
+        untieColIdFromLabel:
+          type: boolean
+          description: Use "true" to indicate that the column label should not be used as the column identifier. Use "false" to use the label as the identifier.
+        recalcWhen:
+          type: integer
+          description: A number indicating when the column should be recalculated. <ol start='0'><li>On new records or when any field in recalcDeps changes, it's a 'data-cleaning'.</li><li>Never.</li><li>Calculate on new records and on manual updates to any data field.</li></ol>
+        visibleCol:
+          type: integer
+          description: For Ref and RefList columns, the colRef of a column to display
   parameters:
     expandQueryParam:
       in: query

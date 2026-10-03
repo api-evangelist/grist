@@ -127,25 +127,6 @@ paths:
           description: Success
 components:
   schemas:
-    ColumnsWithoutFields:
-      type: object
-      required:
-      - columns
-      properties:
-        columns:
-          type: array
-          items:
-            type: object
-            required:
-            - id
-            properties:
-              id:
-                type: string
-                example: ColumnName
-      example:
-        columns:
-        - id: pet
-        - id: popularity
     GetFields:
       allOf:
       - $ref: '#/components/schemas/Fields'
@@ -159,47 +140,6 @@ components:
           colRef:
             type: integer
             description: 'Column reference, e.g.: <code>2</code>'
-    UpdateColumns:
-      type: object
-      required:
-      - columns
-      properties:
-        columns:
-          type: array
-          items:
-            type: object
-            required:
-            - id
-            - fields
-            properties:
-              id:
-                type: string
-                description: Column identifier
-              fields:
-                allOf:
-                - $ref: '#/components/schemas/CreateFields'
-                - type: object
-                  properties:
-                    colId:
-                      type: string
-                      description: Set it to the new column ID when you want to change it.
-      example:
-        columns:
-        - id: pet
-          fields:
-            label: Pet
-        - id: popularity
-          fields:
-            label: Popularity ❤
-            type: Int
-    CreateFields:
-      allOf:
-      - $ref: '#/components/schemas/Fields'
-      - type: object
-        properties:
-          recalcDeps:
-            type: string
-            description: 'An encoded array of column identifiers (colRefs) that this column depends on. If any of these columns change, the column will be recalculated. E.g.: <code>[2, 3]</code>'
     CreateColumns:
       type: object
       required:
@@ -237,6 +177,47 @@ components:
           fields:
             type: Choice
             widgetOptions: '{"choices":["New","Old"],"choiceOptions":{"New":{"fillColor":"#FF0000","textColor":"#FFFFFF"}}}'
+    CreateFields:
+      allOf:
+      - $ref: '#/components/schemas/Fields'
+      - type: object
+        properties:
+          recalcDeps:
+            type: string
+            description: 'An encoded array of column identifiers (colRefs) that this column depends on. If any of these columns change, the column will be recalculated. E.g.: <code>[2, 3]</code>'
+    UpdateColumns:
+      type: object
+      required:
+      - columns
+      properties:
+        columns:
+          type: array
+          items:
+            type: object
+            required:
+            - id
+            - fields
+            properties:
+              id:
+                type: string
+                description: Column identifier
+              fields:
+                allOf:
+                - $ref: '#/components/schemas/CreateFields'
+                - type: object
+                  properties:
+                    colId:
+                      type: string
+                      description: Set it to the new column ID when you want to change it.
+      example:
+        columns:
+        - id: pet
+          fields:
+            label: Pet
+        - id: popularity
+          fields:
+            label: Popularity ❤
+            type: Int
     ColumnsList:
       type: object
       properties:
@@ -259,6 +240,25 @@ components:
           fields:
             label: Popularity ❤
             type: Int
+    ColumnsWithoutFields:
+      type: object
+      required:
+      - columns
+      properties:
+        columns:
+          type: array
+          items:
+            type: object
+            required:
+            - id
+            properties:
+              id:
+                type: string
+                example: ColumnName
+      example:
+        columns:
+        - id: pet
+        - id: popularity
     Fields:
       type: object
       properties:
@@ -313,19 +313,19 @@ components:
         type: string
       description: normalized table name (see `TABLE ID` in Raw Data) or numeric row ID in `_grist_Tables`
       required: true
-    docIdPathParam:
-      in: path
-      name: docId
-      schema:
-        type: string
-      description: A string id (UUID)
-      required: true
     colIdPathParam:
       in: path
       name: colId
       schema:
         type: string
       description: The column id (without the starting `$`) as shown in the column configuration below the label
+      required: true
+    docIdPathParam:
+      in: path
+      name: docId
+      schema:
+        type: string
+      description: A string id (UUID)
       required: true
   securitySchemes:
     ApiKey:

@@ -64,6 +64,68 @@ paths:
                 $ref: '#/components/schemas/DocWithWorkspace'
 components:
   schemas:
+    Workspace:
+      type: object
+      required:
+      - id
+      - name
+      - access
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 97
+        name:
+          type: string
+          example: Secret Plans
+        access:
+          type: string
+          $ref: '#/components/schemas/Access'
+    Doc:
+      type: object
+      required:
+      - id
+      - name
+      - isPinned
+      - urlId
+      - access
+      properties:
+        id:
+          type: string
+          example: 145
+        name:
+          type: string
+          example: Project Lollipop
+        access:
+          type: string
+          $ref: '#/components/schemas/Access'
+        isPinned:
+          type: boolean
+          example: true
+        urlId:
+          type:
+          - string
+          - 'null'
+          example: null
+    WorkspaceWithDocs:
+      allOf:
+      - $ref: '#/components/schemas/Workspace'
+      - type: object
+        required:
+        - docs
+        properties:
+          docs:
+            type: array
+            items:
+              $ref: '#/components/schemas/Doc'
+    WorkspaceWithDocsAndDomain:
+      allOf:
+      - $ref: '#/components/schemas/WorkspaceWithDocs'
+      - type: object
+        properties:
+          orgDomain:
+            type: string
+            example: gristlabs
     Access:
       type: string
       enum:
@@ -107,52 +169,15 @@ components:
         updatedAt:
           type: string
           example: '2019-09-13T15:42:35.000Z'
-    DocWithWorkspace:
-      allOf:
-      - $ref: '#/components/schemas/Doc'
-      - type: object
-        required:
-        - workspace
-        properties:
-          workspace:
-            $ref: '#/components/schemas/WorkspaceWithOrg'
-    Doc:
-      type: object
-      required:
-      - id
-      - name
-      - isPinned
-      - urlId
-      - access
-      properties:
-        id:
-          type: string
-          example: 145
-        name:
-          type: string
-          example: Project Lollipop
-        access:
-          type: string
-          $ref: '#/components/schemas/Access'
-        isPinned:
-          type: boolean
-          example: true
-        urlId:
-          type:
-          - string
-          - 'null'
-          example: null
-    WorkspaceWithDocs:
+    WorkspaceWithOrg:
       allOf:
       - $ref: '#/components/schemas/Workspace'
       - type: object
         required:
-        - docs
+        - org
         properties:
-          docs:
-            type: array
-            items:
-              $ref: '#/components/schemas/Doc'
+          org:
+            $ref: '#/components/schemas/Org'
     User:
       type: object
       required:
@@ -172,40 +197,15 @@ components:
           - string
           - 'null'
           example: null
-    WorkspaceWithOrg:
+    DocWithWorkspace:
       allOf:
-      - $ref: '#/components/schemas/Workspace'
+      - $ref: '#/components/schemas/Doc'
       - type: object
         required:
-        - org
+        - workspace
         properties:
-          org:
-            $ref: '#/components/schemas/Org'
-    WorkspaceWithDocsAndDomain:
-      allOf:
-      - $ref: '#/components/schemas/WorkspaceWithDocs'
-      - type: object
-        properties:
-          orgDomain:
-            type: string
-            example: gristlabs
-    Workspace:
-      type: object
-      required:
-      - id
-      - name
-      - access
-      properties:
-        id:
-          type: integer
-          format: int64
-          example: 97
-        name:
-          type: string
-          example: Secret Plans
-        access:
-          type: string
-          $ref: '#/components/schemas/Access'
+          workspace:
+            $ref: '#/components/schemas/WorkspaceWithOrg'
   securitySchemes:
     ApiKey:
       type: http

@@ -89,14 +89,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/SqlResultSet'
 components:
-  parameters:
-    docIdPathParam:
-      in: path
-      name: docId
-      schema:
-        type: string
-      description: A string id (UUID)
-      required: true
   schemas:
     SqlResultSet:
       type: object
@@ -126,6 +118,14 @@ components:
               id: 2
               pet: dog
               popularity: 95
+  parameters:
+    docIdPathParam:
+      in: path
+      name: docId
+      schema:
+        type: string
+      description: A string id (UUID)
+      required: true
   securitySchemes:
     ApiKey:
       type: http
