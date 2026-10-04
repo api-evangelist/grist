@@ -165,39 +165,6 @@ components:
           - id: popularity
             fields:
               label: Popularity ❤
-    UpdateTables:
-      type: object
-      required:
-      - tables
-      properties:
-        tables:
-          type: array
-          items:
-            type: object
-            required:
-            - id
-            - fields
-            properties:
-              id:
-                type: string
-                description: Current table identifier
-              fields:
-                type: object
-                properties:
-                  tableId:
-                    type: string
-                    description: Set to a new value to rename the table
-                  onDemand:
-                    type: boolean
-                    description: Whether the table should use on-demand loading
-      example:
-        tables:
-        - id: People
-          fields:
-            tableId: Persons
-        - id: Places
-          fields:
-            onDemand: true
     TablesWithoutFields:
       type: object
       required:
@@ -306,7 +273,47 @@ components:
         visibleCol:
           type: integer
           description: For Ref and RefList columns, the colRef of a column to display
+    UpdateTables:
+      type: object
+      required:
+      - tables
+      properties:
+        tables:
+          type: array
+          items:
+            type: object
+            required:
+            - id
+            - fields
+            properties:
+              id:
+                type: string
+                description: Current table identifier
+              fields:
+                type: object
+                properties:
+                  tableId:
+                    type: string
+                    description: Set to a new value to rename the table
+                  onDemand:
+                    type: boolean
+                    description: Whether the table should use on-demand loading
+      example:
+        tables:
+        - id: People
+          fields:
+            tableId: Persons
+        - id: Places
+          fields:
+            onDemand: true
   parameters:
+    docIdPathParam:
+      in: path
+      name: docId
+      schema:
+        type: string
+      description: A string id (UUID)
+      required: true
     expandQueryParam:
       in: query
       name: expand
@@ -316,13 +323,6 @@ components:
         - column
       description: Set to "column" to include column metadata for each table in the response.
       required: false
-    docIdPathParam:
-      in: path
-      name: docId
-      schema:
-        type: string
-      description: A string id (UUID)
-      required: true
   securitySchemes:
     ApiKey:
       type: http

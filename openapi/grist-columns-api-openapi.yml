@@ -127,6 +127,36 @@ paths:
           description: Success
 components:
   schemas:
+    ColumnsList:
+      type: object
+      properties:
+        columns:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                example: ColumnName
+              fields:
+                $ref: '#/components/schemas/GetFields'
+      example:
+        columns:
+        - id: pet
+          fields:
+            label: Pet
+        - id: popularity
+          fields:
+            label: Popularity ❤
+            type: Int
+    CreateFields:
+      allOf:
+      - $ref: '#/components/schemas/Fields'
+      - type: object
+        properties:
+          recalcDeps:
+            type: string
+            description: 'An encoded array of column identifiers (colRefs) that this column depends on. If any of these columns change, the column will be recalculated. E.g.: <code>[2, 3]</code>'
     GetFields:
       allOf:
       - $ref: '#/components/schemas/Fields'
@@ -140,6 +170,25 @@ components:
           colRef:
             type: integer
             description: 'Column reference, e.g.: <code>2</code>'
+    ColumnsWithoutFields:
+      type: object
+      required:
+      - columns
+      properties:
+        columns:
+          type: array
+          items:
+            type: object
+            required:
+            - id
+            properties:
+              id:
+                type: string
+                example: ColumnName
+      example:
+        columns:
+        - id: pet
+        - id: popularity
     CreateColumns:
       type: object
       required:
@@ -177,14 +226,6 @@ components:
           fields:
             type: Choice
             widgetOptions: '{"choices":["New","Old"],"choiceOptions":{"New":{"fillColor":"#FF0000","textColor":"#FFFFFF"}}}'
-    CreateFields:
-      allOf:
-      - $ref: '#/components/schemas/Fields'
-      - type: object
-        properties:
-          recalcDeps:
-            type: string
-            description: 'An encoded array of column identifiers (colRefs) that this column depends on. If any of these columns change, the column will be recalculated. E.g.: <code>[2, 3]</code>'
     UpdateColumns:
       type: object
       required:
@@ -218,47 +259,6 @@ components:
           fields:
             label: Popularity ❤
             type: Int
-    ColumnsList:
-      type: object
-      properties:
-        columns:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: string
-                example: ColumnName
-              fields:
-                $ref: '#/components/schemas/GetFields'
-      example:
-        columns:
-        - id: pet
-          fields:
-            label: Pet
-        - id: popularity
-          fields:
-            label: Popularity ❤
-            type: Int
-    ColumnsWithoutFields:
-      type: object
-      required:
-      - columns
-      properties:
-        columns:
-          type: array
-          items:
-            type: object
-            required:
-            - id
-            properties:
-              id:
-                type: string
-                example: ColumnName
-      example:
-        columns:
-        - id: pet
-        - id: popularity
     Fields:
       type: object
       properties:
@@ -306,12 +306,12 @@ components:
       schema:
         type: boolean
       description: Set to true to include the hidden columns (like "manualSort")
-    tableIdPathParam:
+    docIdPathParam:
       in: path
-      name: tableId
+      name: docId
       schema:
         type: string
-      description: normalized table name (see `TABLE ID` in Raw Data) or numeric row ID in `_grist_Tables`
+      description: A string id (UUID)
       required: true
     colIdPathParam:
       in: path
@@ -320,12 +320,12 @@ components:
         type: string
       description: The column id (without the starting `$`) as shown in the column configuration below the label
       required: true
-    docIdPathParam:
+    tableIdPathParam:
       in: path
-      name: docId
+      name: tableId
       schema:
         type: string
-      description: A string id (UUID)
+      description: normalized table name (see `TABLE ID` in Raw Data) or numeric row ID in `_grist_Tables`
       required: true
   securitySchemes:
     ApiKey:

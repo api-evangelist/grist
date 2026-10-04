@@ -105,31 +105,6 @@ paths:
                       $ref: '#/components/schemas/Org'
 components:
   schemas:
-    Access:
-      type: string
-      enum:
-      - owners
-      - editors
-      - viewers
-    User:
-      type: object
-      required:
-      - id
-      - name
-      - picture
-      properties:
-        id:
-          type: integer
-          format: int64
-          example: 101
-        name:
-          type: string
-          example: Helga Hufflepuff
-        picture:
-          type:
-          - string
-          - 'null'
-          example: null
     Org:
       type: object
       required:
@@ -167,6 +142,31 @@ components:
         updatedAt:
           type: string
           example: '2019-09-13T15:42:35.000Z'
+    User:
+      type: object
+      required:
+      - id
+      - name
+      - picture
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 101
+        name:
+          type: string
+          example: Helga Hufflepuff
+        picture:
+          type:
+          - string
+          - 'null'
+          example: null
+    Access:
+      type: string
+      enum:
+      - owners
+      - editors
+      - viewers
   securitySchemes:
     ApiKey:
       type: http

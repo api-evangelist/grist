@@ -180,6 +180,53 @@ paths:
                     example: true
 components:
   schemas:
+    WebhookPartialFields:
+      type: object
+      properties:
+        name:
+          type:
+          - string
+          - 'null'
+          example: new-project-email
+        memo:
+          type:
+          - string
+          - 'null'
+          example: Send an email when a project is added
+        url:
+          type: string
+          format: uri
+          example: https://example.com/webhook/123
+        enabled:
+          type: boolean
+        eventTypes:
+          type: array
+          items:
+            type: string
+          example:
+          - add
+          - update
+        isReadyColumn:
+          type:
+          - string
+          - 'null'
+          example: null
+        tableId:
+          type: string
+          example: Projects
+    WebhookId:
+      type: object
+      required:
+      - id
+      properties:
+        id:
+          type: string
+          description: Webhook identifier
+          example: xxxxxxx-xxxx-xxxx-xxxxxxxxxxxxxxxx
+    Webhooks:
+      type: array
+      items:
+        $ref: '#/components/schemas/Webhook'
     WebhookBatchStatus:
       type:
       - object
@@ -206,6 +253,20 @@ components:
         status:
           type: string
           example: success
+    WebhookRequiredFields:
+      type: object
+      required:
+      - name
+      - memo
+      - url
+      - enabled
+      - unsubscribeKey
+      - eventTypes
+      - isReadyColumn
+      - tableId
+      properties:
+        unsubscribeKey:
+          type: string
     WebhookUsage:
       type:
       - object
@@ -249,19 +310,6 @@ components:
           example: 200
         lastEventBatch:
           $ref: '#/components/schemas/WebhookBatchStatus'
-    WebhookId:
-      type: object
-      required:
-      - id
-      properties:
-        id:
-          type: string
-          description: Webhook identifier
-          example: xxxxxxx-xxxx-xxxx-xxxxxxxxxxxxxxxx
-    Webhooks:
-      type: array
-      items:
-        $ref: '#/components/schemas/Webhook'
     Webhook:
       type: object
       properties:
@@ -277,54 +325,6 @@ components:
       allOf:
       - $ref: '#/components/schemas/WebhookPartialFields'
       - $ref: '#/components/schemas/WebhookRequiredFields'
-    WebhookPartialFields:
-      type: object
-      properties:
-        name:
-          type:
-          - string
-          - 'null'
-          example: new-project-email
-        memo:
-          type:
-          - string
-          - 'null'
-          example: Send an email when a project is added
-        url:
-          type: string
-          format: uri
-          example: https://example.com/webhook/123
-        enabled:
-          type: boolean
-        eventTypes:
-          type: array
-          items:
-            type: string
-          example:
-          - add
-          - update
-        isReadyColumn:
-          type:
-          - string
-          - 'null'
-          example: null
-        tableId:
-          type: string
-          example: Projects
-    WebhookRequiredFields:
-      type: object
-      required:
-      - name
-      - memo
-      - url
-      - enabled
-      - unsubscribeKey
-      - eventTypes
-      - isReadyColumn
-      - tableId
-      properties:
-        unsubscribeKey:
-          type: string
   parameters:
     docIdPathParam:
       in: path
