@@ -37,6 +37,10 @@ accessModel:
   generated: '2026-09-03'
   method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/grist.png
+x-docs-platform: mkdocs
+x-docs-platform-confidence: medium
+x-docs-platform-checked: 2026-10-03
+x-docs-hosting: github-pages
 tags:
   - Spreadsheets
   - Database
@@ -334,6 +338,9 @@ apis:
   - type: OpenAPIConsole
     url: https://docs.getgrist.com/apiconsole
 common:
+  - type: CapabilityMap
+    url: capabilities/grist-capability-edges.yml
+    name: Grist Business Capability Map
   - type: AgenticAccess
     url: agentic-access/grist-agentic-access.yml
   - type: DomainSecurity
