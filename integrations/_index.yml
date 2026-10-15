@@ -40,7 +40,7 @@
     builder: unknown (not in the directory record)
     other_apps:
     - grist-api-key
-  status: pending-generation
+  status: not-a-workflow
   arazzo: null
 - slug: grist-n8n
   label: n8n
@@ -65,7 +65,7 @@
     node_path: Grist
     trigger: false
     builder: n8n (built-in node)
-  status: pending-generation
+  status: not-a-workflow
   arazzo: null
 - slug: grist-pipedream
   label: Pipedream
@@ -91,5 +91,5 @@
     actions: true
     sources: true
     builder: Pipedream repo (component)
-  status: pending-generation
+  status: not-a-workflow
   arazzo: null
