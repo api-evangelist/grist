@@ -64,14 +64,6 @@ paths:
                 $ref: '#/components/schemas/DocWithWorkspace'
 components:
   schemas:
-    WorkspaceWithDocsAndDomain:
-      allOf:
-      - $ref: '#/components/schemas/WorkspaceWithDocs'
-      - type: object
-        properties:
-          orgDomain:
-            type: string
-            example: gristlabs
     WorkspaceWithOrg:
       allOf:
       - $ref: '#/components/schemas/Workspace'
@@ -81,15 +73,6 @@ components:
         properties:
           org:
             $ref: '#/components/schemas/Org'
-    DocWithWorkspace:
-      allOf:
-      - $ref: '#/components/schemas/Doc'
-      - type: object
-        required:
-        - workspace
-        properties:
-          workspace:
-            $ref: '#/components/schemas/WorkspaceWithOrg'
     WorkspaceWithDocs:
       allOf:
       - $ref: '#/components/schemas/Workspace'
@@ -101,21 +84,28 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/Doc'
-    User:
+    Doc:
       type: object
       required:
       - id
       - name
-      - picture
+      - isPinned
+      - urlId
+      - access
       properties:
         id:
-          type: integer
-          format: int64
-          example: 101
+          type: string
+          example: 145
         name:
           type: string
-          example: Helga Hufflepuff
-        picture:
+          example: Project Lollipop
+        access:
+          type: string
+          $ref: '#/components/schemas/Access'
+        isPinned:
+          type: boolean
+          example: true
+        urlId:
           type:
           - string
           - 'null'
@@ -157,32 +147,6 @@ components:
         updatedAt:
           type: string
           example: '2019-09-13T15:42:35.000Z'
-    Doc:
-      type: object
-      required:
-      - id
-      - name
-      - isPinned
-      - urlId
-      - access
-      properties:
-        id:
-          type: string
-          example: 145
-        name:
-          type: string
-          example: Project Lollipop
-        access:
-          type: string
-          $ref: '#/components/schemas/Access'
-        isPinned:
-          type: boolean
-          example: true
-        urlId:
-          type:
-          - string
-          - 'null'
-          example: null
     Access:
       type: string
       enum:
@@ -206,6 +170,42 @@ components:
         access:
           type: string
           $ref: '#/components/schemas/Access'
+    WorkspaceWithDocsAndDomain:
+      allOf:
+      - $ref: '#/components/schemas/WorkspaceWithDocs'
+      - type: object
+        properties:
+          orgDomain:
+            type: string
+            example: gristlabs
+    User:
+      type: object
+      required:
+      - id
+      - name
+      - picture
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 101
+        name:
+          type: string
+          example: Helga Hufflepuff
+        picture:
+          type:
+          - string
+          - 'null'
+          example: null
+    DocWithWorkspace:
+      allOf:
+      - $ref: '#/components/schemas/Doc'
+      - type: object
+        required:
+        - workspace
+        properties:
+          workspace:
+            $ref: '#/components/schemas/WorkspaceWithOrg'
   securitySchemes:
     ApiKey:
       type: http

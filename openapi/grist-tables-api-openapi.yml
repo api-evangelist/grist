@@ -116,20 +116,24 @@ paths:
         200:
           description: Success
 components:
+  parameters:
+    docIdPathParam:
+      in: path
+      name: docId
+      schema:
+        type: string
+      description: A string id (UUID)
+      required: true
+    expandQueryParam:
+      in: query
+      name: expand
+      schema:
+        type: string
+        enum:
+        - column
+      description: Set to "column" to include column metadata for each table in the response.
+      required: false
   schemas:
-    GetFields:
-      allOf:
-      - $ref: '#/components/schemas/Fields'
-      - type: object
-        properties:
-          recalcDeps:
-            type: array
-            items:
-              type: integer
-            description: 'An array of column identifiers (colRefs) that this column depends on, prefixed with "L" constant. If any of these columns change, the column will be recalculated. E.g.: <code>["L", 2, 3]</code>'
-          colRef:
-            type: integer
-            description: 'Column reference, e.g.: <code>2</code>'
     CreateTables:
       type: object
       required:
@@ -233,6 +237,52 @@ components:
           fields:
             tableRef: 2
             onDemand: false
+    GetFields:
+      allOf:
+      - $ref: '#/components/schemas/Fields'
+      - type: object
+        properties:
+          recalcDeps:
+            type: array
+            items:
+              type: integer
+            description: 'An array of column identifiers (colRefs) that this column depends on, prefixed with "L" constant. If any of these columns change, the column will be recalculated. E.g.: <code>["L", 2, 3]</code>'
+          colRef:
+            type: integer
+            description: 'Column reference, e.g.: <code>2</code>'
+    UpdateTables:
+      type: object
+      required:
+      - tables
+      properties:
+        tables:
+          type: array
+          items:
+            type: object
+            required:
+            - id
+            - fields
+            properties:
+              id:
+                type: string
+                description: Current table identifier
+              fields:
+                type: object
+                properties:
+                  tableId:
+                    type: string
+                    description: Set to a new value to rename the table
+                  onDemand:
+                    type: boolean
+                    description: Whether the table should use on-demand loading
+      example:
+        tables:
+        - id: People
+          fields:
+            tableId: Persons
+        - id: Places
+          fields:
+            onDemand: true
     Fields:
       type: object
       properties:
@@ -273,56 +323,6 @@ components:
         visibleCol:
           type: integer
           description: For Ref and RefList columns, the colRef of a column to display
-    UpdateTables:
-      type: object
-      required:
-      - tables
-      properties:
-        tables:
-          type: array
-          items:
-            type: object
-            required:
-            - id
-            - fields
-            properties:
-              id:
-                type: string
-                description: Current table identifier
-              fields:
-                type: object
-                properties:
-                  tableId:
-                    type: string
-                    description: Set to a new value to rename the table
-                  onDemand:
-                    type: boolean
-                    description: Whether the table should use on-demand loading
-      example:
-        tables:
-        - id: People
-          fields:
-            tableId: Persons
-        - id: Places
-          fields:
-            onDemand: true
-  parameters:
-    docIdPathParam:
-      in: path
-      name: docId
-      schema:
-        type: string
-      description: A string id (UUID)
-      required: true
-    expandQueryParam:
-      in: query
-      name: expand
-      schema:
-        type: string
-        enum:
-        - column
-      description: Set to "column" to include column metadata for each table in the response.
-      required: false
   securitySchemes:
     ApiKey:
       type: http
